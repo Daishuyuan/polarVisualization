@@ -1,0 +1,94 @@
+@font-face {
+    font-family: 'chartTitleFont';
+    src: url('../../fonts/chartTitleFont.ttf')
+}
+
+.chart_title {
+    color: #cce4f9;
+    margin-top: 0px;
+    margin-left: 0.52vw;
+    font-size: 1.15vw;
+}
+
+.pane_style {
+    background-color: aqua;
+}
+
+.system_title{
+    color: #cce4f9;
+    font-size: 2.26vw;
+    font-family: 'chartTitleFont';
+    margin-left: 0.78vw;
+}
+
+.title_row {
+    background-color: #7f9cb563;
+    width: 102%;
+    font-family: 'sciFont';
+}
+
+.title_col{
+    font-family: 'sciFont';
+    color: #cce4f9;
+}
+
+.body_row{
+    background-color: #a0e0d610;
+    /* border-radius: 5px; */
+    /* box-shadow: 0px 0px 20px #0085f7d6; */
+    margin: 0.26vw;
+    /* background: linear-gradient(#02026f14,#02026f54,#02026fbf); */
+}
+
+.WXY_floating_window {
+    position: relative;
+    left: 14px;
+    font-size: 11px;
+    background-color: #000;
+    color: #fff;
+    padding: 4px 8px;
+    font-family: 'Oswald', sans-serif;
+    transition: background-color 200ms ease-out;
+    opacity: 0.7;
+}
+
+.WXY_floating_window_obliteration {
+    position: relative;
+    font-size: 11px;
+    background-color: #000;
+    color: #fff;
+    padding: 4px 8px;
+    font-family: 'Oswald', sans-serif;
+    transition: background-color 200ms ease-out;
+    opacity: 0.7;
+}
+
+.WXY_floating_window_obliteration:hover {
+    box-shadow: 0 0 15px 1px wheat;
+}
+
+.WXY_floating_window:hover {
+    box-shadow: 0 0 15px 1px blue;
+}
+
+.WXY_line {
+    height: 12px;
+    width: 8px;
+    border-left: 2px solid black;
+    transform: skew(-40deg);
+    position: relative;
+    left: 8px;
+}
+
+.WXY_img_font {
+    display: flex;
+    align-items: center;
+}
+
+.WXY_label_title {
+    font-size: larger;
+}
+
+.WXY_label {
+    position: absolute;
+}

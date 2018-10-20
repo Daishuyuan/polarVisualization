@@ -1,6 +1,6 @@
 package com.shou.polar;
 
-import com.shou.polar.component.UpdateEvent;
+import com.shou.polar.service.UpdateEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,8 +14,12 @@ import java.util.Map;
 @Controller
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 public class PolarApplication {
+    private final UpdateEvent updateEvent;
+
     @Autowired
-    UpdateEvent updateEvent;
+    public PolarApplication(UpdateEvent updateEvent) {
+        this.updateEvent = updateEvent;
+    }
 
     @RequestMapping(value = "/dataStatus", produces = "text/event-stream")
     public @ResponseBody Map<String, Boolean> push() {

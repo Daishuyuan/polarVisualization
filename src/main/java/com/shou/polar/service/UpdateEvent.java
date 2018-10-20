@@ -1,12 +1,13 @@
-package com.shou.polar.component;
-import org.springframework.stereotype.Component;
+package com.shou.polar.service;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-
-@Component
+@Service
 public class UpdateEvent {
     private static final int WAIT_TIME = 500;
     private Semaphore signals;
@@ -16,7 +17,7 @@ public class UpdateEvent {
     private Timer timer;
 
     public UpdateEvent() {
-        RES_NAMES = Collections.synchronizedSet(Set.of("", ""));
+        RES_NAMES = Collections.synchronizedSet(Set.of("PRESS", "TEMP"));
         signals = new Semaphore(1);
         resHashMap = Collections.synchronizedMap(new HashMap<>());
         timer = new Timer();
@@ -24,7 +25,7 @@ public class UpdateEvent {
     }
 
     /**
-     * 更新某个资源为可用状态
+     * 当某个数据更新时必须要到这里报道(所有需要向前端推送的数据)
      *
      * @param resName 持有资源名称
      */

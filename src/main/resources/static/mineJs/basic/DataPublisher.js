@@ -2,9 +2,8 @@ import { Tools as tools } from "./BasicTools.js"
 
 export var TYPE_ECHARTS = "echarts";
 export var TYPE_CUSTOM = "custom";
-var SHARE_RES_MAP = new Map();
-var SUBSCRIBERS = [];
-const CHECK_UPDATE_TICK = 500; 
+const SHARE_RES_MAP = new Map();
+const SUBSCRIBERS = [];
 
 export class DataPublisher {
     constructor(propsUrl) {
@@ -76,13 +75,11 @@ export class DataPublisher {
             });
         }
         
-        // check and pull data trigger 
-        setInterval(() => {
-            $.ajax({
-                url: propsUrl,
-                type: "GET",
-                dataType: "json"
-            }).done(function(props) {
+        // check and pull data trigger
+        if (!!window.EventSource) {
+            let source = new EventSource('dataStatus');
+            source.addEventListener('message', function (e) {
+                let props = e.data;
                 // check data updating in props diagram
                 for (let name in props) {
                     if (props[name]) {
@@ -98,10 +95,22 @@ export class DataPublisher {
                 for (let i=0; i < SUBSCRIBERS.length; ++i) {
                     this._reqRes(SUBSCRIBERS[i]);
                 }
-            }).catch(function(e) {
-                tools.mutter(e, "error");
             });
-        }, CHECK_UPDATE_TICK);
+
+            source.addEventListener('open', function (e) {
+                tools.mutter("begin to listen the status of data", "info");
+            }, false);
+            
+            source.addEventListener('error', function (e) {
+                if (e.readyState == EventSource.CLOSED) {
+                    tools.mutter("listener of data status is closed.", "info");
+                } else {
+                    tools.mutter(`current state: ${e.readyState}`, "info");
+                }
+            }, false);
+        } else {
+            tools.mutter("your browser don't support EventSource", "error");
+        }
     }
 
     // subscrib entity to map(entity should be configured by url, target and type)

@@ -1,0 +1,134 @@
+{
+    "zhongShan_out":{
+        "temperature":{
+            "serious":[{
+                "data":[]
+            }]
+        },
+        "wind": {
+            "serious": [{
+                "data": []
+            }]
+        },
+        "pressure": {
+            "serious": [{
+                "data": []
+            }]
+        },
+        "hunidity": {
+            "serious": [{
+                "data": []
+            }]
+        }
+    },
+    "zhongShan_room": {
+        "temperature": {
+            "serious": [{
+                "data": []
+            }]
+        },
+        "wind": {
+            "serious": [{
+                "data": []
+            }]
+        },
+        "pressure": {
+            "serious": [{
+                "data": []
+            }]
+        },
+        "hunidity": {
+            "serious": [{
+                "data": []
+            }]
+        }
+    },
+    "kunLun": {
+        "temperature": {
+            "serious": [{
+                "data": []
+            }]
+        },
+        "wind": {
+            "serious": [{
+                "data": []
+            }]
+        },
+        "pressure": {
+            "serious": [{
+                "data": []
+            }]
+        },
+        "hunidity": {
+            "serious": [{
+                "data": []
+            }]
+        }
+    },
+    "changCheng": {
+        "temperature": {
+            "serious": [{
+                "data": []
+            }]
+        },
+        "wind": {
+            "serious": [{
+                "data": []
+            }]
+        },
+        "pressure": {
+            "serious": [{
+                "data": []
+            }]
+        },
+        "hunidity": {
+            "serious": [{
+                "data": []
+            }]
+        }
+    },
+    "taiShan": {
+        "temperature": {
+            "serious": [{
+                "data": []
+            }]
+        },
+        "wind": {
+            "serious": [{
+                "data": []
+            }]
+        },
+        "pressure": {
+            "serious": [{
+                "data": []
+            }]
+        },
+        "hunidity": {
+            "serious": [{
+                "data": []
+            }]
+        }
+    },
+    "xueLong": {
+        "temperature": {
+            "serious": [{
+                "data": []
+            }]
+        },
+        "wind": {
+            "serious": [{
+                "data": []
+            }]
+        },
+        "pressure": {
+            "serious": [{
+                "data": []
+            }]
+        },
+        "hunidity": {
+            "serious": [{
+                "data": []
+            }]
+        }
+    }
+}

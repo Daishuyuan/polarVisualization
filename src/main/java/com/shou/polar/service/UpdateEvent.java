@@ -1,6 +1,5 @@
 package com.shou.polar.service;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -9,6 +8,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 public class UpdateEvent {
+    private static final String[] RES_NAMES_REF = new String[]{"PRESS", "TEMP"};
     private static final int WAIT_TIME = 500;
     private Semaphore signals;
     private Set<String> RES_NAMES;
@@ -17,7 +17,7 @@ public class UpdateEvent {
     private Timer timer;
 
     public UpdateEvent() {
-        RES_NAMES = Collections.synchronizedSet(Set.of("PRESS", "TEMP"));
+        RES_NAMES = Collections.synchronizedSet(Set.of(RES_NAMES_REF));
         signals = new Semaphore(1);
         resHashMap = Collections.synchronizedMap(new HashMap<>());
         timer = new Timer();

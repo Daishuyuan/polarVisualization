@@ -18,14 +18,9 @@ public class ApiController {
         this.advice = advice;
     }
 
-    @GetMapping("/sessionId")
-    public String uid(HttpServletRequest request) {
-        return request.getSession().getId();
-    }
-
-    @RequestMapping("/errors/{sessionId}")
-    public List<String> getErrors(@PathVariable String sessionId) {
-        return advice.getErrors(sessionId);
+    @GetMapping("/errors")
+    public List<String> getErrors(HttpServletRequest request) {
+        return advice.getErrors(request.getSession().getId());
     }
 
     @RequestMapping("/theme/{name}")

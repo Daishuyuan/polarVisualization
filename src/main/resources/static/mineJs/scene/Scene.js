@@ -48,7 +48,9 @@ export class Scene {
     themeInit(props) {
         // clear before status
         if(CUR_SCENE && INNER_DOMS.get(CUR_SCENE)) {
-            INNER_DOMS.get(CUR_SCENE).forEach((dom) => $(dom).hide());
+            INNER_DOMS.get(CUR_SCENE).forEach((dom) => {
+                $(dom).hide();
+            });
         }
         this._curProps = props;
         CUR_SCENE = this._wkid;
@@ -70,16 +72,21 @@ export class Scene {
         this.recoverSite();
         // init tables
         if (INNER_DOMS.has(this._wkid)) {
-            INNER_DOMS.get(this._wkid).forEach((dom) => $(dom).show());
+            INNER_DOMS.get(this._wkid).forEach((dom) => {
+                dom.initEvents();
+                $(dom).show();
+            });
         } else {
             try {
                 let dom_cache = [];
                 tools.req(`${this._preDataUrl}\\${this._wkid}`).then((scene) => {
-                    if (scene.tableLayer) {
+                    if (scene.hasOwnProperty("tableLayer")) {
                         for (let name in scene.tableLayer) {
-                            let dom = this._factory.generate(this._tableViewId, scene.tableLayer[name]);
-                            dom.id = `${this._wkid}_${name}`;
-                            dom_cache.push(dom);
+                            if (scene.tableLayer.hasOwnProperty(name)) {
+                                let dom = this._factory.generate(this._tableViewId, scene.tableLayer[name]);
+                                dom.id = `${this._wkid}_${name}`;
+                                dom_cache.push(dom);
+                            }
                         }
                     } else {
                         tools.mutter("tableLayer isn't exist.", "error");

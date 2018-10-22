@@ -21,16 +21,10 @@
  * -----------------------------------------------------------> data_proc(chart) 拉取到数据后的处理函数Str类型
  * -----------------------------------------------------------> prefix(title) 标题装饰性前缀
  * -----------------------------------------------------------> event_id(title) 绑定变更函数名称
- * @requires jQuery
- * @requires echarts
- * @requires echarts-liquidfill
- * @requires BasicTools
- * @requires bootstrap
- * @exports TableFactory
  **/
-import { Tools as tools } from "../basic/BasicTools.js"
-import { PARAMS_TABLE as ptable } from "../basic/ParamsTable.js"
-import { TYPE_ECHARTS } from "../basic/DataPublisher.js"
+import {Tools as tools} from "../basic/BasicTools.js"
+import {PARAMS_TABLE as ptable} from "../basic/ParamsTable.js"
+import {TYPE_ECHARTS} from "../basic/DataPublisher.js"
 
 export class TableFactory {
     constructor() {
@@ -41,41 +35,61 @@ export class TableFactory {
         const sstd = (x) => !!x ? x : ""; // string standard
         const nstd = (x) => !isNaN(parseFloat(x)) && x > 0 ? x : 0; // number standard
 
+        // load event
+        function loadEvent(node) {
+            switch (node.type) {
+                case "title":
+                    let jqId = node.domId, content = $(jqId).html();
+                    Object.defineProperty(node, "name", {
+                        get() {
+                            return content;
+                        },
+                        set(name) {
+                            $(jqId).html(content = name);
+                        }
+                    });
+                    tools.setEventInApp(node.event_id, () => node);
+                    break;
+                case "chart":
+                    if (node.url) {
+                        let entity = {
+                            type: TYPE_ECHARTS,
+                            url: node.url,
+                            target: node.chart
+                        };
+                        tools.setEventInApp(node.event_id, () => entity);
+                    }
+                    break;
+            }
+        }
+
         // load chart
         function loadChart(node) {
             let dom = node.dom;
-            $(dom).ready(() => {
-                $.ajax({
-                    url: node.url,
-                    type: "GET",
-                    dataType: "json",
-                    success: function (option) {
-                        var myChar = echarts.init(dom[0]);
-                        myChar.setOption(option);
-                        myChar.resize();
-                        if (option.series[0].type === "gauge") {
-                            setInterval(function () {
-                                option.series[0].data[0].value = (Math.random() * 100 + 1).toFixed(1) - 0;
-                                myChar.setOption(option, true);
-                            }, 4000);
-                        }
-                        if (node.event_id) {
-                            let entity = {
-                                type: TYPE_ECHARTS,
-                                url: node.url,
-                                target: myChar
-                            }
-                            tools.setEventInApp(node.event_id, () => entity);
-                        }
+            let myChart = echarts.init(dom[0]);
+            $.ajax({
+                url: node.url,
+                type: "GET",
+                dataType: "json",
+                success: function (option) {
+                    myChart.setOption(option);
+                    myChart.resize();
+                    if (option.series[0].type === "gauge") {
+                        setInterval(function () {
+                            option.series[0].data[0].value = (Math.random() * 100 + 1).toFixed(1) - 0;
+                            myChart.setOption(option, true);
+                        }, 4000);
                     }
-                });
+                }
             });
+            return myChart;
         }
 
         this.__init__ = (jqDom, config) => {
             jqDom.ready(function () {
-                var tbcnt = [],
-                    echDelay = [];
+                const tbcnt = [],
+                    echDelay = [],
+                    events = [];
 
                 // cols processing
                 function __col_owner__(i, row, cols) {
@@ -97,16 +111,11 @@ export class TableFactory {
                                     title_content = `<p id='${id}' style='${NO_MARGIN}' class='${sstd(node.style)}'>${content}</p>`;
                                     tbcnt.push(`<div ${control}>${prefix_content}${title_content}</div>`);
                                     if (ptable.exists(node.event_id)) {
-                                        let jqId = tools.identify(id);
-                                        Object.defineProperty(node, "name", {
-                                            get () {
-                                                return content;
-                                            },
-                                            set (name) {
-                                                $(jqId).html(content = name);
-                                            }
+                                        events.push({
+                                            domId: tools.identify(id),
+                                            event_id: node.event_id,
+                                            type: node.type
                                         });
-                                        tools.setEventInApp(node.event_id, () => entity);
                                     }
                                     break;
                                 case "chart":
@@ -114,14 +123,18 @@ export class TableFactory {
                                         title_height = 0;
                                     if (node.name) {
                                         let content_title = `<p style='margin:0;'>${sstd(node.name)}</p>`;
-                                        title_height = parseInt(Math.min(Math.max(0, node.title_height ? node.title_height : TITLE_DEFAULT_HEIGHT), 100));
-                                        tbcnt.push(`<div class='${sstd(node.title_class)}' style="height: ${title_height}%;text-align: center;margin:0;">${content_title}</div>`);
+                                        title_height = node.hasOwnProperty("title_height") ? node.title_height : TITLE_DEFAULT_HEIGHT;
+                                        title_height = Math.min(Math.max(0, title_height), 100);
+                                        if (node.hasOwnProperty("title_class")) {
+                                            tbcnt.push(`<div class='${sstd(node.title_class)}' style="height: ${title_height}%;text-align: center;margin:0;">${content_title}</div>`);
+                                        }
                                     }
                                     tbcnt.push(`<div id='${_id}' style='height:${100 - title_height}%;' class='${sstd(node.style)}'></div>`);
                                     echDelay.push({
                                         event_id: node.event_id,
                                         id: _id,
-                                        url: node.url
+                                        url: node.url,
+                                        data_url: node.data_url
                                     });
                                     break;
                                 case "capsule":
@@ -149,45 +162,51 @@ export class TableFactory {
                             __col_owner__(i, row, row.cols);
                             tbcnt.push("</div>");
                         } else {
-                            let descrip = row.descrip ? row.descrip : i + 1;
-                            tools.mutter(`row error: ${descrip}`, "error");
+                            let description = row.hasOwnProperty("descrip") ? row.descrip : i + 1;
+                            tools.mutter(`row error: ${description}`, "error");
                         }
                     }
                 }
 
-                ! function () {
-                    try {
-                        if (config) {
-                            if (config.pane) {
-                                for (let name in config.pane) {
+                !function () {
+                    if (config) {
+                        if (config.hasOwnProperty("pane")) {
+                            for (let name in config.pane) {
+                                if (config.pane.hasOwnProperty(name)) {
                                     jqDom.css(name, config.pane[name]);
                                 }
-                            } else {
-                                tools.mutter("pane not in config.", "error");
-                            }
-                            tbcnt.push(`<div class='container-fluid' style='height:100%;'>`);
-                            if (config.rows) {
-                                __row_owner__(config.rows);
-                            } else {
-                                tools.mutter("rows not in config.", "error");
-                            }
-                            tbcnt.push("</div>");
-                            // echarts initialization
-                            jqDom.append(tbcnt.join('\n'));
-                            try {
-                                for (let i = 0; i < echDelay.length; ++i) {
-                                    let node = echDelay[i];
-                                    node.dom = jqDom.find(tools.identify(node.id));
-                                    loadChart(node);
-                                }
-                            } catch (e) {
-                                tools.mutter(e, "error");
                             }
                         } else {
-                            tools.mutter("config is null", "error");
+                            tools.mutter("pane not in config.", "error");
                         }
-                    } catch (e) {
-                        tools.mutter(e, "error");
+                        tbcnt.push(`<div class='container-fluid' style='height:100%;'>`);
+                        if (config.rows) {
+                            __row_owner__(config.rows);
+                        } else {
+                            tools.mutter("rows not in config.", "error");
+                        }
+                        tbcnt.push("</div>");
+                        // echarts initialization
+                        jqDom.append(tbcnt.join('\n'));
+                        for (let i = 0; i < echDelay.length; ++i) {
+                            let node = echDelay[i];
+                            node.dom = jqDom.find(tools.identify(node.id));
+                            let chart = loadChart(node);
+                            if (node.event_id) {
+                                events.push({
+                                    chart: chart,
+                                    event_id: node.event_id,
+                                    url: node.data_url,
+                                    type: node.type
+                                });
+                            }
+                        }
+                        jqDom.initEvents = () => {
+                            for (let i = 0, len = events.length; i < len; ++i) {
+                                loadEvent(events[i]);
+                            }
+                        };
+                        jqDom.initEvents();
                     }
                 }();
             });

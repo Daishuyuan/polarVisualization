@@ -23,7 +23,7 @@ public class ApiController {
         return advice.getErrors(request.getSession().getId());
     }
 
-    @RequestMapping("/theme/{name}")
+    @RequestMapping("/scenes/{name}")
     public JsonObject getThemePropsByName(@PathVariable String name) {
 
         return null;

@@ -8,7 +8,6 @@ import { Tools as tools } from "../basic/BasicTools.js";
 import { PARAMS_TABLE as ptable } from "../basic/ParamsTable.js";
 
 (function() {
-    tools.mutter(`sessionId: ${id}`, "info");
     tools.honour();
     try {
         let vueLayer = new VueLayer(ptable.constants.MASK_HTML_PATH, ptable.constants.MAIN_APP_ID);

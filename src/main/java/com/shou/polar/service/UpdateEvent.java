@@ -1,5 +1,7 @@
 package com.shou.polar.service;
 
+import com.shou.polar.props.ResNameSpace;
+import org.jboss.logging.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -8,7 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 public class UpdateEvent {
-    private static final String[] RES_NAMES_REF = new String[]{"PRESS", "TEMP"};
+    private Logger logger = Logger.getLogger(UpdateEvent.class);
     private static final int WAIT_TIME = 500;
     private Semaphore signals;
     private Set<String> RES_NAMES;
@@ -17,7 +19,7 @@ public class UpdateEvent {
     private Timer timer;
 
     public UpdateEvent() {
-        RES_NAMES = Collections.synchronizedSet(Set.of(RES_NAMES_REF));
+        RES_NAMES = Collections.synchronizedSet(Set.of(ResNameSpace.getNames()));
         signals = new Semaphore(1);
         resHashMap = Collections.synchronizedMap(new HashMap<>());
         timer = new Timer();
@@ -32,7 +34,10 @@ public class UpdateEvent {
     public synchronized void updateRes(String resName) {
         if (RES_NAMES.contains(resName)) {
             resHashMap.put(resName, true);
+            logger.info("update resource: " + resName);
             waitTime();
+        } else {
+            logger.error("resource name: " + resName + " is invalid.");
         }
     }
 
@@ -63,6 +68,7 @@ public class UpdateEvent {
             signals.acquire();
         } catch (InterruptedException e) {
             e.printStackTrace();
+            logger.error(e);
         }
         return resHashMap;
     }

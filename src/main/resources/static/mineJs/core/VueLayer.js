@@ -3,11 +3,11 @@ import { Tools as tools } from "../basic/BasicTools.js"
 export class VueLayer {
     constructor(MASK_HTML_PATH, MAIN_APP_ID) {
         // generate menu events
-        var menuButtonEvents = new Map(),
+        const menuButtonEvents = new Map(),
             popupButtonEvents = new Map();
 
         // initialize the application
-        var mainApp = new Vue({
+        this.mainApp = new Vue({
             el: tools.identify(MAIN_APP_ID),
             data: {
                 fakePage: MASK_HTML_PATH,
@@ -39,7 +39,6 @@ export class VueLayer {
         });
 
         // private variables
-        this.mainApp = mainApp;
         this.menuButtonEvents = menuButtonEvents;
         this.popupButtonEvents = popupButtonEvents;
     }

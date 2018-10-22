@@ -1,0 +1,351 @@
+{
+    "tableLayer": {
+      "titlePanel": {
+        "pane": {
+          "position": "absolute",
+          "left": "0%",
+          "top": "0%",
+          "width": "35%",
+          "height": "8%"
+        },
+        "rows": [{
+          "height": 100,
+          "descrip": "第一行",
+          "cols": [{
+            "type": "title",
+            "name": "极地大屏可视化系统",
+            "style": "system_title",
+            "height": 100,
+            "column": "col-md-12",
+            "descrip": "第一列"
+          }]
+        }]
+      },
+      "leftPanel": {
+        "pane": {
+          "position": "absolute",
+          "left": "0%",
+          "top": "10%",
+          "width": "31%",
+          "height": "100%"
+        },
+        "rows": [{
+            "height": 6,
+            "descrip": "第一行",
+            "class": "title_row",
+            "cols": [{
+              "type": "title",
+              "name": "激光雷达站点气象和地理坐标信息",
+              "style": "chart_title",
+              "height": 6,
+              "column": "col-md-12",
+              "descrip": "第一列"
+            }]
+          },
+          {
+            "height": 34,
+            "descrip": "第二行",
+            "class": "body_row",
+            "cols": [{
+                "type": "capsule",
+                "column": "col-md-4",
+                "rows": [{
+                    "height": 45,
+                    "descrip": "第一行",
+                    "class": "body_row",
+                    "cols": [{
+                        "type": "chart",
+                        "name": "温湿度、压强",
+                        "title_class": "title_col",
+                        "height": 16,
+                        "url": "http://localhost:3000/gauge",
+                        "column": "col-md-6",
+                        "descrip": "第一列"
+                      },
+                      {
+                        "type": "chart",
+                        "height": 16,
+                        "url": "http://localhost:3000/gauge",
+                        "column": "col-md-6",
+                        "descrip": "第二列"
+                      }
+                    ]
+                  },
+                  {
+                    "height": 45,
+                    "descrip": "第二行",
+                    "class": "body_row",
+                    "cols": [{
+                        "type": "chart",
+                        "height": 10,
+                        "url": "http://localhost:3000/gauge",
+                        "column": "col-md-6",
+                        "descrip": "第一列"
+                      },
+                      {
+                        "type": "chart",
+                        "height": 10,
+                        "url": "http://localhost:3000/gauge",
+                        "column": "col-md-6",
+                        "descrip": "第二列"
+                      }
+                    ]
+                  }
+                ]
+
+              },
+              {
+                "type": "chart",
+                "name": "环境监控",
+                "title_class": "title_col",
+                "height": 30,
+                "url": "http://localhost:3000/roomAlarm",
+                "column": "col-md-4",
+                "descrip": "第二列"
+              },
+              {
+                "type": "chart",
+                "name": "风向、风力",
+                "title_class": "title_col",
+                "height": 30,
+                "url": "http://localhost:3000/windRose",
+                "column": "col-md-4",
+                "descrip": "第三列"
+              }
+            ]
+          },
+          {
+            "height": 6,
+            "descrip": "第三行",
+            "class": "title_row",
+            "cols": [{
+              "type": "title",
+              "name": "激光雷达站点实时运行状况信息",
+              "style": "chart_title",
+              "height": 6,
+              "column": "col-md-12",
+              "descrip": "第一列"
+            }]
+          },
+          {
+            "height": 34,
+            "descrip": "第四行",
+            "class": "body_row",
+            "cols": [{
+                "type": "chart",
+                "title_class": "title_col",
+                "height": 30,
+                "url": "http://localhost:3000/gauge",
+                "column": "col-md-4",
+                "descrip": "第一列"
+              },
+              {
+                "type": "capsule",
+                "column": "col-md-4",
+                "rows": [{
+                    "height": 50,
+                    "descrip": "第一行",
+                    "class": "body_row",
+                    "cols": [{
+                      "type": "chart",
+                      "name": "采样点数",
+                      "title_class": "title_col",
+                      "height": 13,
+                      "url": "http://localhost:3000/pointCount",
+                      "column": "col-md-12",
+                      "descrip": "第一列"
+                    }]
+                  },
+                  {
+                    "height": 50,
+                    "descrip": "第二行",
+                    "class": "body_row",
+                    "cols": [{
+                      "type": "chart",
+                      "name": "采样频率",
+                      "title_class": "title_col",
+                      "height": 13,
+                      "url": "http://localhost:3000/frequency",
+                      "column": "col-md-12",
+                      "descrip": "第一列"
+                    }]
+
+                  }
+                ]
+              },
+              {
+                "type": "chart",
+                "name": "设备波长状态",
+                "title_class": "title_col",
+                "height": 30,
+                "url": "http://localhost:3000/wave",
+                "column": "col-md-4",
+                "descrip": "第三列"
+              }
+            ]
+          }
+        ]
+      },
+      "rightPanel": {
+        "pane": {
+          "position": "absolute",
+          "right": "0%",
+          "top": "10%",
+          "width": "33%",
+          "height": "100%"
+        },
+        "rows": [{
+            "height": 6,
+            "descrip": "第一行",
+            "class": "title_row",
+            "cols": [{
+              "type": "title",
+              "name": "反演数据和三分量可视化展示",
+              "style": "chart_title",
+              "height": 6,
+              "column": "col-md-12",
+              "descrip": "第一列"
+            }]
+          },
+          {
+            "height": 34,
+            "descrip": "第二行",
+            "class": "body_row",
+            "cols": [{
+                "type": "chart",
+                "title_class": "title_col",
+                "name": "反演数据",
+                "height": 30,
+                "url": "http://localhost:3000/heatmap",
+                "column": "col-md-5",
+                "descrip": "第一列"
+              },
+              {
+                "type": "capsule",
+                "column": "col-md-7",
+                "rows": [{
+                    "height": 30,
+                    "descrip": "第一行",
+                    "class": "body_row",
+                    "cols": [{
+                      "type": "chart",
+                      "title_class": "title_col",
+                      "name": "三分量可视化",
+                      "height": 12,
+                      "url": "http://localhost:3000/line_geo",
+                      "column": "col-md-12",
+                      "descrip": "第一列"
+                    }]
+                  },
+                  {
+                    "height": 30,
+                    "descrip": "第二行",
+                    "class": "body_row",
+                    "cols": [{
+                      "type": "chart",
+                      "url": "http://localhost:3000/line_geo",
+                      "height": 9,
+                      "column": "col-md-12",
+                      "descrip": "第一列"
+                    }]
+                  },
+                  {
+                    "height": 30,
+                    "descrip": "第三行",
+                    "class": "body_row",
+                    "cols": [{
+                      "type": "chart",
+                      "url": "http://localhost:3000/line_geo",
+                      "height": 9,
+                      "column": "col-md-12",
+                      "descrip": "第一列"
+                    }]
+                  }
+                ]
+              }
+            ]
+
+          },
+          {
+            "height": 6,
+            "descrip": "第三行",
+            "class": "title_row",
+            "cols": [{
+              "type": "title",
+              "style": "chart_title",
+              "height": 6,
+              "name": "数据文件实时接受状态",
+              "column": "col-md-12",
+              "descrip": "第一列"
+            }]
+          },
+          {
+            "height": 34,
+            "descrip": "第四行",
+            "class": "body_row",
+            "cols": [{
+                "type": "capsule",
+                "column": "col-md-3",
+                "rows": [{
+                    "height": 50,
+                    "descrip": "第1行",
+                    "class": "body_row",
+                    "cols": [{
+                      "type": "chart",
+                      "title_class": "title_col",
+                      "name": "接收文件数量",
+                      "height": 13,
+                      "url": "http://localhost:3000/counter",
+                      "column": "col-md-12",
+                      "descrip": "第一列"
+                    }]
+                  },
+                  {
+                    "height": 50,
+                    "descrip": "第2行",
+                    "class": "body_row",
+                    "cols": [{
+                      "type": "chart",
+                      "title_class": "title_col",
+                      "name": "处理文件数量",
+                      "height": 13,
+                      "url": "http://localhost:3000/counter",
+                      "column": "col-md-12",
+                      "descrip": "第一列"
+                    }]
+                  }
+                ]
+              },
+              {
+                "type": "chart",
+                "title_class": "title_col",
+                "name": "完成进度",
+                "height": 18,
+                "column": "col-md-3",
+                "url": "http://localhost:3000/ringComplete",
+                "descrip": "第二列"
+              },
+              {
+                "type": "chart",
+                "title_class": "title_col",
+                "name": "接收任务完成进度",
+                "height": 14,
+                "column": "col-md-3",
+                "url": "http://localhost:3000/complete",
+                "descrip": "第三列"
+              },
+              {
+                "type": "chart",
+                "height": 30,
+                "title_class": "title_col",
+                "column": "col-md-3",
+                "name": "接收文件种类",
+                "url": "http://localhost:3000/fileType",
+                "descrip": "第四列"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }

@@ -6,7 +6,8 @@ export var PARAMS_TABLE = {
         TABLEVIEW_ID: "threeJsView",
         MASK_HTML_PATH: "/cutScene",
         RECOV_BTN: "homeTitle",
-        PRE_DATA_URL: "http://localhost:3000"
+        PRE_DATA_URL: "",
+        SCENE_DATA_URL: "/api/scenes"
     },
     events: {
         "SHIP_LOAD_EVENT": "ship_load_event",

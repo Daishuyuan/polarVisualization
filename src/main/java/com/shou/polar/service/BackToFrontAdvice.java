@@ -4,7 +4,6 @@ import org.jboss.logging.Logger;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
@@ -30,11 +29,6 @@ public class BackToFrontAdvice {
         }
         ERROR_POOL.get(sessionId).add(e.getLocalizedMessage());
         logger.error(e.getMessage());
-    }
-
-    @ModelAttribute
-    public void addAttribute(Model model) {
-        model.addAttribute("msg", "额外信息");
     }
 
     @InitBinder

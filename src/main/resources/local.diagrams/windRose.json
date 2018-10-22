@@ -1,0 +1,82 @@
+{
+  "angleAxis": {
+    "type": "category",
+    "data": [
+      "N",
+      "NNE",
+      "NE",
+      "ENE",
+      "E",
+      "ESE",
+      "SE",
+      "SSE",
+      "S",
+      "SSW",
+      "SW",
+      "WSW",
+      "W",
+      "WNW",
+      "NW",
+      "NNW"
+    ],
+    "z": 0,
+    "boundaryGap": false,
+    "splitLine": {
+      "show": true,
+      "lineStyle": {
+        "color": "#fff",
+        "type": "solid"
+      }
+    },
+    "axisLine": {
+      "show": true,
+      "lineStyle": {
+        "color": "#fff"
+      }
+    }
+  },
+  "radiusAxis": {
+    "axisLine": {
+      "lineStyle": {
+        "color": "#fff"
+      }
+    },
+    "splitLine": {
+      "lineStyle": {
+        "color": "#fff"
+      }
+    }
+  },
+  "polar": {
+    "radius": "65%"
+  },
+  "series": [{
+    "type": "bar",
+    "data": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      20,
+      0,
+      0
+    ],
+    "coordinateSystem": "polar",
+    "radius": "90%",
+    "stack": "A",
+    "itemStyle": {
+      "normal": {
+        "color": "rgb(124, 181, 236)"
+      }
+    }
+  }]
+}

@@ -89,14 +89,10 @@ function init_ships(layer, props, ships) {
                     "left": `${screen_point.x}px`,
                     "top": `${screen_point.y - dom.height()}px`
                 });
-                if (map_point &&
-                    !tools.floatBox.hitTest(label.box, boxes) && 
+                label.switch = !!(map_point &&
+                    !tools.floatBox.hitTest(label.box, boxes) &&
                     Math.abs(map_point.longitude - lon) <= 0.1 &&
-                    Math.abs(map_point.latitude - lat) <= 0.1) {
-                    label.switch = true;
-                } else {
-                    label.switch = false;
-                }
+                    Math.abs(map_point.latitude - lat) <= 0.1);
             });
         };
         setInterval(() => firePopup(), 100);
@@ -113,14 +109,22 @@ export var SceneManager = () => {
     const TABLE_DEBUG = false;
 
     const __init_ship_and_stations_= (layer, props) => {
-        $.ajax(`${props.preDataUrl}/Common`).done((common) => {
-            let ships = common.data.ships, stations = common.data.stations;
-            init_ships(layer, props, ships);
+        $.ajax({
+            url: `${props.scenesUrl}/common`,
+            dataType: "json"
+        }).done((common) => {
+            if (common.hasOwnProperty("ships")) {
+                init_ships(layer, props, common.ships);
+            }
+            if (common.hasOwnProperty("stations")) {
+
+            }
             props.map.add(layer);
         });
-    }
+    };
 
     const __init__ = (props) => {
+        tools.watch("props", props);
         props.factory = new TableFactory();
         // arcgis 3d map renderer
         if (!TABLE_DEBUG) {
@@ -153,7 +157,6 @@ export var SceneManager = () => {
                         starsEnabled: false,
                     }
                 });
-                tools.watch("view", props.view);
                 tools.setEventInApp(ptable.events.VUE_CONTROL, () => props.vuePanel.application);
                 props.view.ui.empty('top-left'); // remove control panel in top left
                 props.view.ui._removeComponents(["attribution"]); // remove "Powered by esri"
@@ -162,7 +165,7 @@ export var SceneManager = () => {
                     __init_ship_and_stations_(props.staticGLayer = new GraphicsLayer(), props);
 
                     // init scenes
-                    let scenes = [], dom = null;
+                    let scenes = [];
                     scenes.push(new GlobalScene(props)); // scene 1
                     scenes.push(new LidarScene(props)); // scene 2
                     scenes.push(new AntarcticaScene(props)); // scene 3
@@ -170,9 +173,9 @@ export var SceneManager = () => {
                     scenes.forEach((scene) => {
                         props.vuePanel.menuEvents.set(scene.eventName, () => {
                             scene.load();
-                            if ((dom = $(tools.identify(props.recoverBtn)))) {
-                                dom.click(() => scene.recoverSite());
-                            }
+                            $(tools.identify(props.recoverBtn)).click(() => {
+                                scene.recoverSite();
+                            });
                         });
                     }); // load scene
                     scenes[0].load(); // load scene 1
@@ -182,18 +185,14 @@ export var SceneManager = () => {
                 });
             });
         }
-    }
+    };
 
     return {
         init: (props) => {
-            try {
-                if (props) {
-                    __init__(props);
-                } else {
-                    throw new Error("props unsettled.");
-                }
-            } catch(e) {
-                tools.mutter(e, "error");
+            if (props) {
+                __init__(props);
+            } else {
+                tools.mutter("props is undefined.", "error");
             }
         }
     }

@@ -1,0 +1,19 @@
+{
+  "series": [
+    {
+      "type": "liquidFill",
+      "outline": {
+        "show": false
+      },
+      "radius": "100%",
+      "data": [
+        0.6
+      ],
+      "label": {
+        "normal": {
+          "fontSize": 20
+        }
+      }
+    }
+  ]
+}

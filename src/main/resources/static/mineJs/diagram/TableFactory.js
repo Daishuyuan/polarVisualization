@@ -210,13 +210,14 @@ export class TableFactory {
                     }
                 }();
             });
+            return jqDom;
         }
     }
 
     generate(id, config) {
-        let dom = document.createElement("div");
-        this.__init__($(dom), config);
+        let dom = document.createElement("div"),
+            handle = this.__init__($(dom), config);
         $(tools.identify(id)).append(dom);
-        return dom;
+        return handle;
     }
 }

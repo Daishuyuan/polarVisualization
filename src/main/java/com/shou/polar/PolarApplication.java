@@ -1,7 +1,6 @@
 package com.shou.polar;
 
 import com.shou.polar.service.UpdateEvent;
-import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +14,6 @@ import java.util.Map;
 @Controller
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 public class PolarApplication {
-    private static Logger logger = Logger.getLogger(PolarApplication.class);
     private final UpdateEvent updateEvent;
 
     @Autowired

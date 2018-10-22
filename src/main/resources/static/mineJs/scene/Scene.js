@@ -1,9 +1,9 @@
 import { Tools as tools } from "../basic/BasicTools.js";
 import { DelayTime } from "../core/VueLayer.js";
 
-var SCENE_NAMES = new Map();
-var INNER_DOMS = new Map();
-var CUR_SCENE = null;
+const SCENE_NAMES = new Map();
+const INNER_DOMS = new Map();
+let CUR_SCENE = null;
 
 export class Scene {
     constructor(props) {
@@ -20,6 +20,7 @@ export class Scene {
         this._wkid = props.wkid;
         this._eventName = props.eventName;
         this._preDataUrl = props.preDataUrl;
+        this._scenesUrl = props.scenesUrl;
         this._curScene = null;
         this._curProps = null;
         SCENE_NAMES.set(this._wkid, this._eventName); // register wkid and eventName
@@ -49,7 +50,7 @@ export class Scene {
         // clear before status
         if(CUR_SCENE && INNER_DOMS.get(CUR_SCENE)) {
             INNER_DOMS.get(CUR_SCENE).forEach((dom) => {
-                $(dom).hide();
+                dom.hide();
             });
         }
         this._curProps = props;
@@ -74,12 +75,12 @@ export class Scene {
         if (INNER_DOMS.has(this._wkid)) {
             INNER_DOMS.get(this._wkid).forEach((dom) => {
                 dom.initEvents();
-                $(dom).show();
+                dom.show();
             });
         } else {
             try {
                 let dom_cache = [];
-                tools.req(`${this._preDataUrl}\\${this._wkid}`).then((scene) => {
+                tools.req(`${this._scenesUrl}/${this._wkid}`).then((scene) => {
                     if (scene.hasOwnProperty("tableLayer")) {
                         for (let name in scene.tableLayer) {
                             if (scene.tableLayer.hasOwnProperty(name)) {

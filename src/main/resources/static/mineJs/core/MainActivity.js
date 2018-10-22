@@ -16,7 +16,8 @@ import { PARAMS_TABLE as ptable } from "../basic/ParamsTable.js";
             vuePanel: vueLayer,
             preDataUrl: ptable.constants.PRE_DATA_URL,
             container: ptable.constants.TABLEVIEW_ID,
-            recoverBtn: ptable.constants.RECOV_BTN
+            recoverBtn: ptable.constants.RECOV_BTN,
+            scenesUrl: ptable.constants.SCENE_DATA_URL
         });
     } catch (e) {
         tools.mutter(`outermost error msg: ${e}`, "fatal");

@@ -52,7 +52,7 @@
             "name": "温度",
             "title_class": "title_col",
             "height": 30,
-            "url": "http://localhost:3000/gauge",
+            "url": "/api/diagrams/gauge",
             "column": "col-md-3",
             "descrip": "第一列"
           },
@@ -61,7 +61,7 @@
               "name": "气压",
               "title_class": "title_col",
               "height": 30,
-              "url": "http://localhost:3000/gauge",
+              "url": "/api/diagrams/gauge",
               "column": "col-md-3",
               "descrip": "第二列"
             },
@@ -70,7 +70,7 @@
               "name": "湿度",
               "title_class": "title_col",
               "height": 30,
-              "url": "http://localhost:3000/liquidFill",
+              "url": "/api/diagrams/liquidFill",
               "column": "col-md-3",
               "descrip": "第三列"
             },
@@ -79,7 +79,7 @@
               "name": "风速",
               "title_class": "title_col",
               "height": 30,
-              "url": "http://localhost:3000/windRose",
+              "url": "/api/diagrams/windRose",
               "column": "col-md-3",
               "descrip": "第四列"
             }
@@ -109,7 +109,7 @@
             "title_class": "title_col",
 
             "height": 30,
-            "url": "http://localhost:3000/gauge",
+            "url": "/api/diagrams/gauge",
             "column": "col-md-3",
             "descrip": "第一列"
           },
@@ -119,7 +119,7 @@
               "title_class": "title_col",
 
               "height": 30,
-              "url": "http://localhost:3000/gauge",
+              "url": "/api/diagrams/gauge",
               "column": "col-md-3",
               "descrip": "第二列"
             },
@@ -129,7 +129,7 @@
               "title_class": "title_col",
 
               "height": 30,
-              "url": "http://localhost:3000/liquidFill",
+              "url": "/api/diagrams/liquidFill",
               "column": "col-md-3",
               "descrip": "第三列"
             },
@@ -139,7 +139,7 @@
               "title_class": "title_col",
               "width": 30,
               "height": 30,
-              "url": "http://localhost:3000/windRose",
+              "url": "/api/diagrams/windRose",
               "column": "col-md-3",
               "descrip": "第四列"
             }
@@ -177,7 +177,7 @@
             "name": "地磁数据",
             "title_class": "title_col",
             "height": 30,
-            "url": "http://localhost:3000/line_geo_all",
+            "url": "/api/diagrams/line_geo_all",
             "column": "col-md-6",
             "descrip": "第一列"
           },
@@ -186,7 +186,7 @@
               "name": "工作电压和实际电压",
               "title_class": "title_col",
               "height": 30,
-              "url": "http://localhost:3000/line_datazoom",
+              "url": "/api/diagrams/line_datazoom",
               "column": "col-md-6",
               "descrip": "第二列"
             }
@@ -214,7 +214,7 @@
             "name": "地磁X分量",
             "title_class": "title_col",
             "height": 30,
-            "url": "http://localhost:3000/line_geo",
+            "url": "/api/diagrams/line_geo",
             "column": "col-md-6",
             "descrip": "第一列"
           },
@@ -223,7 +223,7 @@
               "name": "地磁Y分量",
               "title_class": "title_col",
               "height": 30,
-              "url": "http://localhost:3000/line_geo",
+              "url": "/api/diagrams/line_geo",
               "column": "col-md-6",
               "descrip": "第二列"
             }
@@ -238,7 +238,7 @@
             "name": "地磁Z分量",
             "title_class": "title_col",
             "height": 30,
-            "url": "http://localhost:3000/line_geo",
+            "url": "/api/diagrams/line_geo",
             "column": "col-md-6",
             "descrip": "第一列"
           },
@@ -248,7 +248,7 @@
               "title_class": "title_col",
               "width": 30,
               "height": 30,
-              "url": "http://localhost:3000/heatmap",
+              "url": "/api/diagrams/heatmap",
               "column": "col-md-6",
               "descrip": "第二列"
             }

@@ -1,4 +1,4 @@
-package com.shou.polar.props;
+package com.shou.polar.pojo;
 
 import org.springframework.context.ApplicationEvent;
 

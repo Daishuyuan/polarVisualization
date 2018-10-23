@@ -1,7 +1,7 @@
 package com.shou.polar.controller;
 
 import com.shou.polar.component.ComponentsUtils;
-import com.shou.polar.props.UpdateEvent;
+import com.shou.polar.pojo.UpdateEvent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

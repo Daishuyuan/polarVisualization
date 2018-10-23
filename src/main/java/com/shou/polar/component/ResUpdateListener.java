@@ -1,7 +1,7 @@
 package com.shou.polar.component;
 
-import com.shou.polar.props.ResNameSpace;
-import com.shou.polar.props.UpdateEvent;
+import com.shou.polar.pojo.ResNameSpace;
+import com.shou.polar.pojo.UpdateEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -48,11 +48,14 @@ public class ResUpdateListener implements ApplicationListener<UpdateEvent> {
         }
     }
 
-    public static synchronized String waitAndGet() throws InterruptedException {
+    public static String waitAndGet() throws InterruptedException {
         LOCKER.acquire();
         List<String> cache = new ArrayList<>();
         while (!MSG_QUEUE.isEmpty()) {
-            cache.add(MSG_QUEUE.poll());
+            String content = MSG_QUEUE.poll();
+            if (!cache.contains(content)) {
+                cache.add(content);
+            }
         }
         return StringUtils.join(cache, SPLIT);
     }

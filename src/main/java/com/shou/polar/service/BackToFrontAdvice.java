@@ -1,8 +1,12 @@
 package com.shou.polar.service;
 
+import com.shou.polar.component.ComponentsUtils;
+import com.shou.polar.pojo.ResNameSpace;
+import com.shou.polar.pojo.UpdateEvent;
 import org.jboss.logging.Logger;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.propertyeditors.CustomNumberEditor;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +27,14 @@ public class BackToFrontAdvice {
 
     @ExceptionHandler(value = Exception.class)
     public void exception(Exception e, WebRequest request) {
+        ApplicationContext context = ComponentsUtils.getApplicationContext();
         String sessionId = request.getSessionId();
         if (!ERROR_POOL.containsKey(sessionId)) {
             ERROR_POOL.put(sessionId, new ArrayList<>());
         }
         ERROR_POOL.get(sessionId).add(e.getLocalizedMessage());
         logger.error(e.getMessage());
+        context.publishEvent(new UpdateEvent(this, ResNameSpace.ERROR.getName()));
     }
 
     @InitBinder
@@ -41,7 +47,11 @@ public class BackToFrontAdvice {
         List<String> cache = new ArrayList<>();
         if (ERROR_POOL.containsKey(sessionId)) {
             List<String> errors = ERROR_POOL.get(sessionId);
-            cache.addAll(errors);
+            for (String error : errors) {
+                if (!cache.contains(error)) {
+                    cache.add(error);
+                }
+            }
             errors.clear();
         }
         return cache;

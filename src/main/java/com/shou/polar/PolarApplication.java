@@ -29,6 +29,11 @@ public class PolarApplication {
         return "cutScene";
     }
 
+    @RequestMapping("/errors")
+    public String errorPage() {
+        return "error";
+    }
+
     public static void main(String[] args) {
         // run our application now
         SpringApplication.run(PolarApplication.class, args);

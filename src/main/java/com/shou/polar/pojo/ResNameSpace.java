@@ -1,7 +1,8 @@
-package com.shou.polar.props;
+package com.shou.polar.pojo;
 
 public enum ResNameSpace {
-    PRESS("press");
+    PRESS("press"),
+    ERROR("error");
     private final String name;
     ResNameSpace(final String name) {
         this.name = name;

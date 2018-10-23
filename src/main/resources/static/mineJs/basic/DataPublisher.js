@@ -1,4 +1,4 @@
-import { Tools as tools } from "./BasicTools.js"
+import {Tools as tools} from "./BasicTools.js"
 
 export var TYPE_ECHARTS = "echarts";
 export var TYPE_CUSTOM = "custom";
@@ -9,7 +9,7 @@ export class DataPublisher {
     constructor() {
         // update entity by type
         this._updateData = (entity, data) => {
-            switch(entity.type) {
+            switch (entity.type) {
                 case TYPE_ECHARTS:
                     entity.target.setOption(data, true);
                     break;
@@ -37,7 +37,7 @@ export class DataPublisher {
                 }).done((data) => {
                     SHARE_RES_MAP.set(entity.url, data);
                     this._updateData(entity, data);
-                });  
+                });
             }
         };
 
@@ -74,7 +74,7 @@ export class DataPublisher {
                 }
             });
         };
-        
+
         // Check and pull data trigger;
         if (!!window.EventSource) {
             let source = new EventSource('/push');
@@ -82,18 +82,22 @@ export class DataPublisher {
                 let props = e.data.split(",");
                 if (props.length > 0) {
                     // check data updating in props diagram
-                    for (let i=0; i < props.length; ++i) {
-                        if (props[i]) {
-                            let it = SHARE_RES_MAP.keys(), e, name = props[i];
-                            while(!(e = it.next()).done) {
-                                if ((e.value + "").indexOf(name) >= 0) {
-                                    SHARE_RES_MAP.delete(e.value);
-                                }
+                    for (let i = 0; i < props.length; ++i) {
+                        if ("error" === props[i]) {
+                            $.ajax("/api/errors").done((data) => {
+                                layer.msg(data);
+                            });
+                            continue;
+                        }
+                        let it = SHARE_RES_MAP.keys(), e, name = props[i];
+                        while (!(e = it.next()).done) {
+                            if ((e.value + "").indexOf(name) >= 0) {
+                                SHARE_RES_MAP.delete(e.value);
                             }
                         }
                     }
                     // check data validation in subscribers
-                    for (let i=0; i < SUBSCRIBERS.length; ++i) {
+                    for (let i = 0; i < SUBSCRIBERS.length; ++i) {
                         this._reqRes(SUBSCRIBERS[i]);
                     }
                 }
@@ -105,7 +109,7 @@ export class DataPublisher {
 
     // subscrib entity to map(entity should be configured by url, target and type)
     subscrib(entity) {
-        if(entity.url && entity.target && entity.type) {
+        if (entity.url && entity.target && entity.type) {
             this._materialize(entity);
             this._reqRes(entity);
             SUBSCRIBERS.push(entity);

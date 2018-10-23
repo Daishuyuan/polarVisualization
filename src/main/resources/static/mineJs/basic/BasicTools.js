@@ -27,6 +27,15 @@ export class BoxModel {
 }
 
 export var Tools = (() => {
+    const wxy = [
+        `<--  Macho Tears  -->`, `!!;:;!;;;'\`:!!|||!||!||`, `\`'::''''%##&!:::::::;!!`,
+        `\`\`\`';:'':%@%''::::;:::;`, `::::::;%@&&&&$!::;;:'';`, `:::'''!&&&&&&&%;''''::;`,
+        `;;:;!;%@&&&&&&@$!!|;::;`, `|!;;:|&&@&&$$&@&$%&$%||`, `|%!|@@$%&&&$$&@#$;';!:;`,
+        `'''|@&||&&&&$&@#@%|!;;!`, `::'|&;:$@&&&$$&&@|::::;`, `:':!%$&###@@#&!:;;::':!`,
+        `\`'::::%######$:.\`'';!;;`, `;;:::%##@@###@$%!!|$&$|`, `;;!!;&#&!;%##&|!!!!!!!;`,
+        `;!!;;$#$;;|&#&|;;;!|||!`, `::;;!$#%!!;$#&|;:::::;;`,
+        `\`''\`'%#|':'!@#$'.\`\`\`\`\`:`, `!::::%@|::''!@&|;;;'';;`
+    ];
     const idGenerator = () => {
         let id = 0;
 
@@ -34,13 +43,28 @@ export var Tools = (() => {
             while (id += 1) yield id;
         }
         return __inner__();
-    }
+    };
     const ider = idGenerator();
     const guid = () => {
         let S4 = () => (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
         return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
-    }
-    const intValue = (num, MAX_VALUE, MIN_VALUE) => (num > MAX_VALUE || num < MIN_VALUE)? num &= 0xFFFFFFFF: num;
+    };
+    const intValue = (num, MAX_VALUE, MIN_VALUE) => Math.max(Math.min(num, MAX_VALUE), MIN_VALUE);
+    const _unique = (array) => {
+        let temp = {}, r = [], len = array.length, val, type;
+        for (let i = 0; i < len; i++) {
+            val = array[i];
+            type = typeof val;
+            if (!temp[val]) {
+                temp[val] = [type];
+                r.push(val);
+            } else if (temp[val].indexOf(type) < 0) {
+                temp[val].push(type);
+                r.push(val);
+            }
+        }
+        return r;
+    };
     const _watch = (name, obj) => {
         if (name in window.watcher) {
             inner_lock = true;
@@ -60,7 +84,7 @@ export var Tools = (() => {
                 });
             })(obj);
         }
-    }
+    };
     const log_error = console.error;
     const log_warn = console.warn;
     const _mutter = (msg, level) => {
@@ -82,23 +106,26 @@ export var Tools = (() => {
                 console.log(`unknown msg level:${level}`);
                 break;
         }
-    }
-    window.watcher = new Object();
-    var inner_lock = false;
-    var FULL_FIELD_EVENT_MAP = new Map();
-    var LISTENERS_STATS = [];
+    };
+    window.watcher = {};
+    let inner_lock = false;
+    let FULL_FIELD_EVENT_MAP = new Map();
+    let LISTENERS_STATS = [];
     _watch("paramsTable", ptable);
     _watch("listenersNum", LISTENERS_STATS);
     console.error = (str) => _mutter(str, "error");
     console.warn = (str) => _mutter(str, "warn"); 
 
     return {
+        unique: (array) => {
+          return _unique(array);
+        },
         // prevent memory leak because of recycle listener definition
         safe_on: (obj, event, func) => {
             let i = 0, len = LISTENERS_STATS.length;
             for (; i < len; ++i) {
                 let elem = LISTENERS_STATS[i];
-                if (elem.obj == obj && elem.event == event) {
+                if (obj === elem.obj && elem.event === event) {
                     _mutter(`common obj and event can't be defined again.`, "warn");
                     break;
                 }
@@ -116,7 +143,7 @@ export var Tools = (() => {
         },
         // set event in full field
         setEventInApp: (name, func) => {
-            if (func && typeof(func) == "function") {
+            if (func && typeof(func) === "function") {
                 let wkid = name.toUpperCase();
                 if (!ptable.events[wkid]) {
                     ptable.events[wkid] = name;
@@ -137,8 +164,8 @@ export var Tools = (() => {
             return id.startsWith("#")? id.slice(id.lastIndexOf("#")): "#" + id;
         },
         hashCode: (strKey, max = 0x7fffffff, min = -0x80000000) => {
-            var hash = 0;
-            if (!(strKey == null || strKey.value == "")) {
+            let hash = 0;
+            if (!(strKey === undefined || strKey === null || strKey.value === "")) {
                 for (var i = 0; i < strKey.length; i++) {
                     hash = hash * 31 + strKey.charCodeAt(i);
                     hash = intValue(hash, max, min);
@@ -150,7 +177,7 @@ export var Tools = (() => {
             _watch(name, obj);
         },
         sleep: (milliseconds) => {
-            var deferred = $.Deferred();
+            let deferred = $.Deferred();
             setTimeout(function () {
                 deferred.resolve();
             }, milliseconds);
@@ -164,14 +191,14 @@ export var Tools = (() => {
             });
         },
         calRunTime: (callback) => {
-            var curTime = Date.now();
+            let curTime = Date.now();
             callback();
             return Date.now() - curTime;
         },
         sGuid: () => {
             return 'xxxxxx-xx-4x-yx-xxxxxxxxxx'.replace(/[xy]/g, (c) => {
-                var r = Math.random() * 16 | 0,
-                    v = c == 'x' ? r : (r & 0x3 | 0x8);
+                let r = Math.random() * 16 | 0,
+                    v = c === 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
             });
         },
@@ -179,15 +206,6 @@ export var Tools = (() => {
             return guid();
         },
         honour: () => {
-            var wxy = [
-                `<--  Macho Tears  -->`, `!!;:;!;;;'\`:!!|||!||!||`, `\`'::''''%##&!:::::::;!!`,
-                `\`\`\`';:'':%@%''::::;:::;`, `::::::;%@&&&&$!::;;:'';`, `:::'''!&&&&&&&%;''''::;`,
-                `;;:;!;%@&&&&&&@$!!|;::;`, `|!;;:|&&@&&$$&@&$%&$%||`, `|%!|@@$%&&&$$&@#$;';!:;`,
-                `'''|@&||&&&&$&@#@%|!;;!`, `::'|&;:$@&&&$$&&@|::::;`, `:':!%$&###@@#&!:;;::':!`,
-                `\`'::::%######$:.\`'';!;;`, `;;:::%##@@###@$%!!|$&$|`, `;;!!;&#&!;%##&|!!!!!!!;`,
-                `;!!;;$#$;;|&#&|;;;!|||!`, `::;;!$#%!!;$#&|;:::::;;`,
-                `\`''\`'%#|':'!@#$'.\`\`\`\`\`:`, `!::::%@|::''!@&|;;;'';;`
-            ];
             console.log(`%c ${wxy.join('\n')}`, "color:#008B45;text-shadow:5px 5px 2px #fff, 5px 5px 2px #373E40, 5px 5px 5px #A2B4BA, 5px 5px 10px #82ABBA;font-weight:bolder;");
         },
         mutter: (msg, level) => {
@@ -196,7 +214,7 @@ export var Tools = (() => {
         floatBox: {
             hitTest: (item, items) => {
                 for (let i=0; i < items.length; ++i) {
-                    if (item != items[i] && item.hitTest(items[i])) {
+                    if (item !== items[i] && item.hitTest(items[i])) {
                         return true;
                     }
                 }

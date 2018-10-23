@@ -6,7 +6,7 @@ const SHARE_RES_MAP = new Map();
 const SUBSCRIBERS = [];
 
 export class DataPublisher {
-    constructor(propsUrl) {
+    constructor() {
         // update entity by type
         this._updateData = (entity, data) => {
             switch(entity.type) {
@@ -77,13 +77,19 @@ export class DataPublisher {
         
         // check and pull data trigger
         if (!!window.EventSource) {
-            let source = new EventSource('dataStatus');
-            source.addEventListener('message', function (e) {
-                let props = e.data;
+            let source = new EventSource('/push');
+            source.onopen = (e) => {};
+            source.onerror = (e) => {
+                if (e.target.readyState == EventSource.CLOSED) {
+                    tools.mutter("EventSource is closed.", "warn");
+                }
+            }
+            source.onmessage = (e) => {
+                let props = e.data.split(",");
                 // check data updating in props diagram
-                for (let name in props) {
-                    if (props[name]) {
-                        let it = SHARE_RES_MAP.keys(), e;
+                for (let i=0; i < props.length; ++i) {
+                    if (props[i]) {
+                        let it = SHARE_RES_MAP.keys(), e, name = props[i];
                         while(!(e = it.next()).done) {
                             if ((e.value + "").indexOf(name) >= 0) {
                                 SHARE_RES_MAP.delete(e.value);
@@ -95,19 +101,7 @@ export class DataPublisher {
                 for (let i=0; i < SUBSCRIBERS.length; ++i) {
                     this._reqRes(SUBSCRIBERS[i]);
                 }
-            });
-
-            source.addEventListener('open', function (e) {
-                tools.mutter("begin to listen the status of data", "info");
-            }, false);
-            
-            source.addEventListener('error', function (e) {
-                if (e.readyState == EventSource.CLOSED) {
-                    tools.mutter("listener of data status is closed.", "info");
-                } else {
-                    tools.mutter(`current state: ${e.readyState}`, "info");
-                }
-            }, false);
+            };
         } else {
             tools.mutter("your browser don't support EventSource", "error");
         }

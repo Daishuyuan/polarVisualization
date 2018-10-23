@@ -15,7 +15,6 @@ import java.util.List;
 @RequestMapping("/api")
 public class ApiController {
     private final BackToFrontAdvice advice;
-    private final Gson gson;
     private static final String SPLIT = "/";
     private static final String SUFFIX = ".json";
     private static final String DEFAULT_FILE_TYPE = "UTF-8";
@@ -26,7 +25,6 @@ public class ApiController {
     @Autowired
     public ApiController(BackToFrontAdvice advice) {
         this.advice = advice;
-        gson = new Gson();
     }
 
     private String readFileContentByPath(String path) throws IOException {

@@ -1,6 +1,6 @@
 package com.shou.polar;
 
-import com.shou.polar.service.UpdateEvent;
+import com.shou.polar.component.ResUpdateListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,21 +9,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Map;
-
 @Controller
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 public class PolarApplication {
-    private final UpdateEvent updateEvent;
+    private static final String PUSH_HEAD = "data:";
+    private static final String PUSH_TAIL = "\n\n";
 
-    @Autowired
-    public PolarApplication(UpdateEvent updateEvent) {
-        this.updateEvent = updateEvent;
-    }
-
-    @RequestMapping(value = "/dataStatus", produces = "text/event-stream")
-    public @ResponseBody Map<String, Boolean> push() {
-        return updateEvent.waitAndGet();
+    @RequestMapping(value = "/push", produces = "text/event-stream")
+    public @ResponseBody String push() throws InterruptedException {
+        return PUSH_HEAD + ResUpdateListener.waitAndGet() + PUSH_TAIL;
     }
 
     @RequestMapping("/")

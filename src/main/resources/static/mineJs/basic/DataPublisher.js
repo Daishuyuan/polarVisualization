@@ -4,6 +4,7 @@ export var TYPE_ECHARTS = "echarts";
 export var TYPE_CUSTOM = "custom";
 const SHARE_RES_MAP = new Map();
 const SUBSCRIBERS = [];
+const USE_ERROR_LOG = true;
 
 export class DataPublisher {
     constructor() {
@@ -83,7 +84,7 @@ export class DataPublisher {
                 if (props.length > 0) {
                     // check data updating in props diagram
                     for (let i = 0; i < props.length; ++i) {
-                        if ("error" === props[i]) {
+                        if (USE_ERROR_LOG && "error" === props[i]) {
                             $.ajax("/api/errors").done((data) => {
                                 data.length = Math.min(data.length, 5);
                                 data = ['出错: '].concat(data).join('</br>');
@@ -91,7 +92,6 @@ export class DataPublisher {
                                     icon: 2
                                 });
                             });
-                            continue;
                         }
                         let it = SHARE_RES_MAP.keys(), e, name = props[i];
                         while (!(e = it.next()).done) {

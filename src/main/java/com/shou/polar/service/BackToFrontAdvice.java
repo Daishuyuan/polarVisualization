@@ -27,12 +27,12 @@ public class BackToFrontAdvice {
 
     @ExceptionHandler(value = Exception.class)
     public void exception(Exception e, WebRequest request) {
-        ApplicationContext context = ComponentsUtils.getApplicationContext();
         String sessionId = request.getSessionId();
+        ApplicationContext context = ComponentsUtils.getApplicationContext();
         if (!ERROR_POOL.containsKey(sessionId)) {
             ERROR_POOL.put(sessionId, new ArrayList<>());
         }
-        ERROR_POOL.get(sessionId).add(e.getLocalizedMessage());
+        ERROR_POOL.get(sessionId).add(e.getMessage());
         logger.error(e.getMessage());
         context.publishEvent(new UpdateEvent(this, ResNameSpace.ERROR.getName()));
     }

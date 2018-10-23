@@ -85,7 +85,11 @@ export class DataPublisher {
                     for (let i = 0; i < props.length; ++i) {
                         if ("error" === props[i]) {
                             $.ajax("/api/errors").done((data) => {
-                                layer.msg(data);
+                                data.length = Math.min(data.length, 5);
+                                data = ['出错: '].concat(data).join('</br>');
+                                layer.alert(data, {
+                                    icon: 2
+                                });
                             });
                             continue;
                         }

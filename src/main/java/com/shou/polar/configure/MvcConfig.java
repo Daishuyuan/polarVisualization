@@ -1,12 +1,18 @@
 package com.shou.polar.configure;
 
+import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.http.HttpInputMessage;
+import org.springframework.http.HttpOutputMessage;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.*;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.*;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
 
@@ -32,12 +38,18 @@ public class MvcConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public HttpMessageConverter<String> responseBodyConverter(){
+    public HttpMessageConverter<String> charsetConverter(){
         return new StringHttpMessageConverter(Charset.forName(CHARSET_UTF_8)); // 设置传给前端的编码格式
+    }
+
+    @Bean
+    public HttpMessageConverter<?> gsonConverter(){
+        return new GsonHttpMessageConverter();
     }
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        converters.add(responseBodyConverter());
+        converters.add(charsetConverter());
+        converters.add(gsonConverter());
     }
 }

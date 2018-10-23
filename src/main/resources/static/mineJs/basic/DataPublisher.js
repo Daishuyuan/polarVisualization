@@ -21,7 +21,7 @@ export class DataPublisher {
                     break;
             }
             entity.isInited = true;
-        }
+        };
 
         // pull resouce from remote or local
         this._reqRes = (entity) => {
@@ -39,10 +39,10 @@ export class DataPublisher {
                     this._updateData(entity, data);
                 });  
             }
-        }
+        };
 
-        // innerify entity
-        this._innerify = (entity) => {
+        // materialize entity
+        this._materialize = (entity) => {
             let _url = entity.url,
                 _type = entity.type,
                 _target = entity.target;
@@ -51,7 +51,7 @@ export class DataPublisher {
                     return _url;
                 },
                 set(url) {
-                    if (url && url != _url) {
+                    if (url && url !== _url) {
                         _url = url;
                         this._reqRes(entity);
                     }
@@ -62,7 +62,7 @@ export class DataPublisher {
                     return _type;
                 },
                 set(type) {
-                    if (type && type != _type) {
+                    if (type && type !== _type) {
                         _type = type;
                         this._reqRes(entity);
                     }
@@ -73,33 +73,29 @@ export class DataPublisher {
                     return _target;
                 }
             });
-        }
+        };
         
-        // check and pull data trigger
+        // Check and pull data trigger;
         if (!!window.EventSource) {
             let source = new EventSource('/push');
-            source.onopen = (e) => {};
-            source.onerror = (e) => {
-                if (e.target.readyState == EventSource.CLOSED) {
-                    tools.mutter("EventSource is closed.", "warn");
-                }
-            }
             source.onmessage = (e) => {
                 let props = e.data.split(",");
-                // check data updating in props diagram
-                for (let i=0; i < props.length; ++i) {
-                    if (props[i]) {
-                        let it = SHARE_RES_MAP.keys(), e, name = props[i];
-                        while(!(e = it.next()).done) {
-                            if ((e.value + "").indexOf(name) >= 0) {
-                                SHARE_RES_MAP.delete(e.value);
+                if (props.length > 0) {
+                    // check data updating in props diagram
+                    for (let i=0; i < props.length; ++i) {
+                        if (props[i]) {
+                            let it = SHARE_RES_MAP.keys(), e, name = props[i];
+                            while(!(e = it.next()).done) {
+                                if ((e.value + "").indexOf(name) >= 0) {
+                                    SHARE_RES_MAP.delete(e.value);
+                                }
                             }
                         }
                     }
-                }
-                // check data validation in subscribers
-                for (let i=0; i < SUBSCRIBERS.length; ++i) {
-                    this._reqRes(SUBSCRIBERS[i]);
+                    // check data validation in subscribers
+                    for (let i=0; i < SUBSCRIBERS.length; ++i) {
+                        this._reqRes(SUBSCRIBERS[i]);
+                    }
                 }
             };
         } else {
@@ -110,7 +106,7 @@ export class DataPublisher {
     // subscrib entity to map(entity should be configured by url, target and type)
     subscrib(entity) {
         if(entity.url && entity.target && entity.type) {
-            this._innerify(entity);
+            this._materialize(entity);
             this._reqRes(entity);
             SUBSCRIBERS.push(entity);
         } else {

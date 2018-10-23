@@ -33,7 +33,7 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Bean
     public HttpMessageConverter<String> responseBodyConverter(){
-        return new StringHttpMessageConverter(Charset.forName(CHARSET_UTF_8));
+        return new StringHttpMessageConverter(Charset.forName(CHARSET_UTF_8)); // 设置传给前端的编码格式
     }
 
     @Override

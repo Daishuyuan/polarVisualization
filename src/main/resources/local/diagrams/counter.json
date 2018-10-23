@@ -1,0 +1,12 @@
+{
+  "title": {
+    "text": 40000,
+    "x": "center",
+    "y": "center",
+    "textStyle": {
+      "color": "#98a0c4",
+      "fontWeight": "bolder",
+      "fontSize": 45
+    }
+  }
+}

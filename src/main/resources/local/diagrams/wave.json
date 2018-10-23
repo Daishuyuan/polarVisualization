@@ -1,0 +1,43 @@
+{
+  "tooltip": {
+    "trigger": "axis",
+    "formatter": "{a}:{c}m"
+  },
+  "grid": {
+    "left": "15%",
+    "right": "20%",
+    "top": "18%",
+    "bottom": "15%"
+  },
+  "calculable": true,
+  "xAxis": [{
+    "name": "时间",
+    "type": "category",
+    "axisLine": {
+      "lineStyle": {
+        "color": "#fff"
+      }
+    },
+    "boundaryGap": false,
+    "data": ["08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00"]
+  }],
+  "yAxis": [{
+    "name": "波长/m",
+    "axisLine": {
+      "lineStyle": {
+        "color": "#fff"
+      }
+    },
+    "type": "value"
+  }],
+  "series": [{
+    "name": "波长",
+    "type": "line",
+    "color": "#9DC4FA",
+    "lineStyle": {
+      "color": "#3B9DFC"
+    },
+    "smooth": true,
+    "data": [67, 30, 70, 40, 50, 25, 30, 25, 34, 45, 51, 43, 38, 38, 42, 34, 48, 52, 67, 81, 50, 56, 52, 51, 49, 67]
+  }]
+}

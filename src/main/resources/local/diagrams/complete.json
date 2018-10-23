@@ -1,0 +1,88 @@
+{
+  "title": {
+    "x": "50%",
+    "y": "45%",
+    "textAlign": "center",
+    "subtextStyle": {
+      "fontWeight": "bold",
+      "fontSize": 32,
+      "color": "#3ea1ff"
+    }
+  },
+  "series": [{
+    "name": " ",
+    "type": "pie",
+    "radius": ["50%", "70%"],
+    "avoidLabelOverlap": false,
+    "startAngle": 0,
+    "endAngle": 360,
+    "color": ["#AAABAD"],
+    "hoverAnimation": false,
+    "legendHoverLink": false,
+    "label": {
+      "normal": {
+        "show": false,
+        "position": "center"
+      },
+      "emphasis": {
+        "show": true,
+        "textStyle": {
+          "fontSize": "30",
+          "fontWeight": "bold"
+        }
+      }
+    },
+    "labelLine": {
+      "normal": {
+        "show": false
+      }
+    },
+    "data": [{
+      "value": 75,
+      "name": "1"
+    }, {
+      "value": 25,
+      "name": "2"
+    }]
+  }, {
+    "name": "",
+    "type": "pie",
+    "radius": ["50%", "70%"],
+    "avoidLabelOverlap": false,
+    "startAngle": 90,
+    "endAngle": 360,
+    "color": ["#42B8D6", "transparent"],
+    "hoverAnimation": false,
+    "legendHoverLink": false,
+    "itemStyle": {
+      "normal": {
+        "borderColor": "transparent",
+        "borderWidth": "20"
+      },
+      "emphasis": {
+        "borderColor": "transparent",
+        "borderWidth": "20"
+      }
+    },
+    "z": 10,
+    "label": {
+      "normal": {
+        "show": false,
+        "position": "center"
+      },
+      "emphasis": {
+        "show": true,
+        "textStyle": {
+          "fontSize": "30",
+          "fontWeight": "bold"
+        }
+      }
+    },
+    "labelLine": {
+      "normal": {
+        "show": false
+      }
+    },
+    "data": [{}, {}]
+  }]
+}

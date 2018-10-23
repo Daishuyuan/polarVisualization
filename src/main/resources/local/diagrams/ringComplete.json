@@ -1,0 +1,155 @@
+{
+  "color": ["#85b6b2", "#6d4f8d", "#cd5e7e", "#e38980", "#f7db88"],
+  "tooltip": {
+    "formatter": "{a} <br/>{b} : {c} ({d}%)"
+  },
+  "series": [{
+    "name": "gauge.json",
+    "type": "pie",
+    "clockWise": false,
+    "radius": [35, 45],
+    "itemStyle": {
+      "normal": {
+        "label": {
+          "show": false
+        },
+        "labelLine": {
+          "show": false
+        }
+      }
+    },
+    "hoverAnimation": false,
+    "data": [{
+      "value": 300,
+      "name": "01"
+    }, {
+      "value": 50,
+      "name": "invisible",
+      "itemStyle": {
+        "normal": {
+          "color": "rgba(0,0,0,0)",
+          "label": {
+            "show": false
+          },
+          "labelLine": {
+            "show": false
+          }
+        },
+        "emphasis": {
+          "color": "rgba(0,0,0,0)"
+        }
+      }
+    }]
+  }, {
+    "name": "index.html",
+    "type": "pie",
+    "clockWise": false,
+    "radius": [25, 35],
+    "itemStyle": {
+      "normal": {
+        "label": {
+          "show": false
+        },
+        "labelLine": {
+          "show": false
+        }
+      }
+    },
+    "hoverAnimation": false,
+    "data": [{
+      "value": 150,
+      "name": "02"
+    }, {
+      "value": 60,
+      "name": "invisible",
+      "itemStyle": {
+        "normal": {
+          "color": "rgba(0,0,0,0)",
+          "label": {
+            "show": false
+          },
+          "labelLine": {
+            "show": false
+          }
+        },
+        "emphasis": {
+          "color": "rgba(0,0,0,0)"
+        }
+      }
+    }]
+  }, {
+    "name": "polar.jpg",
+    "type": "pie",
+    "clockWise": false,
+    "hoverAnimation": false,
+    "radius": [15, 25],
+    "itemStyle": {
+      "normal": {
+        "label": {
+          "show": false
+        },
+        "labelLine": {
+          "show": false
+        }
+      }
+    },
+    "data": [{
+      "value": 80,
+      "name": "03"
+    }, {
+      "value": 50,
+      "name": "invisible",
+      "itemStyle": {
+        "normal": {
+          "color": "rgba(0,0,0,0)",
+          "label": {
+            "show": false
+          },
+          "labelLine": {
+            "show": false
+          }
+        },
+        "emphasis": {
+          "color": "rgba(0,0,0,0)"
+        }
+      }
+    }]
+  }, {
+    "name": "mine.js",
+    "type": "pie",
+    "clockWise": false,
+    "hoverAnimation": false,
+    "radius": [5, 15],
+    "itemStyle": {
+      "normal": {
+        "label": {
+          "show": false
+        },
+        "labelLine": {
+          "show": false
+        }
+      }
+    },
+    "data": [{
+      "value": 45,
+      "name": "04"
+    }, {
+      "value": 30,
+      "name": "invisible",
+      "itemStyle": {
+        "normal": {
+          "color": "rgba(0,0,0,0)",
+          "label": {
+            "show": false
+          },
+          "labelLine": {
+            "show": false
+          }
+        },
+        "emphasis": {
+          "color": "rgba(0,0,0,0)"
+        }
+      }
+    }]
+  }]
+}

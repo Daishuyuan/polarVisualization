@@ -1,0 +1,35 @@
+{
+  "tooltip": {},
+  "radar": {
+    "name": {
+      "textStyle": {
+        "color": "#fff"
+      }
+    },
+    "nameGap": 1,
+    "indicator": [{
+      "name": "温度",
+      "max": 40
+    }, {
+      "name": "气压",
+      "max": 3
+    }, {
+      "name": "湿度",
+      "max": 100
+    }, {
+      "name": "CO2",
+      "max": 1200
+    }]
+  },
+  "series": [{
+    "name": "预算 vs 开销（Budget vs spending）",
+    "type": "radar",
+    "data": [{
+      "value": [20, 1.5, 70, 1000],
+      "name": "预警值"
+    }, {
+      "value": [5, 0.8, 20, 700],
+      "name": "实际值"
+    }]
+  }]
+}

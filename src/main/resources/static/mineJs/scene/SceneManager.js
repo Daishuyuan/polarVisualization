@@ -1,10 +1,7 @@
-import { GlobalScene } from "./GlobalScene.js";
-import { AntarcticaScene } from "./AntarcticaScene.js";
-import { ArcticScene } from "./ArcticScene.js"
-import { LidarScene } from "./LidarScene.js"
 import { TableFactory } from "../diagram/TableFactory.js";
 import { Tools as tools } from "../basic/BasicTools.js";
 import { PARAMS_TABLE as ptable} from "../basic/ParamsTable.js";
+import { Scene } from "./Scene.js";
 
 /**
  * add 3d model of ships into our global map
@@ -127,15 +124,14 @@ export var SceneManager = () => {
     const __init_scenes_ = (props) => {
         let scenes = [];
         let register = (SceneFactory) => {
-            props.wkid = SceneFactory.name;
-            scenes.push(new SceneFactory(props));
+            if (Scene.isPrototypeOf(SceneFactory)) {
+                props.wkid = SceneFactory.name;
+                scenes.push(new SceneFactory(props));
+            } else {
+                tools.mutter(`${SceneFactory.name} is not a subclass of Scene`, "error");
+            }
         };
-        [
-            GlobalScene,
-            LidarScene,
-            AntarcticaScene,
-            ArcticScene
-        ].forEach((Factory) => {
+        props.scenes.forEach((Factory) => {
             register(Factory);
         });
         // load scene

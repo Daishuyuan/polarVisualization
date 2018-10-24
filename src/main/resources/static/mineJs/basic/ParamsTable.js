@@ -1,3 +1,8 @@
+import { GlobalScene } from "../scene/GlobalScene.js";
+import { AntarcticaScene } from "../scene/AntarcticaScene.js";
+import { ArcticScene } from "../scene/ArcticScene.js"
+import { LidarScene } from "../scene/LidarScene.js"
+
 /**
  * used to increase the speed of searching
  *
@@ -14,7 +19,8 @@ export var PARAMS_TABLE = {
         "PRE_DATA_URL": "", // boot url
         "SCENE_DATA_URL": "/api/scenes", // link scene data url
         "TABLE_DEBUG": false, // table debug model switch
-        "USE_ERROR_LOG": false // notice error log switch
+        "USE_ERROR_LOG": false, // notice error log switch
+        "SCENES_LIST": [ GlobalScene, LidarScene, AntarcticaScene, ArcticScene] // current scenes list
     },
     events: {
         "SHIP_LOAD_EVENT": "ship_load_event", // ship zoom in invigorating event

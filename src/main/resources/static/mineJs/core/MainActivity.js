@@ -12,7 +12,9 @@ import { DataPublisher } from "../basic/DataPublisher.js";
     tools.honour();
     try {
         let vueLayer = new VueLayer(ptable.constants.MASK_HTML_PATH, ptable.constants.MAIN_APP_ID);
-        let publisher = new DataPublisher();
+        let publisher = new DataPublisher({
+            use_error_log: ptable.constants.USE_ERROR_LOG
+        });
         let manager = SceneManager();
         manager.init({
             vuePanel: vueLayer,

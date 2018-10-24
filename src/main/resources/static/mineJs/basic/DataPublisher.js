@@ -27,13 +27,6 @@ const SHARE_RES_MAP = new Map();
  * @type {Array}
  */
 const SUBSCRIBERS = [];
-/**
- * true: begin to notice backend error or exceptions
- * false: don't generate information from backend
- *
- * @type {boolean} default true
- */
-const USE_ERROR_LOG = true;
 
 /**
  * used to publish data and pull data from server
@@ -41,7 +34,7 @@ const USE_ERROR_LOG = true;
  * @author dsy zxj 2018/10/23
  */
 export class DataPublisher {
-    constructor() {
+    constructor(params) {
         // update entity by type
         this._updateData = (entity, data) => {
             switch (entity.type) {
@@ -121,7 +114,7 @@ export class DataPublisher {
                 if (props.length > 0) {
                     // check data updating in props diagram
                     for (let i = 0; i < props.length; ++i) {
-                        if (USE_ERROR_LOG && "error" === props[i]) {
+                        if (!params.use_error_log && "error" === props[i]) {
                             $.ajax("/api/errors").done((data) => {
                                 data.length = Math.min(data.length, 5);
                                 data = ['出错: '].concat(data).join('</br>');

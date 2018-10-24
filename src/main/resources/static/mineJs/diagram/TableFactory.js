@@ -40,7 +40,9 @@ export class TableFactory {
             switch (node.type) {
                 case "title":
                     let jqId = node.domId, content = $(jqId).html();
+                    delete node.name;
                     Object.defineProperty(node, "name", {
+                        configurable: true,
                         get() {
                             return content;
                         },

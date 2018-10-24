@@ -48,6 +48,7 @@ export class DataPublisher {
                 _type = entity.type,
                 _target = entity.target;
             Object.defineProperty(entity, "url", {
+                configurable: true,
                 get() {
                     return _url;
                 },
@@ -59,6 +60,7 @@ export class DataPublisher {
                 }
             });
             Object.defineProperty(entity, "type", {
+                configurable: true,
                 get() {
                     return _type;
                 },
@@ -70,6 +72,7 @@ export class DataPublisher {
                 }
             });
             Object.defineProperty(entity, "target", {
+                configurable: true,
                 get() {
                     return _target;
                 }

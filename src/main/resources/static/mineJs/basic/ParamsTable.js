@@ -7,12 +7,12 @@ const SEARCH_MAP = new Map();
 
 export var PARAMS_TABLE = {
     constants: {
-        MAIN_APP_ID: "PolarApp",
-        TABLEVIEW_ID: "threeJsView",
-        MASK_HTML_PATH: "/cutScene",
-        RECOV_BTN: "homeTitle",
-        PRE_DATA_URL: "",
-        SCENE_DATA_URL: "/api/scenes"
+        "MAIN_APP_ID": "PolarApp",
+        "TABLE_VIEW_ID": "threeJsView",
+        "MASK_HTML_PATH": "/cutScene",
+        "RECOVER_BTN": "homeTitle",
+        "PRE_DATA_URL": "",
+        "SCENE_DATA_URL": "/api/scenes"
     },
     events: {
         "SHIP_LOAD_EVENT": "ship_load_event",

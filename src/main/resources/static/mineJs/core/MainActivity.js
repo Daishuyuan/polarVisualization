@@ -17,8 +17,8 @@ import { DataPublisher } from "../basic/DataPublisher.js";
         manager.init({
             vuePanel: vueLayer,
             preDataUrl: ptable.constants.PRE_DATA_URL,
-            container: ptable.constants.TABLEVIEW_ID,
-            recoverBtn: ptable.constants.RECOV_BTN,
+            container: ptable.constants.TABLE_VIEW_ID,
+            recoverBtn: ptable.constants.RECOVER_BTN,
             scenesUrl: ptable.constants.SCENE_DATA_URL,
             publisher: publisher
         });

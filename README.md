@@ -11,18 +11,18 @@
 ## Architectures
 - 前端架构(resources/static/mineJs)
 1. basic 基础库
-- BasicTools 基本工具集
-- DataPublisher 数据更新和推送模块
-- ParamsTable 参数表 
+    1. BasicTools 基本工具集
+    2. DataPublisher 数据更新和推送模块
+    3. ParamsTable 参数表 
 2. core 核心库
-- MainActivity Js程序入口
-- VueLayer 基于vue的前端控制层
+    1. MainActivity Js程序入口
+    2. VueLayer 基于vue的前端控制层
 3. diagram 图表库
-- TableFactory 图表构建工厂模块
+    1. TableFactory 图表构建工厂模块
 4. scene 场景库
-- Scene 所有场景的父类，负责一般性的场景操作
-- XXXScene 继承自Scene，实现特殊的场景功能
-- SceneManager 负责管理和初始化所有的场景
+    1. Scene 所有场景的父类，负责一般性的场景操作
+    2. XXXScene 继承自Scene，实现特殊的场景功能
+    3. SceneManager 负责管理和初始化所有的场景
 
 ## Js Coding Rule
 1. 所有变量的命名采用驼峰命名法，如myName, checkHandle等；

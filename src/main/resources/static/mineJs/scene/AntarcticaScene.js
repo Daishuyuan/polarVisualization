@@ -38,10 +38,9 @@ export class AntarcticaScene extends Scene {
             viewField: this.ANTARCTICA_VIEW_POINT
         });
         tools.setEventInApp(ptable.events.SHIP_LOAD_EVENT, (ship) => {
-            console.log(tools.getEventByName("ships").name);
             let title_entity = tools.getEventByName(ptable.events.SHIP_TITLE_CHANGE)();
             if (title_entity) {
-                title_entity.name = ship.attributes.name;
+                title_entity.name = ship.attributes.name + "实时气象信息";
             }
         });
     }

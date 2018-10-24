@@ -4,7 +4,6 @@ import { ArcticScene } from "./ArcticScene.js"
 import { LidarScene } from "./LidarScene.js"
 import { TableFactory } from "../diagram/TableFactory.js";
 import { Tools as tools } from "../basic/BasicTools.js";
-import { BoxModel as Box } from "../basic/BasicTools.js";
 import { PARAMS_TABLE as ptable} from "../basic/ParamsTable.js";
 
 function init_ships(layer, props, ships) {
@@ -12,7 +11,7 @@ function init_ships(layer, props, ships) {
         "esri/Graphic",
         "esri/geometry/Point"
     ], (Graphic, Point) => {
-        let ship_cache = [], lables_cache = [];
+        let ship_cache = [], threshold = 1;
         ships.forEach((ship) => {
             let lon = parseFloat(ship.lon), lat = parseFloat(ship.lat), dom = null;
             let eventName = `${ship.name}_event`;
@@ -23,8 +22,7 @@ function init_ships(layer, props, ships) {
                 lon: ship.lon,
                 lat: ship.lat,
                 switch: true,
-                extend: true,
-                box: null,
+                extend: false,
                 event: eventName
             };
             if (!isNaN(lon) && !isNaN(lat)) {
@@ -61,46 +59,27 @@ function init_ships(layer, props, ships) {
                         });
                     });    
                 })(ship_model);
-                $(tools.identify(`${ship.name}_id`)).ready(() => {
-                    dom = $(tools.identify(`${ship.name}_id`));
-                    let width = dom.width(), height = dom.height();
-                    handle.box = new Box(
-                        () => parseFloat(dom.css("left")),
-                        () => parseFloat(dom.css("top")) - height,
-                        () => width,
-                        () => height
-                    );
-                    lables_cache.push(handle);
-                });
             }
         });
         // bind on drag event
         const firePopup = () => {
-            let boxes = lables_cache.map((x) => x.box);
-            lables_cache.forEach((label) => {
-                let lon = label.lon, lat = label.lat;
+            let ships = ship_cache.map((x) => x.attributes);
+            ships.forEach((ship) => {
+                let lon = ship.lon, lat = ship.lat;
                 let screen_point = props.view.toScreen(new Point({
                     spatialReference: props.view.spatialReference,
                     longitude: lon,
                     latitude: lat
                 }));
                 let map_point = props.view.toMap(screen_point);
-                let dom = $(tools.identify(label.id));
+                let dom = $(tools.identify(ship.id));
                 dom.css({
                     "left": `${screen_point.x}px`,
                     "top": `${screen_point.y - dom.height()}px`
                 });
-                if (map_point && Math.abs(map_point.longitude - lon) <= 1 &&
-                    Math.abs(map_point.latitude - lat) <= 1) {
-                    if (!tools.floatBox.hitTest(label.box, boxes)) {
-                        label.extend = true;
-                    } else {
-                        label.extend = false;
-                    }
-                    label.switch = true;
-                } else {
-                    label.switch = false;
-                }
+                ship.extend = !!(props.view.scale < 1000000);
+                ship.switch = !!(map_point && Math.abs(map_point.longitude - lon) <= threshold &&
+                    Math.abs(map_point.latitude - lat) <= threshold);
             });
         };
         setInterval(() => firePopup(), 100);
@@ -165,6 +144,7 @@ export var SceneManager = () => {
                         starsEnabled: false,
                     }
                 });
+                tools.watch("view", props.view);
                 tools.setEventInApp(ptable.events.VUE_CONTROL, () => props.vuePanel.application);
                 props.view.ui.empty('top-left'); // remove control panel in top left
                 props.view.ui._removeComponents(["attribution"]); // remove "Powered by esri"

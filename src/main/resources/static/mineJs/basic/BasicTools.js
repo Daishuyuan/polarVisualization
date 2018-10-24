@@ -1,31 +1,5 @@
 import { PARAMS_TABLE as ptable } from "./ParamsTable.js";
 
-export class BoxModel {
-    constructor(func_x,func_y,func_w,func_h) {
-        this.x = () => func_x();
-        this.y = () => func_y();
-        this.width = () => func_w();
-        this.height = () => func_h();
-    }
-
-    hitTest(box) {
-        let [x0, y0, w0, h0] = [this.x(), this.y(), this.width(), this.height()];
-        let [x1, y1, w1, h1] = [box.x(), box.y(), box.width(), box.height()];
-        if (x0 >= x1 && x0 <= x1 + w1 && y0 >= y1 && y0 <= y1 + h1) {
-            return true;
-        }
-        if (x0 + w0 >= x1 && x0 + w0 <= x1 + w1 && y0 >= y1 && y0 <= y1 + h1) {
-            return true;
-        }
-        if (x0 >= x1 && x0 <= x1 + w1 && y0 + h0 >= y1 && y0 + h0 <= y1 + h1) {
-            return true;
-        }
-        if (x0 + w0 >= x1 && x0 + w0 <= x1 + w1 && y0 + h0 >= y1 && y0 + h0 <= y1 + h1) {
-            return true;
-        }
-    }
-}
-
 export var Tools = (() => {
     const wxy = [
         `<--  Macho Tears  -->`, `!!;:;!;;;'\`:!!|||!||!||`, `\`'::''''%##&!:::::::;!!`,
@@ -210,16 +184,6 @@ export var Tools = (() => {
         },
         mutter: (msg, level) => {
             _mutter(msg, level);
-        },
-        floatBox: {
-            hitTest: (item, items) => {
-                for (let i=0; i < items.length; ++i) {
-                    if (item !== items[i] && item.hitTest(items[i])) {
-                        return true;
-                    }
-                }
-                return false;
-            }
         }
     }
 })();

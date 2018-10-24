@@ -35,7 +35,7 @@
         "class": "title_row",
         "cols": [{
           "type": "title",
-          "event_id":"stations",
+          "event_id":"ship_change",
           "name": "中山站实时气象信息",
           "style": "chart_title",
           "height": 6,

@@ -1,5 +1,10 @@
 import { Scene } from "./Scene.js"
 
+/**
+ * Global Scene
+ *
+ * @author dsy 2018/9/22
+ */
 export class GlobalScene extends Scene {
     constructor(props) {
         props.wkid = "GlobalScene";

@@ -15,7 +15,7 @@ export var TYPE_CUSTOM = "custom";
 /**
  * share resource (this resource is what has been downloaded from server by url)
  * in this map for that we don't want same url and same resource to download twice.
- * And we want to notice subscribers that resource has been updated by removing url in it.
+ * And we want to notice subscribers to take the real-time resource by removing its url in it.
  *
  * @type {Map<any, any>}
  */

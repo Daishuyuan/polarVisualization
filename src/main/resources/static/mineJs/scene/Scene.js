@@ -1,10 +1,32 @@
 import { Tools as tools } from "../basic/BasicTools.js";
 import { DelayTime } from "../core/VueLayer.js";
 
+/**
+ * record scene which is initialized by SceneManager
+ *
+ * @type {Map<any, any>} default empty
+ */
 const SCENE_NAMES = new Map();
+/**
+ * record table doms which is initialized by TableFactory
+ *
+ * @type {Map<any, any>} default empty
+ */
 const INNER_DOMS = new Map();
+/**
+ * record well known id of current loaded scene
+ *
+ * @type {null} default origin
+ */
 let CUR_SCENE = null;
 
+/**
+ * super class of all scenes
+ * used to control some common operations in other scenes
+ * themeInit - this function used to init scene basic params
+ *
+ * @author dsy 2018/9/22
+ */
 export class Scene {
     constructor(props) {
         if (!props.wkid || !props.eventName) {

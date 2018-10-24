@@ -2,6 +2,11 @@ import { Scene } from "./Scene.js"
 import { Tools as tools} from "../basic/BasicTools.js"
 import { PARAMS_TABLE as ptable } from "../basic/ParamsTable.js"
 
+/**
+ * Antarctica Scene
+ *
+ * @author dsy 2018/9/22
+ */
 export class AntarcticaScene extends Scene {
     constructor(props) {
         props.wkid = "AntarcticaScene";

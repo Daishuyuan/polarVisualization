@@ -1,5 +1,5 @@
 /**
- * @name MainActivity 全局配置与应用入口
+ * @name MainActivity Application portal
  * @author dsy 2018-09-10
  */
 import { VueLayer } from "./VueLayer.js";

@@ -1,5 +1,10 @@
 import { Scene } from "./Scene.js"
 
+/**
+ * Arctic Scene
+ *
+ * @author dsy 2018/9/22
+ */
 export class ArcticScene extends Scene {
     constructor(props) {
         props.wkid = "ArcticScene";

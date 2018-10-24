@@ -1,5 +1,10 @@
 import { Scene } from "./Scene.js"
 
+/**
+ * Lidar Scene
+ *
+ * @author wxy 2018/9/22
+ */
 export class LidarScene extends Scene {
     constructor(props) {
         props.wkid = "LidarScene";

@@ -126,18 +126,14 @@ export var SceneManager = () => {
         let register = (SceneFactory) => {
             if (Scene.isPrototypeOf(SceneFactory)) {
                 props.wkid = SceneFactory.name;
-                scenes.push(new SceneFactory(props));
+                let scene = new SceneFactory(props);
+                props.vuePanel.menuEvents.set(scene.eventName, () => scene.load());
+                scenes.push(scene);
             } else {
                 tools.mutter(`${SceneFactory.name} is not a subclass of Scene`, "error");
             }
         };
-        props.scenes.forEach((Factory) => {
-            register(Factory);
-        });
-        // load scene
-        scenes.forEach((scene) => {
-            props.vuePanel.menuEvents.set(scene.eventName, () => scene.load());
-        });
+        props.scenes.forEach((Factory) => register(Factory));
         scenes[0].load(); // load scene 1
         props.vuePanel.init(); // vue panel init
     };

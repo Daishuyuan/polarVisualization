@@ -6,7 +6,7 @@ import {PARAMS_TABLE as ptable} from "./ParamsTable.js";
  * @author dsy 2018/10/22
  */
 export var Tools = (() => {
-    // I want to tell this honour with alacrity here
+    // I want to tell this honour with alacrity here( Our Talisman )
     const wxy = [
         `<--  Macho Tears  -->`, `!!;:;!;;;'\`:!!|||!||!||`, `\`'::''''%##&!:::::::;!!`,
         `\`\`\`';:'':%@%''::::;:::;`, `::::::;%@&&&&$!::;;:'';`, `:::'''!&&&&&&&%;''''::;`,
@@ -25,7 +25,7 @@ export var Tools = (() => {
 
         return __inner__();
     };
-    const ider = idGenerator();
+    const generator = idGenerator();
     const guid = () => {
         let S4 = () => (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
         return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
@@ -70,7 +70,7 @@ export var Tools = (() => {
     const log_warn = console.warn;
     const _mutter = (msg, level) => {
         // to dye our information with different color
-        let content = `WXY(id:${ider.next().value},lv:wxy_${level}):%c ${msg}`;
+        let content = `WXY(id:${generator.next().value},lv:wxy_${level}):%c ${msg}`;
         switch (level) {
             case "fatal":
                 console.log(content, "color:#750000");

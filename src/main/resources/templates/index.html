@@ -69,6 +69,12 @@
     </div>
     <!-- core -->
     <script type="module" src="./mineJs/core/MainActivity.js"></script>
+    <script>
+        window.addEventListener("orientationchange", function() {
+            // Announce the new orientation number
+            alert(window.orientation);
+        }, false);
+    </script>
 </body>
 
 </html>

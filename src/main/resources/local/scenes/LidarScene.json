@@ -10,14 +10,14 @@
         },
         "rows": [{
           "height": 100,
-          "descrip": "第一行",
+          "description": "第一行",
           "cols": [{
             "type": "title",
             "name": "极地大屏可视化系统",
             "style": "system_title",
             "height": 100,
             "column": "col-md-12",
-            "descrip": "第一列"
+            "description": "第一列"
           }]
         }]
       },
@@ -31,7 +31,7 @@
         },
         "rows": [{
             "height": 6,
-            "descrip": "第一行",
+            "description": "第一行",
             "class": "title_row",
             "cols": [{
               "type": "title",
@@ -39,19 +39,19 @@
               "style": "chart_title",
               "height": 6,
               "column": "col-md-12",
-              "descrip": "第一列"
+              "description": "第一列"
             }]
           },
           {
             "height": 34,
-            "descrip": "第二行",
+            "description": "第二行",
             "class": "body_row",
             "cols": [{
                 "type": "capsule",
                 "column": "col-md-4",
                 "rows": [{
                     "height": 45,
-                    "descrip": "第一行",
+                    "description": "第一行",
                     "class": "body_row",
                     "cols": [{
                         "type": "chart",
@@ -60,34 +60,34 @@
                         "height": 16,
                         "url": "/api/diagrams/gauge",
                         "column": "col-md-6",
-                        "descrip": "第一列"
+                        "description": "第一列"
                       },
                       {
                         "type": "chart",
                         "height": 16,
                         "url": "/api/diagrams/gauge",
                         "column": "col-md-6",
-                        "descrip": "第二列"
+                        "description": "第二列"
                       }
                     ]
                   },
                   {
                     "height": 45,
-                    "descrip": "第二行",
+                    "description": "第二行",
                     "class": "body_row",
                     "cols": [{
                         "type": "chart",
                         "height": 10,
                         "url": "/api/diagrams/gauge",
                         "column": "col-md-6",
-                        "descrip": "第一列"
+                        "description": "第一列"
                       },
                       {
                         "type": "chart",
                         "height": 10,
                         "url": "/api/diagrams/gauge",
                         "column": "col-md-6",
-                        "descrip": "第二列"
+                        "description": "第二列"
                       }
                     ]
                   }
@@ -101,7 +101,7 @@
                 "height": 30,
                 "url": "/api/diagrams/roomAlarm",
                 "column": "col-md-4",
-                "descrip": "第二列"
+                "description": "第二列"
               },
               {
                 "type": "chart",
@@ -110,13 +110,13 @@
                 "height": 30,
                 "url": "/api/diagrams/windRose",
                 "column": "col-md-4",
-                "descrip": "第三列"
+                "description": "第三列"
               }
             ]
           },
           {
             "height": 6,
-            "descrip": "第三行",
+            "description": "第三行",
             "class": "title_row",
             "cols": [{
               "type": "title",
@@ -124,12 +124,12 @@
               "style": "chart_title",
               "height": 6,
               "column": "col-md-12",
-              "descrip": "第一列"
+              "description": "第一列"
             }]
           },
           {
             "height": 34,
-            "descrip": "第四行",
+            "description": "第四行",
             "class": "body_row",
             "cols": [{
                 "type": "chart",
@@ -137,14 +137,14 @@
                 "height": 30,
                 "url": "/api/diagrams/gauge",
                 "column": "col-md-4",
-                "descrip": "第一列"
+                "description": "第一列"
               },
               {
                 "type": "capsule",
                 "column": "col-md-4",
                 "rows": [{
                     "height": 50,
-                    "descrip": "第一行",
+                    "description": "第一行",
                     "class": "body_row",
                     "cols": [{
                       "type": "chart",
@@ -153,12 +153,12 @@
                       "height": 13,
                       "url": "/api/diagrams/pointCount",
                       "column": "col-md-12",
-                      "descrip": "第一列"
+                      "description": "第一列"
                     }]
                   },
                   {
                     "height": 50,
-                    "descrip": "第二行",
+                    "description": "第二行",
                     "class": "body_row",
                     "cols": [{
                       "type": "chart",
@@ -167,7 +167,7 @@
                       "height": 13,
                       "url": "/api/diagrams/frequency",
                       "column": "col-md-12",
-                      "descrip": "第一列"
+                      "description": "第一列"
                     }]
 
                   }
@@ -180,7 +180,7 @@
                 "height": 30,
                 "url": "/api/diagrams/wave",
                 "column": "col-md-4",
-                "descrip": "第三列"
+                "description": "第三列"
               }
             ]
           }
@@ -196,7 +196,7 @@
         },
         "rows": [{
             "height": 6,
-            "descrip": "第一行",
+            "description": "第一行",
             "class": "title_row",
             "cols": [{
               "type": "title",
@@ -204,12 +204,12 @@
               "style": "chart_title",
               "height": 6,
               "column": "col-md-12",
-              "descrip": "第一列"
+              "description": "第一列"
             }]
           },
           {
             "height": 34,
-            "descrip": "第二行",
+            "description": "第二行",
             "class": "body_row",
             "cols": [{
                 "type": "chart",
@@ -218,14 +218,14 @@
                 "height": 30,
                 "url": "/api/diagrams/heatmap",
                 "column": "col-md-5",
-                "descrip": "第一列"
+                "description": "第一列"
               },
               {
                 "type": "capsule",
                 "column": "col-md-7",
                 "rows": [{
                     "height": 30,
-                    "descrip": "第一行",
+                    "description": "第一行",
                     "class": "body_row",
                     "cols": [{
                       "type": "chart",
@@ -234,31 +234,31 @@
                       "height": 12,
                       "url": "/api/diagrams/line_geo",
                       "column": "col-md-12",
-                      "descrip": "第一列"
+                      "description": "第一列"
                     }]
                   },
                   {
                     "height": 30,
-                    "descrip": "第二行",
+                    "description": "第二行",
                     "class": "body_row",
                     "cols": [{
                       "type": "chart",
                       "url": "/api/diagrams/line_geo",
                       "height": 9,
                       "column": "col-md-12",
-                      "descrip": "第一列"
+                      "description": "第一列"
                     }]
                   },
                   {
                     "height": 30,
-                    "descrip": "第三行",
+                    "description": "第三行",
                     "class": "body_row",
                     "cols": [{
                       "type": "chart",
                       "url": "/api/diagrams/line_geo",
                       "height": 9,
                       "column": "col-md-12",
-                      "descrip": "第一列"
+                      "description": "第一列"
                     }]
                   }
                 ]
@@ -268,7 +268,7 @@
           },
           {
             "height": 6,
-            "descrip": "第三行",
+            "description": "第三行",
             "class": "title_row",
             "cols": [{
               "type": "title",
@@ -276,19 +276,19 @@
               "height": 6,
               "name": "数据文件实时接受状态",
               "column": "col-md-12",
-              "descrip": "第一列"
+              "description": "第一列"
             }]
           },
           {
             "height": 34,
-            "descrip": "第四行",
+            "description": "第四行",
             "class": "body_row",
             "cols": [{
                 "type": "capsule",
                 "column": "col-md-3",
                 "rows": [{
                     "height": 50,
-                    "descrip": "第1行",
+                    "description": "第1行",
                     "class": "body_row",
                     "cols": [{
                       "type": "chart",
@@ -297,12 +297,12 @@
                       "height": 13,
                       "url": "/api/diagrams/counter",
                       "column": "col-md-12",
-                      "descrip": "第一列"
+                      "description": "第一列"
                     }]
                   },
                   {
                     "height": 50,
-                    "descrip": "第2行",
+                    "description": "第2行",
                     "class": "body_row",
                     "cols": [{
                       "type": "chart",
@@ -311,7 +311,7 @@
                       "height": 13,
                       "url": "/api/diagrams/counter",
                       "column": "col-md-12",
-                      "descrip": "第一列"
+                      "description": "第一列"
                     }]
                   }
                 ]
@@ -323,7 +323,7 @@
                 "height": 18,
                 "column": "col-md-3",
                 "url": "/api/diagrams/ringComplete",
-                "descrip": "第二列"
+                "description": "第二列"
               },
               {
                 "type": "chart",
@@ -332,7 +332,7 @@
                 "height": 14,
                 "column": "col-md-3",
                 "url": "/api/diagrams/complete",
-                "descrip": "第三列"
+                "description": "第三列"
               },
               {
                 "type": "chart",
@@ -341,7 +341,7 @@
                 "column": "col-md-3",
                 "name": "接收文件种类",
                 "url": "/api/diagrams/fileType",
-                "descrip": "第四列"
+                "description": "第四列"
               }
             ]
           }

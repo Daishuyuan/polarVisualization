@@ -1,9 +1,9 @@
 /**
  * @name TableFactory 图表配置工厂
- * @author dsy 2018-10-08
+ * @author dsy zxj 2018-10-08
  * @description 在给定的Div中依据配置信息生成并加载对应的图表,配置信息格式如下：
  * oneTablePane {} -> pane {} -> 浮动面板的css配置
- * -----------------> rows [] -> row {} -> descrip 行描述信息
+ * -----------------> rows [] -> row {} -> description 行描述信息
  * --------------------------------------> height 行高度 >= 0
  * --------------------------------------> class css样式类名
  * --------------------------------------> cols [] -> col {} -> type 类型 = title/chart/capsule
@@ -12,7 +12,7 @@
  * -----------------------------------------------------------> title_height(chart) 标题高度
  * -----------------------------------------------------------> style(title/chart) 主体的css类名
  * -----------------------------------------------------------> height(title/chart) 列高度 >= 0
- * -----------------------------------------------------------> descrip(all) 列描述信息
+ * -----------------------------------------------------------> description(all) 列描述信息
  * -----------------------------------------------------------> column(all) 列样式，如col-md-?
  * -----------------------------------------------------------> url(chart) 图表加载的数据源地址
  * -----------------------------------------------------------> src(chart) 加载的数据源的名称
@@ -34,11 +34,14 @@ export class TableFactory {
         const guid = tools.sGuid; // guid generator
         const sstd = (x) => !!x ? x : ""; // string standard
         const nstd = (x) => !isNaN(parseFloat(x)) && x > 0 ? x : 0; // number standard
+        const TITLE_SIGN = "title";
+        const CHART_SIGN = "chart";
+        const CAPSULE_SIGN = "capsule";
 
-        // load event
+        // load event and update handle event
         function loadEvent(node) {
             switch (node.type) {
-                case "title":
+                case TITLE_SIGN:
                     let jqId = node.domId, content = $(jqId).html();
                     delete node.name;
                     Object.defineProperty(node, "name", {
@@ -52,7 +55,7 @@ export class TableFactory {
                     });
                     tools.setEventInApp(node.event_id, () => node);
                     break;
-                case "chart":
+                case CHART_SIGN:
                     if (node.url) {
                         let entity = {
                             type: TYPE_ECHARTS,
@@ -87,6 +90,7 @@ export class TableFactory {
             return myChart;
         }
 
+        // diagram initialization
         this.__init__ = (jqDom, config) => {
             jqDom.ready(function () {
                 const tbcnt = [],
@@ -100,7 +104,7 @@ export class TableFactory {
                             let node = cols[j];
                             tbcnt.push(`<div class='${sstd(node.column)}' style='height:100%;padding-left:1%;padding-right:0;'>`);
                             switch (node.type) {
-                                case "title":
+                                case TITLE_SIGN:
                                     let prefix_content = "",
                                         title_content = "",
                                         control = "",
@@ -120,9 +124,10 @@ export class TableFactory {
                                         });
                                     }
                                     break;
-                                case "chart":
+                                case CHART_SIGN:
                                     let _id = `ZXJ${guid()}`.replace(/-/g, ""),
                                         title_height = 0;
+                                    // if node exist name then init title above this chart
                                     if (node.name) {
                                         let content_title = `<p style='margin:0;'>${sstd(node.name)}</p>`;
                                         title_height = node.hasOwnProperty("title_height") ? node.title_height : TITLE_DEFAULT_HEIGHT;
@@ -139,7 +144,7 @@ export class TableFactory {
                                         data_url: node.data_url
                                     });
                                     break;
-                                case "capsule":
+                                case CAPSULE_SIGN:
                                     __row_owner__(node.rows);
                                     break;
                                 default:
@@ -148,8 +153,8 @@ export class TableFactory {
                             }
                             tbcnt.push("</div>");
                         } else {
-                            let vrow = row.descrip ? row.descrip : i + 1,
-                                vcol = node.descrip ? node.descrip : j + 1;
+                            let vrow = row.description ? row.description : i + 1,
+                                vcol = node.description ? node.description : j + 1;
                             tools.mutter(`column error: ${vrow}-${vcol}`, "error");
                         }
                     }
@@ -164,14 +169,16 @@ export class TableFactory {
                             __col_owner__(i, row, row.cols);
                             tbcnt.push("</div>");
                         } else {
-                            let description = row.hasOwnProperty("descrip") ? row.descrip : i + 1;
+                            let description = row.hasOwnProperty("description") ? row.description : i + 1;
                             tools.mutter(`row error: ${description}`, "error");
                         }
                     }
                 }
 
+                // Entry of lathe
                 !function () {
                     if (config) {
+                        // config initialization cave-in
                         if (config.hasOwnProperty("pane")) {
                             for (let name in config.pane) {
                                 if (config.pane.hasOwnProperty(name)) {
@@ -203,6 +210,7 @@ export class TableFactory {
                                 });
                             }
                         }
+                        // initialize events (These events are used soon after)
                         jqDom.initEvents = () => {
                             for (let i = 0, len = events.length; i < len; ++i) {
                                 loadEvent(events[i]);
@@ -216,6 +224,7 @@ export class TableFactory {
         }
     }
 
+    // tables generation by configuration and identification
     generate(id, config) {
         let dom = document.createElement("div"),
             handle = this.__init__($(dom), config);

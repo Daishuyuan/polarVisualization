@@ -1,3 +1,8 @@
+/**
+ * used to increase the speed of searching
+ *
+ * @type {Map<any, any>}
+ */
 const SEARCH_MAP = new Map();
 
 export var PARAMS_TABLE = {

@@ -6,6 +6,13 @@ import { TableFactory } from "../diagram/TableFactory.js";
 import { Tools as tools } from "../basic/BasicTools.js";
 import { PARAMS_TABLE as ptable} from "../basic/ParamsTable.js";
 
+/**
+ * add 3d model of ships into our global map
+ *
+ * @param layer graphic layer
+ * @param props essential properties
+ * @param ships detail of ships
+ */
 function init_ships(layer, props, ships) {
     require([
         "esri/Graphic",
@@ -13,7 +20,7 @@ function init_ships(layer, props, ships) {
     ], (Graphic, Point) => {
         let ship_cache = [], threshold = 1;
         ships.forEach((ship) => {
-            let lon = parseFloat(ship.lon), lat = parseFloat(ship.lat), dom = null;
+            let lon = parseFloat(ship.lon), lat = parseFloat(ship.lat);
             let eventName = `${ship.name}_event`;
             let ship_model = null;
             let handle = {
@@ -92,6 +99,15 @@ function init_ships(layer, props, ships) {
     });
 }
 
+/**
+ * This is a manager to manage scenes and init them
+ * 1. init map and view (global map)
+ * 2. init ships and stations (just add to map)
+ * 3. init scenes (set props and load first scene)
+ * @author dsy 2018/9/12
+ * @returns {{init: init}} singleton
+ * @constructor singleton
+ */
 export var SceneManager = () => {
     const TABLE_DEBUG = false;
 
@@ -120,6 +136,7 @@ export var SceneManager = () => {
                 "esri/views/SceneView",
                 "esri/layers/GraphicsLayer"
             ], (Map, SceneView, GraphicsLayer,) => {
+                // 1. init map and view (global map)
                 props.map = new Map({
                     logo: false,
                     basemap: "satellite",
@@ -149,10 +166,10 @@ export var SceneManager = () => {
                 props.view.ui.empty('top-left'); // remove control panel in top left
                 props.view.ui._removeComponents(["attribution"]); // remove "Powered by esri"
                 props.view.when(() => {
-                    // add bounded elements
+                    // 2. init ships and stations (just add to map)
                     __init_ship_and_stations_(props.staticGLayer = new GraphicsLayer(), props);
 
-                    // init scenes
+                    // 3. init scenes (set props and load first scene)
                     let scenes = [];
                     scenes.push(new GlobalScene(props)); // scene 1
                     scenes.push(new LidarScene(props)); // scene 2

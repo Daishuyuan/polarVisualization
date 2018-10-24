@@ -1,11 +1,45 @@
 import {Tools as tools} from "./BasicTools.js"
 
+/**
+ * mark of echarts subscriber, full-field constants
+ *
+ * @type {string}
+ */
 export var TYPE_ECHARTS = "echarts";
+/**
+ * mark of custom subscriber, full-field constants
+ *
+ * @type {string}
+ */
 export var TYPE_CUSTOM = "custom";
+/**
+ * share resource (this resource is what has been downloaded from server by url)
+ * in this map for that we don't want same url and same resource to download twice.
+ * And we want to notice subscribers that resource has been updated by removing url in it.
+ *
+ * @type {Map<any, any>}
+ */
 const SHARE_RES_MAP = new Map();
+/**
+ * subscribers list used to record current subscribers( this means they want download
+ * resource from their url)
+ *
+ * @type {Array}
+ */
 const SUBSCRIBERS = [];
+/**
+ * true: begin to notice backend error or exceptions
+ * false: don't generate information from backend
+ *
+ * @type {boolean} default true
+ */
 const USE_ERROR_LOG = true;
 
+/**
+ * used to publish data and pull data from server
+ *
+ * @author dsy zxj 2018/10/23
+ */
 export class DataPublisher {
     constructor() {
         // update entity by type

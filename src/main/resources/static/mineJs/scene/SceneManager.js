@@ -109,8 +109,6 @@ function init_ships(layer, props, ships) {
  * @constructor singleton
  */
 export var SceneManager = () => {
-    const TABLE_DEBUG = false;
-
     const __init_ship_and_stations_= (layer, props) => {
         $.ajax({
             url: `${props.scenesUrl}/common`,
@@ -130,7 +128,7 @@ export var SceneManager = () => {
         tools.watch("props", props);
         props.factory = new TableFactory();
         // arcgis 3d map renderer
-        if (!TABLE_DEBUG) {
+        if (!props.table_debug) {
             require([
                 "esri/Map",
                 "esri/views/SceneView",

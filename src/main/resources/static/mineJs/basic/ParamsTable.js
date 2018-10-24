@@ -12,7 +12,8 @@ export var PARAMS_TABLE = {
         "MASK_HTML_PATH": "/cutScene",
         "RECOVER_BTN": "homeTitle",
         "PRE_DATA_URL": "",
-        "SCENE_DATA_URL": "/api/scenes"
+        "SCENE_DATA_URL": "/api/scenes",
+        "TABLE_DEBUG": true
     },
     events: {
         "SHIP_LOAD_EVENT": "ship_load_event",

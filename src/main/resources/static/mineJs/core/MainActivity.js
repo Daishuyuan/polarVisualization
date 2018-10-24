@@ -20,7 +20,8 @@ import { DataPublisher } from "../basic/DataPublisher.js";
             container: ptable.constants.TABLE_VIEW_ID,
             recoverBtn: ptable.constants.RECOVER_BTN,
             scenesUrl: ptable.constants.SCENE_DATA_URL,
-            publisher: publisher
+            publisher: publisher,
+            table_debug: ptable.constants.TABLE_DEBUG
         });
     } catch (e) {
         tools.mutter(`outermost error msg: ${e}`, "fatal");

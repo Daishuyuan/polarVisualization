@@ -124,6 +124,19 @@ export var SceneManager = () => {
         });
     };
 
+    const __init_scenes_ = (props) => {
+        let scenes = [];
+        scenes.push(new GlobalScene(props)); // scene 1
+        scenes.push(new LidarScene(props)); // scene 2
+        scenes.push(new AntarcticaScene(props)); // scene 3
+        scenes.push(new ArcticScene(props)); // scene 4
+        scenes.forEach((scene) => {
+            props.vuePanel.menuEvents.set(scene.eventName, () => scene.load());
+        }); // load scene
+        scenes[0].load(); // load scene 1
+        props.vuePanel.init(); // vue panel init
+    };
+
     const __init__ = (props) => {
         tools.watch("props", props);
         props.factory = new TableFactory();
@@ -164,24 +177,17 @@ export var SceneManager = () => {
                 props.view.ui.empty('top-left'); // remove control panel in top left
                 props.view.ui._removeComponents(["attribution"]); // remove "Powered by esri"
                 props.view.when(() => {
+                    props.staticGLayer = new GraphicsLayer();
                     // 2. init ships and stations (just add to map)
-                    __init_ship_and_stations_(props.staticGLayer = new GraphicsLayer(), props);
-
+                    __init_ship_and_stations_(props.staticGLayer, props);
                     // 3. init scenes (set props and load first scene)
-                    let scenes = [];
-                    scenes.push(new GlobalScene(props)); // scene 1
-                    scenes.push(new LidarScene(props)); // scene 2
-                    scenes.push(new AntarcticaScene(props)); // scene 3
-                    scenes.push(new ArcticScene(props)); // scene 4
-                    scenes.forEach((scene) => {
-                        props.vuePanel.menuEvents.set(scene.eventName, () => scene.load());
-                    }); // load scene
-                    scenes[0].load(); // load scene 1
-                    props.vuePanel.init(); // vue panel init
+                    __init_scenes_(props);
                 }, (error)=> {
                     tools.mutter(error, "error");
                 });
             });
+        } else {
+            __init_scenes_(props);
         }
     };
 

@@ -35,7 +35,9 @@ export class LidarScene extends Scene {
                 }
             });
         });
-        props.staticGLayer.add(this.model);
+        if (props.staticGLayer) {
+            props.staticGLayer.add(this.model);
+        }
     }
 
     load() {

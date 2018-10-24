@@ -13,7 +13,7 @@ export var PARAMS_TABLE = {
         "RECOVER_BTN": "homeTitle",
         "PRE_DATA_URL": "",
         "SCENE_DATA_URL": "/api/scenes",
-        "TABLE_DEBUG": true
+        "TABLE_DEBUG": false
     },
     events: {
         "SHIP_LOAD_EVENT": "ship_load_event",

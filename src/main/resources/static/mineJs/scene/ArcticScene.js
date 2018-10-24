@@ -1,4 +1,5 @@
 import { Scene } from "./Scene.js"
+import { GlobalScene } from "./GlobalScene.js"
 
 /**
  * Arctic Scene
@@ -26,7 +27,7 @@ export class ArcticScene extends Scene {
             name: "北极区域场景",
             menu: [{
                 name: "返回",
-                event: Scene.names.get("GlobalScene")
+                event: Scene.names.get(GlobalScene.name)
             }],
             viewField: this.ARCTIC_VIEW_POINT
         });

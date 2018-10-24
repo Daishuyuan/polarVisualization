@@ -1,4 +1,5 @@
 import { Scene } from "./Scene.js"
+import { AntarcticaScene } from "./AntarcticaScene.js"
 
 /**
  * Lidar Scene
@@ -42,7 +43,7 @@ export class LidarScene extends Scene {
             name: "激光雷达场景",
             menu: [{
                 name: "返回",
-                event: Scene.names.get("AntarcticaScene")
+                event: Scene.names.get(AntarcticaScene.name)
             }],
             viewField: {
                 target: this.model,

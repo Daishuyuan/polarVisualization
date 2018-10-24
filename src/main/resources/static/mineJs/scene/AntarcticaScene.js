@@ -1,6 +1,8 @@
 import { Scene } from "./Scene.js"
 import { Tools as tools} from "../basic/BasicTools.js"
 import { PARAMS_TABLE as ptable } from "../basic/ParamsTable.js"
+import { GlobalScene } from "./GlobalScene.js"
+import { LidarScene } from "./LidarScene.js"
 
 /**
  * Antarctica Scene
@@ -28,10 +30,10 @@ export class AntarcticaScene extends Scene {
             name: "南极区域场景",
             menu: [{
                 name: "返回",
-                event: Scene.names.get("GlobalScene")
+                event: Scene.names.get(GlobalScene.name)
             }, {
                 name: "激光雷达",
-                event: Scene.names.get("LidarScene")
+                event: Scene.names.get(LidarScene.name)
             }, {
                 name: "冰下湖钻探",
                 event: "eventIceLakeDrillingScene"

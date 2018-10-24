@@ -48,7 +48,7 @@ export class Scene {
     // do the work of themes initialization
     themeInit(props) {
         // clear before status
-        if(CUR_SCENE && INNER_DOMS.get(CUR_SCENE)) {
+        if(CUR_SCENE && INNER_DOMS.has(CUR_SCENE)) {
             INNER_DOMS.get(CUR_SCENE).forEach((dom) => {
                 dom.hide();
             });

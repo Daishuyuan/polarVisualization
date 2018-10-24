@@ -23,6 +23,7 @@ function init_ships(layer, props, ships) {
                 lon: ship.lon,
                 lat: ship.lat,
                 switch: true,
+                extend: true,
                 box: null,
                 event: eventName
             };
@@ -89,10 +90,17 @@ function init_ships(layer, props, ships) {
                     "left": `${screen_point.x}px`,
                     "top": `${screen_point.y - dom.height()}px`
                 });
-                label.switch = !!(map_point &&
-                    !tools.floatBox.hitTest(label.box, boxes) &&
-                    Math.abs(map_point.longitude - lon) <= 0.1 &&
-                    Math.abs(map_point.latitude - lat) <= 0.1);
+                if (map_point && Math.abs(map_point.longitude - lon) <= 1 &&
+                    Math.abs(map_point.latitude - lat) <= 1) {
+                    if (!tools.floatBox.hitTest(label.box, boxes)) {
+                        label.extend = true;
+                    } else {
+                        label.extend = false;
+                    }
+                    label.switch = true;
+                } else {
+                    label.switch = false;
+                }
             });
         };
         setInterval(() => firePopup(), 100);

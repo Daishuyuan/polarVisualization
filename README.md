@@ -9,7 +9,7 @@
 4. 上传的代码务必是没有警告和错误的代码，最坏情况下也应该是能够运行通过的代码；
 
 ## Architectures
-- 前端架构(resources/static/minJs)
+- 前端架构(resources/static/mineJs)
 1. basic 基础库
 - BasicTools 基本工具集
 - DataPublisher 数据更新和推送模块

@@ -33,8 +33,8 @@
         <template v-cloak v-show="loaded">
             <div id="threeJsView" class="GlassPlate" style="background: url('./img/earth/background.jpg');background-size: 100%;"></div>
             <!-- popup template -->
-            <div v-for="popup in popups" v-bind:id="popup.id" v-on:click="pop(popup.event);" class="WXY_label">
-                <div v-cloak v-show="popup.switch == true" class="WXY_floating_window WXY_img_font animated fadeIn pulse">
+            <div v-for="popup in popups" v-cloak v-show="popup.switch" v-bind:id="popup.id" v-on:click="pop(popup.event);" class="WXY_label">
+                <div v-cloak v-show="popup.extend == true" class="WXY_floating_window WXY_img_font animated fadeIn pulse">
                     <div>
                         <img width="140px" src="./img/ui/observation_point.jpg" />
                     </div>
@@ -47,12 +47,11 @@
                         <div>气压:&ensp;<span>{{ popup.press }}</span>hPa</div>
                     </div>
                 </div>
-                <div v-cloak v-show="popup.switch == false" class="WXY_floating_window_obliteration WXY_img_font animated fadeIn pulse">
+                <div v-cloak v-show="popup.extend == false" class="WXY_floating_window_obliteration WXY_img_font animated fadeIn pulse">
                     <div>
                         <div class="WXY_label_title">{{ popup.name }}</div>
                     </div>
                 </div>
-                <div v-cloak v-show="popup.switch == true" class="WXY_line animated fadeIn pulse"></div>
             </div>
             <!-- title template -->
             <div class="titleBar">

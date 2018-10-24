@@ -7,7 +7,7 @@ import { Scene } from "./Scene.js"
  */
 export class ArcticScene extends Scene {
     constructor(props) {
-        props.wkid = "ArcticScene";
+        props.wkid = ArcticScene.name;
         super(props);
         require(["esri/Camera", "esri/geometry/Point"], (Camera, Point) => {
             this.ARCTIC_VIEW_POINT = new Camera({

@@ -9,7 +9,7 @@ import { PARAMS_TABLE as ptable } from "../basic/ParamsTable.js"
  */
 export class AntarcticaScene extends Scene {
     constructor(props) {
-        props.wkid = "AntarcticaScene";
+        props.wkid = AntarcticaScene.name;
         super(props);
         require(["esri/Camera", "esri/geometry/Point"], (Camera, Point) => {
             this.ANTARCTICA_VIEW_POINT = new Camera({

@@ -7,7 +7,7 @@ import { Scene } from "./Scene.js"
  */
 export class GlobalScene extends Scene {
     constructor(props) {
-        props.wkid = "GlobalScene";
+        props.wkid = GlobalScene.name;
         super(props);
         require(["esri/Camera", "esri/geometry/Point"], (Camera, Point) => {
             this.GLOBAL_VIEW_POINT = new Camera({

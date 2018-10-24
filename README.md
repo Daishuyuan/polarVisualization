@@ -32,7 +32,7 @@
 - 点击+号创建启动方式，选择spring boot，然后选择PolarApplication作为程序启动入口
 5. 打开浏览器，输入http://localhost:8080 等待界面加载完成
 
-#Authors
+## Authors
 1. DSY 负责前后端统筹规划开发和设计
 2. ZXJ 负责图表样式的调整和数据接口的开发
 3. WXY1 负责地图服务的配置和开发

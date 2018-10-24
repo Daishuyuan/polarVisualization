@@ -29,23 +29,24 @@ let CUR_SCENE = null;
  */
 export class Scene {
     constructor(props) {
-        if (!props.wkid || !props.eventName) {
-            tools.mutter("wkid and eventName both can't be null or undefined.", "error");
+        if (!props.wkid) {
+            tools.mutter("wkid can't be null or undefined.", "error");
         }
+        const PREFIX_WKID = "ZX_EVENT_";
         this._vuePanel = props.vuePanel;
         this._tableViewId = props.container;
         this._menuId = props.menuId;
-        this._staticGLayer = props.staticGLayer;
         this._map = props.map;
         this._view = props.view;
         this._factory = props.factory;
         this._wkid = props.wkid;
-        this._eventName = props.eventName;
-        this._preDataUrl = props.preDataUrl;
         this._scenesUrl = props.scenesUrl;
         this._recoverBtn = props.recoverBtn;
-        this._curScene = null;
         this._curProps = null;
+        this._eventName = PREFIX_WKID + props.wkid;
+        // this._curScene = null;
+        // this._preDataUrl = props.preDataUrl;
+        // this._staticGLayer = props.staticGLayer;
         SCENE_NAMES.set(this._wkid, this._eventName); // register wkid and eventName
     }
 

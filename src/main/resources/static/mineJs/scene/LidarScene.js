@@ -8,7 +8,6 @@ import { AntarcticaScene } from "./AntarcticaScene.js"
  */
 export class LidarScene extends Scene {
     constructor(props) {
-        props.wkid = LidarScene.name;
         super(props);
         require([
             "esri/Graphic",

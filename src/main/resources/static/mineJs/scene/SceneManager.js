@@ -126,13 +126,22 @@ export var SceneManager = () => {
 
     const __init_scenes_ = (props) => {
         let scenes = [];
-        scenes.push(new GlobalScene(props)); // scene 1
-        scenes.push(new LidarScene(props)); // scene 2
-        scenes.push(new AntarcticaScene(props)); // scene 3
-        scenes.push(new ArcticScene(props)); // scene 4
+        // scene 1
+        props.wkid = GlobalScene.name;
+        scenes.push(new GlobalScene(props));
+        // scene 2
+        props.wkid = LidarScene.name;
+        scenes.push(new LidarScene(props));
+        // scene 3
+        props.wkid = AntarcticaScene.name;
+        scenes.push(new AntarcticaScene(props));
+        // scene 4
+        props.wkid = ArcticScene.name;
+        scenes.push(new ArcticScene(props));
+        // load scene
         scenes.forEach((scene) => {
             props.vuePanel.menuEvents.set(scene.eventName, () => scene.load());
-        }); // load scene
+        });
         scenes[0].load(); // load scene 1
         props.vuePanel.init(); // vue panel init
     };

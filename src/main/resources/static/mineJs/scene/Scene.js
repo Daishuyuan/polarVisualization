@@ -21,6 +21,7 @@ export class Scene {
         this._eventName = props.eventName;
         this._preDataUrl = props.preDataUrl;
         this._scenesUrl = props.scenesUrl;
+        this._recoverBtn = props.recoverBtn;
         this._curScene = null;
         this._curProps = null;
         SCENE_NAMES.set(this._wkid, this._eventName); // register wkid and eventName
@@ -47,6 +48,10 @@ export class Scene {
 
     // do the work of themes initialization
     themeInit(props) {
+        // set title recover button
+        $(tools.identify(this._recoverBtn)).click(() => {
+            this.recoverSite();
+        });
         // clear before status
         if(CUR_SCENE && INNER_DOMS.has(CUR_SCENE)) {
             INNER_DOMS.get(CUR_SCENE).forEach((dom) => {

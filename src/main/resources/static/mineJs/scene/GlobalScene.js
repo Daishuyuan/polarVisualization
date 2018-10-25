@@ -36,10 +36,6 @@ export class GlobalScene extends Scene {
     }
 
     onUpdate() {
-        this.viewField.position.x += 1;
-        this.view.goTo(this.viewField, {
-            animate: true
-        });
-        return this.ROLL_TICK;
+
     }
 }

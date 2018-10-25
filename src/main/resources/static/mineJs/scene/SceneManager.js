@@ -35,15 +35,15 @@ function init_ships(layer, props, ships) {
                         type: "point",
                         x: lon,
                         y: lat,
-                        z: 0
+                        z: -7
                     },
                     symbol: {
                         type: "point-3d",
                         symbolLayers: [{
                             type: "object",
-                            width: 30000,
-                            height: 30000,
-                            depth: 30000,
+                            width: 30,
+                            height: 30,
+                            depth: 30,
                             resource: {
                                 href: "./models/Ship/warShip.json"
                             }

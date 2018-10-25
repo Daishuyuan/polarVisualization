@@ -58,16 +58,18 @@ export class LidarScene extends Scene {
             });
         });
 
+
+    }
+
+    onLoad() {
         if (this.staticGLayer) {
             this.staticGLayer.add(this.model);
         }
     }
 
-    onLoad() {
-
-    }
-
     onClose() {
-
+        if (this.staticGLayer) {
+            this.staticGLayer.remove(this.model);
+        }
     }
 }

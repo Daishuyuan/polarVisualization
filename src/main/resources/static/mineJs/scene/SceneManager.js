@@ -12,10 +12,9 @@ import { Scene } from "./Scene.js";
  */
 function init_ships(layer, props, ships) {
     require([
-        "esri/Graphic",
-        "esri/geometry/Point"
-    ], (Graphic, Point) => {
-        let ship_cache = [], threshold = 1;
+        "esri/Graphic"
+    ], (Graphic) => {
+        let ship_cache = [];
         ships.forEach((ship) => {
             let lon = parseFloat(ship.lon), lat = parseFloat(ship.lat);
             let eventName = `${ship.name}_event`;
@@ -27,7 +26,8 @@ function init_ships(layer, props, ships) {
                 lat: ship.lat,
                 switch: true,
                 extend: false,
-                event: eventName
+                event: eventName,
+                popup: true
             };
             if (!isNaN(lon) && !isNaN(lat)) {
                 ship_model = new Graphic({
@@ -35,15 +35,15 @@ function init_ships(layer, props, ships) {
                         type: "point",
                         x: lon,
                         y: lat,
-                        z: 0
+                        z: -7
                     },
                     symbol: {
                         type: "point-3d",
                         symbolLayers: [{
                             type: "object",
-                            width: 30000,
-                            height: 30000,
-                            depth: 30000,
+                            width: 30,
+                            height: 30,
+                            depth: 30,
                             resource: {
                                 href: "./models/Ship/warShip.json"
                             }
@@ -65,32 +65,6 @@ function init_ships(layer, props, ships) {
                 })(ship_model);
             }
         });
-        // bind on drag event
-        const firePopup = () => {
-            let ships = ship_cache.map((x) => x.attributes);
-            ships.forEach((ship) => {
-                let lon = ship.lon, lat = ship.lat;
-                let screen_point = props.view.toScreen(new Point({
-                    spatialReference: props.view.spatialReference,
-                    longitude: lon,
-                    latitude: lat
-                }));
-                let map_point = props.view.toMap(screen_point);
-                let dom = $(tools.identify(ship.id));
-                dom.css({
-                    "left": `${screen_point.x}px`,
-                    "top": `${screen_point.y - dom.height()}px`
-                });
-                ship.extend = !!(props.view.scale < 1000000);
-                ship.switch = !!(map_point && Math.abs(map_point.longitude - lon) <= threshold &&
-                    Math.abs(map_point.latitude - lat) <= threshold);
-            });
-        };
-        setInterval(() => firePopup(), 100);
-        tools.safe_on(props.view, "pointer-move", firePopup);
-        tools.safe_on(props.view, "pointer-up", firePopup);
-        tools.safe_on(props.view, "pointer-enter", firePopup);
-        tools.safe_on(props.view, "resize", firePopup);
         // add all ships
         layer.addMany(ship_cache);
     });
@@ -100,7 +74,8 @@ function init_ships(layer, props, ships) {
  * This is a manager to manage scenes and init them
  * 1. init map and view (global map)
  * 2. init ships and stations (just add to map)
- * 3. init scenes (set props and load first scene)
+ * 3. init popup event
+ * 4. init scenes (set props and load first scene)
  * @author dsy 2018/9/12
  * @returns {{init: init}} singleton
  * @constructor singleton
@@ -136,6 +111,41 @@ export var SceneManager = () => {
         props.scenes.forEach((Factory) => register(Factory));
         scenes[0].themeInit(); // load scene 1
         props.vuePanel.init(); // vue panel init
+    };
+
+    const __init_popup_ = (props) => {
+        require([
+            "esri/geometry/Point"
+        ], (Point) => {
+            const threshold = 1;
+            // bind on drag event
+            const firePopup = () => {
+                let items = props.staticGLayer.graphics.items.map((x) => x.attributes);
+                items = items.filter((x) => x && x.popup);
+                items.forEach((item) => {
+                    let lon = item.lon, lat = item.lat;
+                    let screen_point = props.view.toScreen(new Point({
+                        spatialReference: props.view.spatialReference,
+                        longitude: lon,
+                        latitude: lat
+                    }));
+                    let map_point = props.view.toMap(screen_point);
+                    let dom = $(tools.identify(item.id));
+                    dom.css({
+                        "left": `${screen_point.x}px`,
+                        "top": `${screen_point.y - dom.height()}px`
+                    });
+                    item.extend = !!(props.view.scale < 1000000);
+                    item.switch = !!(map_point && Math.abs(map_point.longitude - lon) <= threshold &&
+                        Math.abs(map_point.latitude - lat) <= threshold);
+                });
+            };
+            props.popupEventId = setInterval(() => firePopup(), 100);
+            tools.safe_on(props.view, "pointer-move", firePopup);
+            tools.safe_on(props.view, "pointer-up", firePopup);
+            tools.safe_on(props.view, "pointer-enter", firePopup);
+            tools.safe_on(props.view, "resize", firePopup);
+        });
     };
 
     const __init__ = (props) => {
@@ -181,7 +191,9 @@ export var SceneManager = () => {
                     props.staticGLayer = new GraphicsLayer();
                     // 2. init ships and stations (just add to map)
                     __init_ship_and_stations_(props.staticGLayer, props);
-                    // 3. init scenes (set props and load first scene)
+                    // 3. init popup event
+                    __init_popup_(props);
+                    // 4. init scenes (set props and load first scene)
                     __init_scenes_(props);
                 }, (error)=> {
                     tools.mutter(error, "error");

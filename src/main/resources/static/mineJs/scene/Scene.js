@@ -19,6 +19,12 @@ const INNER_DOMS = new Map();
  * @type {any} default origin
  */
 let LAST_SCENE;
+/**
+ * generate a event name
+ *
+ * @param Factory subclass of Scene
+ * @returns {string} eventName
+ */
 const GEN_EVENT_NAME = (Factory) => {
     if (Scene.isPrototypeOf(Factory)) {
         return "ZX_EVENT_" + Factory.name;
@@ -114,19 +120,10 @@ export class Scene {
             }
         }
         // save handle of current scene
-        LAST_SCENE = this;
+        tools.watch("curSceneHandle", LAST_SCENE = this);
         // execute load function
         if (typeof (this[INNER_ON_LOAD]) === "function") {
             this[INNER_ON_LOAD]();
-        }
-        // execute update in step of render
-        if (typeof (this[INNER_ON_UPDATE]) === "function") {
-            let tick = 0, inner_func = () => {
-                if (tick = this[INNER_ON_UPDATE]()) {
-                    this.onUpdateEventId = setTimeout(inner_func, tick);
-                }
-            };
-            this.onUpdateEventId = setTimeout(inner_func, tick);
         }
         // set title name
         if (this.name) {
@@ -173,6 +170,15 @@ export class Scene {
             } catch (e) {
                 tools.mutter(e, "error");
             }
+        }
+        // execute update in step of render
+        if (typeof (this[INNER_ON_UPDATE]) === "function") {
+            let tick = 0, inner_func = () => {
+                if (tick = this[INNER_ON_UPDATE]()) {
+                    this.onUpdateEventId = setTimeout(inner_func, tick);
+                }
+            };
+            this.onUpdateEventId = setTimeout(inner_func, tick);
         }
     }
 }

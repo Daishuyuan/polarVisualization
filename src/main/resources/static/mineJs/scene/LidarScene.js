@@ -9,6 +9,11 @@ import { AntarcticaScene } from "./AntarcticaScene.js"
 export class LidarScene extends Scene {
     constructor(props) {
         super(props);
+        super.name = "激光雷达场景";
+        super.menu = [{
+            name: "返回",
+            event: AntarcticaScene
+        }];
         require([
             "esri/Graphic",
             "esri/geometry/Point"
@@ -34,22 +39,20 @@ export class LidarScene extends Scene {
                 }
             });
         });
-        if (props.staticGLayer) {
-            props.staticGLayer.add(this.model);
+        super.viewField = {
+            target: this.model,
+            tilt: 80
+        };
+        if (this.staticGLayer) {
+            this.staticGLayer.add(this.model);
         }
     }
 
-    load() {
-        super.themeInit({
-            name: "激光雷达场景",
-            menu: [{
-                name: "返回",
-                event: Scene.names.get(AntarcticaScene.name)
-            }],
-            viewField: {
-                target: this.model,
-                tilt: 80
-            }
-        });
+    onLoad() {
+
+    }
+
+    onClose() {
+
     }
 }

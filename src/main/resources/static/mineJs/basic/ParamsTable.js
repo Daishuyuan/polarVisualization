@@ -20,6 +20,7 @@ export var PARAMS_TABLE = {
         "SCENE_DATA_URL": "/api/scenes", // link scene data url
         "TABLE_DEBUG": false, // table debug model switch
         "USE_ERROR_LOG": false, // notice error log switch
+        "MENU_ID": "menu", // menu id
         "SCENES_LIST": [ GlobalScene, LidarScene, AntarcticaScene, ArcticScene] // current scenes list
     },
     events: {

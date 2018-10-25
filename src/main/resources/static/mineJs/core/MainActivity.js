@@ -24,6 +24,7 @@ import { DataPublisher } from "../basic/DataPublisher.js";
             scenesUrl: ptable.constants.SCENE_DATA_URL,
             publisher: publisher,
             table_debug: ptable.constants.TABLE_DEBUG,
+            menuId: ptable.constants.MENU_ID,
             scenes: ptable.constants.SCENES_LIST
         });
     } catch (e) {

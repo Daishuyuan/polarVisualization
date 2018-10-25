@@ -19,6 +19,12 @@ const INNER_DOMS = new Map();
  * @type {any} default origin
  */
 let LAST_SCENE;
+const GEN_EVENT_NAME = (Factory) => {
+    if (Scene.isPrototypeOf(Factory)) {
+        return "ZX_EVENT_" + Factory.name;
+    }
+    return tools.guid();
+};
 
 /**
  * super class of all scenes
@@ -32,18 +38,20 @@ export class Scene {
         if (!props.wkid) {
             tools.mutter("wkid can't be null or undefined.", "error");
         }
-        const PREFIX_WKID = "ZX_EVENT_";
+        this.viewField = undefined;
+        this.menu = undefined;
+        this.name = undefined;
+        this.staticGLayer = props.staticGLayer;
         this._vuePanel = props.vuePanel;
         this._tableViewId = props.container;
         this._menuId = props.menuId;
         this._map = props.map;
         this._view = props.view;
         this._factory = props.factory;
-        this._wkid = props.wkid;
+        this._wkid = this.__proto__.constructor.name;
         this._scenesUrl = props.scenesUrl;
         this._recoverBtn = props.recoverBtn;
-        this._curProps = null;
-        this._eventName = PREFIX_WKID + props.wkid;
+        this._eventName = GEN_EVENT_NAME(this.__proto__.constructor);
         // this._curScene = null;
         // this._preDataUrl = props.preDataUrl;
         // this._staticGLayer = props.staticGLayer;
@@ -60,19 +68,29 @@ export class Scene {
         return SCENE_NAMES;
     }
 
+    // get global map
+    get map() {
+        return this._map;
+    }
+
+    // get view
+    get view() {
+        return this._view;
+    }
+
     recoverSite() {
-        let props = this._curProps;
-        if(props && this._map && this._view && props.viewField) {
-            this._view.goTo(props.viewField, {
+        if(this._map && this._view && this.viewField) {
+            this._view.goTo(this.viewField, {
                 animate: true
             });
         }
     }
 
     // do the work of themes initialization
-    themeInit(props) {
+    themeInit() {
         const INNER_ON_CLOSE = "onClose";
         const INNER_ON_UPDATE = "onUpdate";
+        const INNER_ON_LOAD = "onLoad";
         // set title recover button
         $(tools.identify(this._recoverBtn)).click(() => {
             this.recoverSite();
@@ -97,6 +115,10 @@ export class Scene {
         }
         // save handle of current scene
         LAST_SCENE = this;
+        // execute load function
+        if (typeof (this[INNER_ON_LOAD]) === "function") {
+            this[INNER_ON_LOAD]();
+        }
         // execute update in step of render
         if (typeof (this[INNER_ON_UPDATE]) === "function") {
             let tick = 0, inner_func = () => {
@@ -106,23 +128,23 @@ export class Scene {
             };
             this.onUpdateEventId = setTimeout(inner_func, tick);
         }
-        // save current props
-        this._curProps = props;
         // set title name
-        if (props.name) {
-            this._vuePanel.application.title = props.name;
-            tools.watch("curScene", `current scene:${props.name}-${this._wkid}-${this._eventName}`);
+        if (this.name) {
+            this._vuePanel.application.title = this.name;
+            tools.watch("curScene", `current scene:${this.name}-${this._wkid}-${this._eventName}`);
         }
         // common process
-        let delay = new DelayTime(0, 0.1);
-        $(this._menuId).children().hide().show(); // reactivate animation in menu elements
-        this._vuePanel.application.mbuttons = props.menu.map((x) => {
-            return {
-                name: x.name,
-                delay: delay.next(),
-                event: x.event
-            }
-        });
+        if (this.hasOwnProperty("menu")) {
+            let delay = new DelayTime(0, 0.1);
+            $(this._menuId).children().hide().show(); // reactivate animation in menu elements
+            this._vuePanel.application.mbuttons = this.menu.map((x) => {
+                return {
+                    name: x.name,
+                    delay: delay.next(),
+                    event:  GEN_EVENT_NAME(x.event)
+                }
+            });
+        }
         // look at defined view field
         this.recoverSite();
         // init tables
@@ -134,6 +156,7 @@ export class Scene {
         } else {
             try {
                 let dom_cache = [];
+                INNER_DOMS.set(this._wkid, dom_cache);
                 tools.req(`${this._scenesUrl}/${this._wkid}`).then((scene) => {
                     if (scene.hasOwnProperty("tableLayer")) {
                         for (let name in scene.tableLayer) {
@@ -147,7 +170,6 @@ export class Scene {
                         tools.mutter("tableLayer isn't exist.", "error");
                     }
                 });
-                INNER_DOMS.set(this._wkid, dom_cache);
             } catch (e) {
                 tools.mutter(e, "error");
             }

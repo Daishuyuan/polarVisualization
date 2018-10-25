@@ -16,9 +16,9 @@ const INNER_DOMS = new Map();
 /**
  * record well known id of current loaded scene
  *
- * @type {null} default origin
+ * @type {any} default origin
  */
-let CUR_SCENE = null;
+let LAST_SCENE;
 
 /**
  * super class of all scenes
@@ -71,18 +71,44 @@ export class Scene {
 
     // do the work of themes initialization
     themeInit(props) {
+        const INNER_ON_CLOSE = "onClose";
+        const INNER_ON_UPDATE = "onUpdate";
         // set title recover button
         $(tools.identify(this._recoverBtn)).click(() => {
             this.recoverSite();
         });
         // clear before status
-        if(CUR_SCENE && INNER_DOMS.has(CUR_SCENE)) {
-            INNER_DOMS.get(CUR_SCENE).forEach((dom) => {
-                dom.hide();
-            });
+        if (LAST_SCENE) {
+            // remove current scene update event
+            if (LAST_SCENE.hasOwnProperty("onUpdateEventId")) {
+                clearTimeout(LAST_SCENE.onUpdateEventId);
+                delete LAST_SCENE.onUpdateEventId;
+            }
+            // hide all tables in last scene
+            if(INNER_DOMS.has(LAST_SCENE._wkid)) {
+                INNER_DOMS.get(LAST_SCENE._wkid).forEach((dom) => {
+                    dom.hide();
+                });
+            }
+            // execute close function in last scene
+            if (typeof(LAST_SCENE[INNER_ON_CLOSE]) === "function") {
+                LAST_SCENE[INNER_ON_CLOSE]();
+            }
         }
+        // save handle of current scene
+        LAST_SCENE = this;
+        // execute update in step of render
+        if (typeof (this[INNER_ON_UPDATE]) === "function") {
+            let tick = 0, inner_func = () => {
+                if (tick = this[INNER_ON_UPDATE]()) {
+                    this.onUpdateEventId = setTimeout(inner_func, tick);
+                }
+            };
+            this.onUpdateEventId = setTimeout(inner_func, tick);
+        }
+        // save current props
         this._curProps = props;
-        CUR_SCENE = this._wkid;
+        // set title name
         if (props.name) {
             this._vuePanel.application.title = props.name;
             tools.watch("curScene", `current scene:${props.name}-${this._wkid}-${this._eventName}`);

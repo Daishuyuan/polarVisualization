@@ -28,7 +28,7 @@ export class LidarScene extends Scene {
                         height: 80, //8,
                         depth: 50, //5,
                         resource: {
-                            href: "./models/Lidar/lidar.json"
+                            href: "./models/Lidar/lidar_refine.json"
                         }
                     }]
                 }

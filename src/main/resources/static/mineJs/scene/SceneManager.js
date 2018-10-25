@@ -188,6 +188,7 @@ export var SceneManager = () => {
                 });
             });
         } else {
+            // only init scenes without global map
             __init_scenes_(props);
         }
     };

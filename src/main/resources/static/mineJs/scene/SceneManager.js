@@ -71,6 +71,73 @@ function init_ships(layer, props, ships) {
 }
 
 /**
+ * add stations into our global map
+ *
+ * @param layer graphic layer
+ * @param props essential properties
+ * @param stations detail of stations
+ */
+function init_stations(layer, props, stations) {
+    require([
+        "esri/Graphic"
+    ], (Graphic) => {
+        let station_cache = [];
+        stations.forEach((station) => {
+            let lon = parseFloat(station.lon), lat = parseFloat(station.lat);
+            let eventName = `${station.name}_event`;
+            let station_model = null;
+            let handle = {
+                id: `${station.name}_id`,
+                name: station.name,
+                lon: station.lon,
+                lat: station.lat,
+                switch: true,
+                extend: false,
+                event: eventName,
+                popup: true
+            };
+            if (!isNaN(lon) && !isNaN(lat)) {
+                station_model = new Graphic({
+                    geometry: {
+                        type: "point",
+                        x: lon,
+                        y: lat,
+                        z: -7
+                    },
+                    symbol: {
+                        type: "point-3d",
+                        symbolLayers: [{
+                            type: "object",
+                            width: 30,
+                            height: 30,
+                            depth: 30,
+                            resource: {
+                                href: "./models/Ship/warShip.json"
+                            }
+                        }]
+                    },
+                    attributes: handle
+                });
+                station_cache.push(station_model);
+                props.vuePanel.application.popups.push(handle);
+                (function(station_model) {
+                    props.vuePanel.popupEvents.set(eventName, () => {
+                        props.view.goTo({
+                            target: station_model,
+                            tilt: 60
+                        }).then(() => {
+                            tools.getEventByName(ptable.events.SHIP_LOAD_EVENT)(station_model);
+                        });
+                    });
+                })(station_model);
+            }
+        });
+        // add all station
+        layer.addMany(station_cache);
+    });
+}
+
+/**
  * This is a manager to manage scenes and init them
  * 1. init map and view (global map)
  * 2. init ships and stations (just add to map)
@@ -90,7 +157,7 @@ export var SceneManager = () => {
                 init_ships(layer, props, common.ships);
             }
             if (common.hasOwnProperty("stations")) {
-
+                init_stations(layer,props,common.stations);
             }
             props.map.add(layer);
         });

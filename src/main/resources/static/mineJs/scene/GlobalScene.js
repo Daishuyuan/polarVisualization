@@ -10,7 +10,6 @@ import { ArcticScene } from "./ArcticScene.js"
 export class GlobalScene extends Scene {
     constructor(props) {
         super(props);
-        this.ROLL_TICK = 100;
         super.name = "全球尺度场景";
         super.menu = [{
             name: "南极区域场景",

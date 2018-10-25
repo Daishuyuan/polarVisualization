@@ -16,8 +16,9 @@ export class LidarScene extends Scene {
         }];
         require([
             "esri/Graphic",
+            "esri/Camera",
             "esri/geometry/Point"
-        ], (Graphic) => {
+        ], (Graphic, Camera, Point) => {
             this.model = new Graphic({
                 geometry: {
                     type: "point",
@@ -29,20 +30,34 @@ export class LidarScene extends Scene {
                     type: "point-3d",
                     symbolLayers: [{
                         type: "object",
-                        width: 50, //5,
-                        height: 80, //8,
-                        depth: 50, //5,
+                        width: 5, //5,
+                        height: 8, //8,
+                        depth: 5, //5,
                         resource: {
                             href: "./models/Lidar/lidar_refine.json"
                         }
                     }]
                 }
             });
+            this.lidar_position = new Point({
+                x: 76.3706,
+                y: -69.3735,
+                z: 0
+            });
+
+            this.camera_position = new Point({
+                x: this.lidar_position.x - 0.0011,
+                y: this.lidar_position.y,
+                z: 31
+            });
+
+            super.viewField = new Camera({
+                position: this.camera_position,
+                heading: 95,
+                tilt: 73
+            });
         });
-        super.viewField = {
-            target: this.model,
-            tilt: 80
-        };
+
         if (this.staticGLayer) {
             this.staticGLayer.add(this.model);
         }

@@ -1,14 +1,19 @@
 package com.shou.polar;
 
 import com.shou.polar.component.ResUpdateListener;
+import com.shou.polar.process.LidarDataProcessor;
+import com.shou.polar.service.TargetPathScheduledTaskService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+@EnableScheduling
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 public class PolarApplication {
     private static final String PUSH_HEAD = "data:";
@@ -35,7 +40,11 @@ public class PolarApplication {
     }
 
     public static void main(String[] args) {
-        // run our application now
+        // 运行代码
         SpringApplication.run(PolarApplication.class, args);
+
+        // 数据装配
+        TargetPathScheduledTaskService.addTaskSchedule(new LidarDataProcessor());
+        TargetPathScheduledTaskService.configAndRun();
     }
 }

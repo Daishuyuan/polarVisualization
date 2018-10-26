@@ -17,11 +17,11 @@ import java.util.*;
 
 @Service
 @ControllerAdvice
-public class BackToFrontAdvice {
-    private final Logger logger = Logger.getLogger(BackToFrontAdvice.class);
+public class ControllersAdviceService {
+    private final Logger logger = Logger.getLogger(ControllersAdviceService.class);
     private final Map<String, List<String>> ERROR_POOL;
 
-    public BackToFrontAdvice() {
+    public ControllersAdviceService() {
         ERROR_POOL = Collections.synchronizedMap(new HashMap<>());
     }
 

@@ -25,7 +25,8 @@ import { DataPublisher } from "../basic/DataPublisher.js";
             publisher: publisher,
             table_debug: ptable.constants.TABLE_DEBUG,
             menuId: ptable.constants.MENU_ID,
-            scenes: ptable.constants.SCENES_LIST
+            scenes: ptable.constants.SCENES_LIST,
+            demonstrate: ptable.constants.DEMONSTRATE_EVENT
         });
     } catch (e) {
         tools.mutter(`outermost error msg: ${e}`, "fatal");

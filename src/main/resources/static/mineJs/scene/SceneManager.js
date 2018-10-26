@@ -1,4 +1,4 @@
-import { TableFactory } from "../diagram/TableFactory.js";
+import { TableFactory, CHARTLIST, CHART_UNIQUE } from "../diagram/TableFactory.js";
 import { Tools as tools } from "../basic/BasicTools.js";
 import { PARAMS_TABLE as ptable} from "../basic/ParamsTable.js";
 import { Scene } from "./Scene.js";
@@ -127,6 +127,37 @@ function init_stations(layer, props, stations) {
     });
 }
 
+function init_demonstration(props) {
+    if(props.demonstrate){
+        setInterval(()=>{
+            CHARTLIST.forEach(chart=>{
+                switch (chart[CHART_UNIQUE]) {
+                    case "frequency":
+                    case "line_datazoom":
+                    case "line_geo":
+                    case "line_geo_all":
+                    case "pointCount":
+                    case "wave":
+                        break;
+                    case "heatmap":
+                        break;
+                    case "complete":
+                    case "gauge":
+                    case "ringComplete":
+                    case "liquidFill":
+                        break;
+                    case "counter":
+                        break;
+                    case "windRose":
+                    case "roomAlarm":
+                    case "fileType":
+                        break;
+                }
+            });
+        },1000);
+    }
+}
+
 /**
  * This is a manager to manage scenes and init them
  * 1. init map and view (global map)
@@ -252,6 +283,8 @@ export var SceneManager = () => {
                     __init_popup_(props);
                     // 4. init scenes (set props and load first scene)
                     __init_scenes_(props);
+                    // 5. init demonstration
+                    init_demonstration(props);
                 }, (error)=> {
                     tools.mutter(error, "error");
                 });

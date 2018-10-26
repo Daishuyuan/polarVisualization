@@ -26,6 +26,9 @@ import {Tools as tools} from "../basic/BasicTools.js"
 import {PARAMS_TABLE as ptable} from "../basic/ParamsTable.js"
 import {TYPE_ECHARTS} from "../basic/DataPublisher.js"
 
+export let CHARTLIST = [];
+export const CHART_UNIQUE = "DSY_CHART_UNIQUE";// chart unique sign
+
 export class TableFactory {
     constructor() {
         const NO_MARGIN = "margin: 0px"; // no margin style
@@ -72,8 +75,10 @@ export class TableFactory {
         function loadChart(node) {
             let dom = node.dom;
             let myChart = echarts.init(dom[0]);
+            myChart[CHART_UNIQUE]=node.url;
+            CHARTLIST.push(myChart);
             $.ajax({
-                url: node.url,
+                url: ptable.constants.CHART_TEMP_URL + node.url,
                 type: "GET",
                 dataType: "json",
                 success: function (option) {

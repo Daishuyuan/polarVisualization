@@ -17,10 +17,12 @@ export var PARAMS_TABLE = {
         "MASK_HTML_PATH": "/cutScene", // cur scene url
         "RECOVER_BTN": "homeTitle", // title button id
         "PRE_DATA_URL": "", // boot url
+        "CHART_TEMP_URL":"/api/diagrams/",// chart template url
         "SCENE_DATA_URL": "/api/scenes", // link scene data url
         "TABLE_DEBUG": false, // table debug model switch
         "USE_ERROR_LOG": false, // notice error log switch
         "MENU_ID": "menu", // menu id
+        "DEMONSTRATE_EVENT":true,// only for demonstration
         "SCENES_LIST": [ GlobalScene, LidarScene, AntarcticaScene, ArcticScene] // current scenes list
     },
     events: {
@@ -28,6 +30,7 @@ export var PARAMS_TABLE = {
         "STATION_LOAD_EVENT": "station_load_event", // station and title change event
         "SHIP_TITLE_CHANGE": "ship_change", // ship and title change event
         "VUE_CONTROL": "vue_control" // get full vue handle event
+
     },
     exists: (event_id) => {
         if (SEARCH_MAP.size <= 0) {

@@ -2,35 +2,11 @@ import { Tools as tools } from "../basic/BasicTools.js";
 import { DelayTime } from "../core/VueLayer.js";
 
 /**
- * record scene which is initialized by SceneManager
- *
- * @type {Map<any, any>} default empty
- */
-const SCENE_NAMES = new Map();
-/**
- * record table doms which is initialized by TableFactory
- *
- * @type {Map<any, any>} default empty
- */
-const INNER_DOMS = new Map();
-/**
  * record well known id of current loaded scene
  *
  * @type {any} default origin
  */
 let LAST_SCENE;
-/**
- * generate a event name
- *
- * @param Factory subclass of Scene
- * @returns {string} eventName
- */
-const GEN_EVENT_NAME = (Factory) => {
-    if (Scene.isPrototypeOf(Factory)) {
-        return "ZX_EVENT_" + Factory.name;
-    }
-    return tools.guid();
-};
 
 /**
  * super class of all scenes
@@ -44,6 +20,7 @@ export class Scene {
         if (!props.wkid) {
             tools.mutter("wkid can't be null or undefined.", "error");
         }
+        this.created_tables = [];
         this.viewField = undefined;
         this.menu = undefined;
         this.name = undefined;
@@ -57,21 +34,22 @@ export class Scene {
         this._wkid = this.__proto__.constructor.name;
         this._scenesUrl = props.scenesUrl;
         this._recoverBtn = props.recoverBtn;
-        this._eventName = GEN_EVENT_NAME(this.__proto__.constructor);
+        this._eventName = Scene.GEN_EVENT_NAME(this.__proto__.constructor);
         // this._curScene = null;
         // this._preDataUrl = props.preDataUrl;
         // this._staticGLayer = props.staticGLayer;
-        SCENE_NAMES.set(this._wkid, this._eventName); // register wkid and eventName
     }
+
+    static GEN_EVENT_NAME(Factory) {
+        if (Scene.isPrototypeOf(Factory)) {
+            return "ZX_EVENT_" + Factory.name;
+        }
+        return tools.guid();
+    };
 
     // this must be override in sub class
     get eventName() {
         return this._eventName;
-    }
-
-    // get eventName by name of sub class
-    static get names() {
-        return SCENE_NAMES;
     }
 
     // get global map
@@ -97,11 +75,15 @@ export class Scene {
         const INNER_ON_CLOSE = "onClose";
         const INNER_ON_UPDATE = "onUpdate";
         const INNER_ON_LOAD = "onLoad";
+        // check existence of private name
+        if (!this.name) {
+            tools.mutter("the name of scene is invalid", "error");
+        }
         // set title recover button
         $(tools.identify(this._recoverBtn)).click(() => {
             this.recoverSite();
         });
-        // clear before status
+        // last scene close or other process
         if (LAST_SCENE) {
             // remove current scene update event
             if (LAST_SCENE.hasOwnProperty("onUpdateEventId")) {
@@ -109,8 +91,8 @@ export class Scene {
                 delete LAST_SCENE.onUpdateEventId;
             }
             // hide all tables in last scene
-            if(INNER_DOMS.has(LAST_SCENE._wkid)) {
-                INNER_DOMS.get(LAST_SCENE._wkid).forEach((dom) => {
+            if(LAST_SCENE.created_tables.length > 0) {
+                LAST_SCENE.created_tables.forEach((dom) => {
                     dom.hide();
                 });
             }
@@ -138,40 +120,34 @@ export class Scene {
                 return {
                     name: x.name,
                     delay: delay.next(),
-                    event:  GEN_EVENT_NAME(x.event)
+                    event:  Scene.GEN_EVENT_NAME(x.event)
                 }
             });
         }
         // look at defined view field
         this.recoverSite();
         // init tables
-        if (INNER_DOMS.has(this._wkid)) {
-            INNER_DOMS.get(this._wkid).forEach((dom) => {
+        if (this.created_tables.length > 0) {
+            this.created_tables.forEach((dom) => {
                 dom.initEvents();
                 dom.show();
             });
         } else {
-            try {
-                let dom_cache = [];
-                INNER_DOMS.set(this._wkid, dom_cache);
-                tools.req(`${this._scenesUrl}/${this._wkid}`).then((scene) => {
-                    if (scene.hasOwnProperty("tableLayer")) {
-                        for (let name in scene.tableLayer) {
-                            if (scene.tableLayer.hasOwnProperty(name)) {
-                                let dom = this._factory.generate(this._tableViewId, scene.tableLayer[name]);
-                                dom.id = `${this._wkid}_${name}`;
-                                dom_cache.push(dom);
-                            }
+            tools.req(`${this._scenesUrl}/${this._wkid}`).then((scene) => {
+                if (scene.hasOwnProperty("tableLayer")) {
+                    for (let name in scene.tableLayer) {
+                        if (scene.tableLayer.hasOwnProperty(name)) {
+                            let dom = this._factory.generate(this._tableViewId, scene.tableLayer[name]);
+                            dom.id = `${this._wkid}_${name}`;
+                            this.created_tables.push(dom);
                         }
-                    } else {
-                        tools.mutter("tableLayer isn't exist.", "error");
                     }
-                });
-            } catch (e) {
-                tools.mutter(e, "error");
-            }
+                } else {
+                    tools.mutter("tableLayer isn't exist.", "error");
+                }
+            });
         }
-        // execute update in step of render
+        // execute update function
         if (typeof (this[INNER_ON_UPDATE]) === "function") {
             let tick = 0, inner_func = () => {
                 if (tick = this[INNER_ON_UPDATE]()) {

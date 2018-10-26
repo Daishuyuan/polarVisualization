@@ -1,12 +1,25 @@
 import { Scene } from "./Scene.js"
+import { AntarcticaScene } from "./AntarcticaScene.js"
+import { ArcticScene } from "./ArcticScene.js"
 
+/**
+ * Global Scene
+ *
+ * @author dsy 2018/9/22
+ */
 export class GlobalScene extends Scene {
     constructor(props) {
-        props.wkid = "GlobalScene";
-        props.eventName = "eventGlobalScene";
         super(props);
+        super.name = "全球尺度场景";
+        super.menu = [{
+            name: "南极区域场景",
+            event: AntarcticaScene
+        }, {
+            name: "北极区域场景",
+            event: ArcticScene
+        }];
         require(["esri/Camera", "esri/geometry/Point"], (Camera, Point) => {
-            this.GLOBAL_VIEW_POINT = new Camera({
+            super.viewField = new Camera({
                 position: new Point({
                     x: 121.23, // lon
                     y: 30.8, // lat
@@ -17,17 +30,11 @@ export class GlobalScene extends Scene {
         });
     }
 
-    load() {
-        super.themeInit({
-            name: "全球尺度场景",
-            menu: [{
-                name: "南极区域场景",
-                event: Scene.names.get("AntarcticaScene")
-            }, {
-                name: "北极区域场景",
-                event: Scene.names.get("ArcticScene")
-            }],
-            viewField: this.GLOBAL_VIEW_POINT
-        });
+    onLoad() {
+
+    }
+
+    onUpdate() {
+
     }
 }

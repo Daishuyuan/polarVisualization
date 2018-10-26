@@ -1,13 +1,40 @@
 import {Tools as tools} from "./BasicTools.js"
 
+/**
+ * mark of echarts subscriber, full-field constants
+ *
+ * @type {string}
+ */
 export var TYPE_ECHARTS = "echarts";
+/**
+ * mark of custom subscriber, full-field constants
+ *
+ * @type {string}
+ */
 export var TYPE_CUSTOM = "custom";
+/**
+ * share resource (this resource is what has been downloaded from server by url)
+ * in this map for that we don't want same url and same resource to download twice.
+ * And we want to notice subscribers to take the real-time resource by removing its url in it.
+ *
+ * @type {Map<any, any>}
+ */
 const SHARE_RES_MAP = new Map();
+/**
+ * subscribers list used to record current subscribers( this means they want download
+ * resource from their url)
+ *
+ * @type {Array}
+ */
 const SUBSCRIBERS = [];
-const USE_ERROR_LOG = true;
 
+/**
+ * used to publish data and pull data from server
+ *
+ * @author dsy zxj 2018/10/23
+ */
 export class DataPublisher {
-    constructor() {
+    constructor(params) {
         // update entity by type
         this._updateData = (entity, data) => {
             switch (entity.type) {
@@ -87,7 +114,7 @@ export class DataPublisher {
                 if (props.length > 0) {
                     // check data updating in props diagram
                     for (let i = 0; i < props.length; ++i) {
-                        if (USE_ERROR_LOG && "error" === props[i]) {
+                        if (!params.use_error_log && "error" === props[i]) {
                             $.ajax("/api/errors").done((data) => {
                                 data.length = Math.min(data.length, 5);
                                 data = ['出错: '].concat(data).join('</br>');

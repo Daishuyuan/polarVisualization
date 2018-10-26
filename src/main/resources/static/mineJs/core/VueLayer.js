@@ -1,5 +1,10 @@
 import { Tools as tools } from "../basic/BasicTools.js"
 
+/**
+ * controller for vue.js used to control the change of main page(index.html)
+ *
+ * @author dsy 2018/9/11
+ */
 export class VueLayer {
     constructor(MASK_HTML_PATH, MAIN_APP_ID) {
         // generate menu events

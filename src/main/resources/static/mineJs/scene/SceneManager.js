@@ -1,19 +1,22 @@
-import { GlobalScene } from "./GlobalScene.js";
-import { AntarcticaScene } from "./AntarcticaScene.js";
-import { ArcticScene } from "./ArcticScene.js"
-import { LidarScene } from "./LidarScene.js"
 import { TableFactory } from "../diagram/TableFactory.js";
 import { Tools as tools } from "../basic/BasicTools.js";
 import { PARAMS_TABLE as ptable} from "../basic/ParamsTable.js";
+import { Scene } from "./Scene.js";
 
+/**
+ * add 3d model of ships into our global map
+ *
+ * @param layer graphic layer
+ * @param props essential properties
+ * @param ships detail of ships
+ */
 function init_ships(layer, props, ships) {
     require([
-        "esri/Graphic",
-        "esri/geometry/Point"
-    ], (Graphic, Point) => {
-        let ship_cache = [], threshold = 1;
+        "esri/Graphic"
+    ], (Graphic) => {
+        let ship_cache = [];
         ships.forEach((ship) => {
-            let lon = parseFloat(ship.lon), lat = parseFloat(ship.lat), dom = null;
+            let lon = parseFloat(ship.lon), lat = parseFloat(ship.lat);
             let eventName = `${ship.name}_event`;
             let ship_model = null;
             let handle = {
@@ -23,7 +26,8 @@ function init_ships(layer, props, ships) {
                 lat: ship.lat,
                 switch: true,
                 extend: false,
-                event: eventName
+                event: eventName,
+                popup: true
             };
             if (!isNaN(lon) && !isNaN(lat)) {
                 ship_model = new Graphic({
@@ -31,15 +35,15 @@ function init_ships(layer, props, ships) {
                         type: "point",
                         x: lon,
                         y: lat,
-                        z: 0
+                        z: -7
                     },
                     symbol: {
                         type: "point-3d",
                         symbolLayers: [{
                             type: "object",
-                            width: 30000,
-                            height: 30000,
-                            depth: 30000,
+                            width: 30,
+                            height: 30,
+                            depth: 30,
                             resource: {
                                 href: "./models/Ship/warShip.json"
                             }
@@ -61,40 +65,89 @@ function init_ships(layer, props, ships) {
                 })(ship_model);
             }
         });
-        // bind on drag event
-        const firePopup = () => {
-            let ships = ship_cache.map((x) => x.attributes);
-            ships.forEach((ship) => {
-                let lon = ship.lon, lat = ship.lat;
-                let screen_point = props.view.toScreen(new Point({
-                    spatialReference: props.view.spatialReference,
-                    longitude: lon,
-                    latitude: lat
-                }));
-                let map_point = props.view.toMap(screen_point);
-                let dom = $(tools.identify(ship.id));
-                dom.css({
-                    "left": `${screen_point.x}px`,
-                    "top": `${screen_point.y - dom.height()}px`
-                });
-                ship.extend = !!(props.view.scale < 1000000);
-                ship.switch = !!(map_point && Math.abs(map_point.longitude - lon) <= threshold &&
-                    Math.abs(map_point.latitude - lat) <= threshold);
-            });
-        };
-        setInterval(() => firePopup(), 100);
-        tools.safe_on(props.view, "pointer-move", firePopup);
-        tools.safe_on(props.view, "pointer-up", firePopup);
-        tools.safe_on(props.view, "pointer-enter", firePopup);
-        tools.safe_on(props.view, "resize", firePopup);
         // add all ships
         layer.addMany(ship_cache);
     });
 }
 
-export var SceneManager = () => {
-    const TABLE_DEBUG = false;
+/**
+ * add stations into our global map
+ *
+ * @param layer graphic layer
+ * @param props essential properties
+ * @param stations detail of stations
+ */
+function init_stations(layer, props, stations) {
+    require([
+        "esri/Graphic"
+    ], (Graphic) => {
+        let station_cache = [];
+        stations.forEach((station) => {
+            let lon = parseFloat(station.lon), lat = parseFloat(station.lat);
+            let eventName = `${station.name}_event`;
+            let station_model = null;
+            let handle = {
+                id: `${station.name}_id`,
+                name: station.name,
+                lon: station.lon,
+                lat: station.lat,
+                switch: true,
+                extend: false,
+                event: eventName,
+                popup: true
+            };
+            if (!isNaN(lon) && !isNaN(lat)) {
+                station_model = new Graphic({
+                    geometry: {
+                        type: "point",
+                        x: lon,
+                        y: lat,
+                        z: -7
+                    },
+                    symbol: {
+                        type: "point-3d",
+                        symbolLayers: [{
+                            type: "object",
+                            width: 30,
+                            height: 30,
+                            depth: 30,
+                            resource: {
+                                href: "./models/Ship/warShip.json"
+                            }
+                        }]
+                    },
+                    attributes: handle
+                });
+                station_cache.push(station_model);
+                props.vuePanel.application.popups.push(handle);
+                (function(station_model) {
+                    props.vuePanel.popupEvents.set(eventName, () => {
+                        props.view.goTo({
+                            target: station_model,
+                            tilt: 60
+                        }).then(() => {
+                            tools.getEventByName(ptable.events.SHIP_LOAD_EVENT)(station_model);
+                        });
+                    });
+                })(station_model);
+            }
+        });
+        // add all station
+        layer.addMany(station_cache);
+    });
+}
 
+/**
+ * This is a manager to manage scenes and init them
+ * 1. init map and view (global map)
+ * 2. init ships and stations (just add to map)
+ * 3. init popup event
+ * 4. init scenes (set props and load first scene)
+ * @author dsy 2018/9/12
+ * @returns {{init: init}} singleton
+ * @constructor singleton
+ */
+export var SceneManager = () => {
     const __init_ship_and_stations_= (layer, props) => {
         $.ajax({
             url: `${props.scenesUrl}/common`,
@@ -104,9 +157,61 @@ export var SceneManager = () => {
                 init_ships(layer, props, common.ships);
             }
             if (common.hasOwnProperty("stations")) {
-
+                init_stations(layer,props,common.stations);
             }
             props.map.add(layer);
+        });
+    };
+
+    const __init_scenes_ = (props) => {
+        let scenes = [];
+        let register = (SceneFactory) => {
+            if (Scene.isPrototypeOf(SceneFactory)) {
+                props.wkid = SceneFactory.name;
+                let scene = new SceneFactory(props);
+                props.vuePanel.menuEvents.set(scene.eventName, () => scene.themeInit());
+                scenes.push(scene);
+            } else {
+                tools.mutter(`${SceneFactory.name} is not a subclass of Scene`, "error");
+            }
+        };
+        props.scenes.forEach((Factory) => register(Factory));
+        scenes[0].themeInit(); // load scene 1
+        props.vuePanel.init(); // vue panel init
+    };
+
+    const __init_popup_ = (props) => {
+        require([
+            "esri/geometry/Point"
+        ], (Point) => {
+            const threshold = 1;
+            // bind on drag event
+            const firePopup = () => {
+                let items = props.staticGLayer.graphics.items.map((x) => x.attributes);
+                items = items.filter((x) => x && x.popup);
+                items.forEach((item) => {
+                    let lon = item.lon, lat = item.lat;
+                    let screen_point = props.view.toScreen(new Point({
+                        spatialReference: props.view.spatialReference,
+                        longitude: lon,
+                        latitude: lat
+                    }));
+                    let map_point = props.view.toMap(screen_point);
+                    let dom = $(tools.identify(item.id));
+                    dom.css({
+                        "left": `${screen_point.x}px`,
+                        "top": `${screen_point.y - dom.height()}px`
+                    });
+                    item.extend = !!(props.view.scale < 1000000);
+                    item.switch = !!(map_point && Math.abs(map_point.longitude - lon) <= threshold &&
+                        Math.abs(map_point.latitude - lat) <= threshold);
+                });
+            };
+            props.popupEventId = setInterval(() => firePopup(), 100);
+            tools.safe_on(props.view, "pointer-move", firePopup);
+            tools.safe_on(props.view, "pointer-up", firePopup);
+            tools.safe_on(props.view, "pointer-enter", firePopup);
+            tools.safe_on(props.view, "resize", firePopup);
         });
     };
 
@@ -114,12 +219,13 @@ export var SceneManager = () => {
         tools.watch("props", props);
         props.factory = new TableFactory();
         // arcgis 3d map renderer
-        if (!TABLE_DEBUG) {
+        if (!props.table_debug) {
             require([
                 "esri/Map",
                 "esri/views/SceneView",
                 "esri/layers/GraphicsLayer"
             ], (Map, SceneView, GraphicsLayer,) => {
+                // 1. init map and view (global map)
                 props.map = new Map({
                     logo: false,
                     basemap: "satellite",
@@ -149,29 +255,20 @@ export var SceneManager = () => {
                 props.view.ui.empty('top-left'); // remove control panel in top left
                 props.view.ui._removeComponents(["attribution"]); // remove "Powered by esri"
                 props.view.when(() => {
-                    // add bounded elements
-                    __init_ship_and_stations_(props.staticGLayer = new GraphicsLayer(), props);
-
-                    // init scenes
-                    let scenes = [];
-                    scenes.push(new GlobalScene(props)); // scene 1
-                    scenes.push(new LidarScene(props)); // scene 2
-                    scenes.push(new AntarcticaScene(props)); // scene 3
-                    scenes.push(new ArcticScene(props)); // scene 4
-                    scenes.forEach((scene) => {
-                        props.vuePanel.menuEvents.set(scene.eventName, () => {
-                            scene.load();
-                            $(tools.identify(props.recoverBtn)).click(() => {
-                                scene.recoverSite();
-                            });
-                        });
-                    }); // load scene
-                    scenes[0].load(); // load scene 1
-                    props.vuePanel.init(); // vue panel init
+                    props.staticGLayer = new GraphicsLayer();
+                    // 2. init ships and stations (just add to map)
+                    __init_ship_and_stations_(props.staticGLayer, props);
+                    // 3. init popup event
+                    __init_popup_(props);
+                    // 4. init scenes (set props and load first scene)
+                    __init_scenes_(props);
                 }, (error)=> {
                     tools.mutter(error, "error");
                 });
             });
+        } else {
+            // only init scenes without global map
+            __init_scenes_(props);
         }
     };
 

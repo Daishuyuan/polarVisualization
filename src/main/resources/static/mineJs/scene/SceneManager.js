@@ -77,14 +77,16 @@ function init_ships(layer, props, ships) {
  * @param props essential properties
  * @param stations detail of stations
  */
+
 function init_stations(layer, props, stations) {
     require([
-        "esri/Graphic"
+        "esri/Graphic",
+        "esri/symbols/IconSymbol3DLayer"
     ], (Graphic) => {
         let station_cache = [];
         stations.forEach((station) => {
             let lon = parseFloat(station.lon), lat = parseFloat(station.lat);
-            let eventName = `${station.name}_event`;
+            // let eventName = `${station.name}_event`;
             let station_model = null;
             let handle = {
                 id: `${station.name}_id`,
@@ -93,26 +95,24 @@ function init_stations(layer, props, stations) {
                 lat: station.lat,
                 switch: true,
                 extend: false,
-                event: eventName,
-                popup: true
+                // event: eventName,
+                popup: true,
+                // url:"./img/ui/location.png"
             };
             if (!isNaN(lon) && !isNaN(lat)) {
                 station_model = new Graphic({
                     geometry: {
                         type: "point",
-                        x: lon,
-                        y: lat,
-                        z: -7
+                        longitude: lon,
+                        latitude: lat
                     },
                     symbol: {
-                        type: "point-3d",
+                        type:"point-3d",
                         symbolLayers: [{
-                            type: "object",
-                            width: 30,
-                            height: 30,
-                            depth: 30,
-                            resource: {
-                                href: "./models/Ship/warShip.json"
+                            type:"icon",
+                            size:20,
+                            resource:{
+                                href: "./img/ui/location.png"
                             }
                         }]
                     },
@@ -120,16 +120,6 @@ function init_stations(layer, props, stations) {
                 });
                 station_cache.push(station_model);
                 props.vuePanel.application.popups.push(handle);
-                (function(station_model) {
-                    props.vuePanel.popupEvents.set(eventName, () => {
-                        props.view.goTo({
-                            target: station_model,
-                            tilt: 60
-                        }).then(() => {
-                            tools.getEventByName(ptable.events.SHIP_LOAD_EVENT)(station_model);
-                        });
-                    });
-                })(station_model);
             }
         });
         // add all station

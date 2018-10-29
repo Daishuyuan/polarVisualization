@@ -10,6 +10,7 @@ export let SceneGenerator = {
      * @param props essential properties
      */
     init_ships: function (props) {
+        tools.mutter("begin - 开始初始化考察船", "timer0");
         require([
             "esri/Graphic"
         ], (Graphic) => {
@@ -68,6 +69,7 @@ export let SceneGenerator = {
             });
             // add all ships
             layer.addMany(ship_cache);
+            tools.mutter("end - 考察船初始化完毕", "timer0");
         });
     },
     /**
@@ -76,6 +78,7 @@ export let SceneGenerator = {
      * @param props essential properties
      */
     init_stations: function (props) {
+        tools.mutter("begin - 开始初始化考察站", "timer1");
         require([
             "esri/Graphic",
             "esri/symbols/IconSymbol3DLayer"
@@ -123,6 +126,7 @@ export let SceneGenerator = {
             });
             // add all station
             layer.addMany(station_cache);
+            tools.mutter("end - 考察站初始化完毕", "timer1");
         });
     },
     /**
@@ -131,6 +135,7 @@ export let SceneGenerator = {
      * @param props essential properties
      */
     init_scenes: function (props) {
+        tools.mutter("begin - 开始初始化场景", "timer2");
         let scenes = [];
         let register = (SceneFactory) => {
             if (Scene.isPrototypeOf(SceneFactory)) {
@@ -140,11 +145,13 @@ export let SceneGenerator = {
                 scenes.push(scene);
             } else {
                 tools.mutter(`${SceneFactory.name} is not a subclass of Scene`, "error");
+                return false;
             }
         };
         props.scenes.forEach((Factory) => register(Factory));
         scenes[0].themeInit(); // load scene 1
         props.vuePanel.init(); // vue panel init
+        tools.mutter("end - 场景初始化完毕", "timer2");
     },
     /**
      * popup initialization
@@ -152,6 +159,8 @@ export let SceneGenerator = {
      * @param props essential properties
      */
     init_popup: function (props) {
+        tools.mutter("begin - 开始初始化气泡", "timer3");
+        props.popupItems = [];
         require([
             "esri/geometry/Point"
         ], (Point) => {
@@ -161,7 +170,7 @@ export let SceneGenerator = {
                 let items = props.staticGLayer.graphics.items.map((x) => x.attributes);
                 items = items.filter((x) => x && x.popup);
                 items.forEach((item) => {
-                    let lon = item.lon, lat = item.lat;
+                    let lon = item.lon, lat = item.lat, items = props.popupItems;
                     let screen_point = props.view.toScreen(new Point({
                         spatialReference: props.view.spatialReference,
                         longitude: lon,
@@ -169,28 +178,32 @@ export let SceneGenerator = {
                     }));
                     let map_point = props.view.toMap(screen_point);
                     let dom = $(tools.identify(item.id));
+                    let testList = items.map(x => x.is(":visible")? tools.hitTest(x, dom): false);
+                    let hitTest = testList.length > 0? testList.reduce((x,y) => x || y): false;
+                    item.extend = !!(props.view.scale < 1000000);
+                    item.switch = !!(map_point && Math.abs(map_point.longitude - lon) <= threshold &&
+                        Math.abs(map_point.latitude - lat) <= threshold && !hitTest);
                     dom.css({
                         "left": `${screen_point.x}px`,
                         "top": `${screen_point.y - dom.height()}px`
                     });
-                    item.extend = !!(props.view.scale < 1000000);
-                    item.switch = !!(map_point && Math.abs(map_point.longitude - lon) <= threshold &&
-                        Math.abs(map_point.latitude - lat) <= threshold);
                 });
             };
-            props.popupEventId = setInterval(() => firePopup(), 100);
+            // props.popupEventId = setInterval(() => firePopup(), 300);
             tools.safe_on(props.view, "pointer-move", firePopup);
-            tools.safe_on(props.view, "pointer-up", firePopup);
-            tools.safe_on(props.view, "pointer-enter", firePopup);
             tools.safe_on(props.view, "resize", firePopup);
+            tools.mutter("end - 气泡初始化完毕", "timer3");
         });
     },
     /**
+     * demonstration initialization
      *
-     * @param props
+     * @param props essential properties
      */
     init_demonstration: function (props) {
         if (props.demonstrate) {
+            const speed = 5000;
+            tools.mutter("begin - 开始初始化演示效果", "timer4");
             setInterval(() => {
                 CHARTLIST.forEach(chart => {
                     let option = chart[1], myChart = chart[0];
@@ -226,7 +239,7 @@ export let SceneGenerator = {
                             basic = +Math.floor(Math.random() * 1000) + 60;
                             myChart.setOption({
                                 title: {
-                                    text: (percent * 100).toFixed(0)
+                                    text: (Math.random() * 100).toFixed(0)
                                 }
                             });
                             break;
@@ -237,7 +250,8 @@ export let SceneGenerator = {
                             break;
                     }
                 });
-            }, 1000);
+            }, speed);
+            tools.mutter("end - 演示效果初始化完毕", "timer4");
         }
     }
 };

@@ -34,6 +34,7 @@ export class Scene {
         this._wkid = this.__proto__.constructor.name;
         this._scenesUrl = props.scenesUrl;
         this._recoverBtn = props.recoverBtn;
+        this._popupItems = props.popupItems;
         this._eventName = Scene.GEN_EVENT_NAME(this.__proto__.constructor);
         // this._curScene = null;
         // this._preDataUrl = props.preDataUrl;
@@ -139,6 +140,7 @@ export class Scene {
                         if (scene.tableLayer.hasOwnProperty(name)) {
                             let dom = this._factory.generate(this._tableViewId, scene.tableLayer[name]);
                             dom.id = `${this._wkid}_${name}`;
+                            this._popupItems.push(dom);
                             this.created_tables.push(dom);
                         }
                     }

@@ -59,21 +59,20 @@ export var SceneManager = () => {
                         props.ships = common.ships;
                         props.stations = common.stations;
                     })).done(() => {
-                        for(let name in SceneGenerator) {
-                            if (typeof (SceneGenerator[name]) === "function") {
-                                SceneGenerator[name](props);
-                                tools.mutter(`${name} is initialized correctly`, "info");
-                            }
-                        }
+                        SceneGenerator.init_ships(props);
+                        SceneGenerator.init_stations(props);
+                        SceneGenerator.init_demonstration(props);
+                        SceneGenerator.init_popup(props);
+                        SceneGenerator.init_scenes(props);
                     });
                 }, (error)=> {
                     tools.mutter(error, "error");
                 });
             });
         } else {
-            // only init scenes without global map
-            SceneGenerator.init_scenes(props);
+            // when in table debug model
             SceneGenerator.init_demonstration(props);
+            SceneGenerator.init_scenes(props);
         }
     };
 

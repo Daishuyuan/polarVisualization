@@ -165,10 +165,11 @@ export let SceneGenerator = {
             "esri/geometry/Point"
         ], (Point) => {
             const threshold = 1;
+            const updateTick = 50;
+            let items = props.staticGLayer.graphics.items.map((x) => x.attributes);
+            items = items.filter((x) => x && x.popup);
             // bind on drag event
             const firePopup = () => {
-                let items = props.staticGLayer.graphics.items.map((x) => x.attributes);
-                items = items.filter((x) => x && x.popup);
                 items.forEach((item) => {
                     let lon = item.lon, lat = item.lat, items = props.popupItems;
                     let screen_point = props.view.toScreen(new Point({
@@ -189,9 +190,7 @@ export let SceneGenerator = {
                     });
                 });
             };
-            // props.popupEventId = setInterval(() => firePopup(), 300);
-            tools.safe_on(props.view, "pointer-move", firePopup);
-            tools.safe_on(props.view, "resize", firePopup);
+            tools.dynamicInterval(firePopup, updateTick);
             tools.mutter("end - 气泡初始化完毕", "timer3");
         });
     },
@@ -204,7 +203,7 @@ export let SceneGenerator = {
         if (props.demonstrate) {
             const speed = 5000;
             tools.mutter("begin - 开始初始化演示效果", "timer4");
-            setInterval(() => {
+            tools.dynamicInterval(() => {
                 CHARTLIST.forEach(chart => {
                     let option = chart[1], myChart = chart[0];
                     switch (option[CHART_UNIQUE]) {

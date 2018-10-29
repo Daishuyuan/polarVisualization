@@ -207,6 +207,23 @@ export var Tools = (() => {
         mutter: (msg, level) => {
             _mutter(msg, level);
         },
+        dynamicInterval: (func, tick) => {
+            let _tick = tick;
+            let timerId = 0;
+            let timer_func = () => {
+                let start = Date.now();
+                if (typeof(func) === "function") {
+                    func();
+                } else {
+                    _mutter("func isn't the type of function.", "error");
+                    return false;
+                }
+                _tick = Math.max(1, tick - (Date.now() - start));
+                timerId = setTimeout(timer_func, _tick);
+            };
+            timer_func();
+            return timerId;
+        },
         hitTest: (a, b) => {
             let topOne = parseFloat(a.css("top")),
                 topTwo = parseFloat(b.css("top")),

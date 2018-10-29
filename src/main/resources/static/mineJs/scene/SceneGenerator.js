@@ -10,7 +10,7 @@ export let SceneGenerator = {
      * @param props essential properties
      */
     init_ships: function (props) {
-        tools.mutter("begin - 开始初始化考察船", "timer0");
+        tools.mutter("begin - 开始初始化考察船", "timer_init_ships");
         require([
             "esri/Graphic"
         ], (Graphic) => {
@@ -69,7 +69,7 @@ export let SceneGenerator = {
             });
             // add all ships
             layer.addMany(ship_cache);
-            tools.mutter("end - 考察船初始化完毕", "timer0");
+            tools.mutter("end - 考察船初始化完毕", "timer_init_ships");
         });
     },
     /**
@@ -78,7 +78,7 @@ export let SceneGenerator = {
      * @param props essential properties
      */
     init_stations: function (props) {
-        tools.mutter("begin - 开始初始化考察站", "timer1");
+        tools.mutter("begin - 开始初始化考察站", "timer_init_stations");
         require([
             "esri/Graphic",
             "esri/symbols/IconSymbol3DLayer"
@@ -126,7 +126,7 @@ export let SceneGenerator = {
             });
             // add all station
             layer.addMany(station_cache);
-            tools.mutter("end - 考察站初始化完毕", "timer1");
+            tools.mutter("end - 考察站初始化完毕", "timer_init_stations");
         });
     },
     /**
@@ -135,7 +135,7 @@ export let SceneGenerator = {
      * @param props essential properties
      */
     init_scenes: function (props) {
-        tools.mutter("begin - 开始初始化场景", "timer2");
+        tools.mutter("begin - 开始初始化场景", "timer_init_scenes");
         let scenes = [];
         let register = (SceneFactory) => {
             if (Scene.isPrototypeOf(SceneFactory)) {
@@ -151,7 +151,7 @@ export let SceneGenerator = {
         props.scenes.forEach((Factory) => register(Factory));
         scenes[0].themeInit(); // load scene 1
         props.vuePanel.init(); // vue panel init
-        tools.mutter("end - 场景初始化完毕", "timer2");
+        tools.mutter("end - 场景初始化完毕", "timer_init_scenes");
     },
     /**
      * popup initialization
@@ -159,7 +159,7 @@ export let SceneGenerator = {
      * @param props essential properties
      */
     init_popup: function (props) {
-        tools.mutter("begin - 开始初始化气泡", "timer3");
+        tools.mutter("begin - 开始初始化气泡", "timer_init_popup");
         props.popupItems = [];
         require([
             "esri/geometry/Point"
@@ -191,7 +191,7 @@ export let SceneGenerator = {
                 });
             };
             tools.dynamicInterval(firePopup, updateTick);
-            tools.mutter("end - 气泡初始化完毕", "timer3");
+            tools.mutter("end - 气泡初始化完毕", "timer_init_popup");
         });
     },
     /**
@@ -202,7 +202,7 @@ export let SceneGenerator = {
     init_demonstration: function (props) {
         if (props.demonstrate) {
             const speed = 5000;
-            tools.mutter("begin - 开始初始化演示效果", "timer4");
+            tools.mutter("begin - 开始初始化演示效果", "timer_init_demonstration");
             tools.dynamicInterval(() => {
                 CHARTLIST.forEach(chart => {
                     let option = chart[1], myChart = chart[0];
@@ -250,7 +250,7 @@ export let SceneGenerator = {
                     }
                 });
             }, speed);
-            tools.mutter("end - 演示效果初始化完毕", "timer4");
+            tools.mutter("end - 演示效果初始化完毕", "timer_init_demonstration");
         }
     }
 };

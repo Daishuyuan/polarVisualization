@@ -74,6 +74,7 @@ export var Tools = (() => {
             if (timer_map.has(level)) {
                 let time = timer_map.get(level) - Date.now();
                 _mutter(`${msg} - ${time}ms`, "info");
+                timer_map.delete(level);
             } else {
                 timer_map.set(level, Date.now());
                 _mutter(msg, "info");

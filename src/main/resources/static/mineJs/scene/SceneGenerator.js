@@ -201,15 +201,14 @@ export let SceneGenerator = {
      */
     init_demonstration: function (props) {
         if (props.demonstrate) {
-            const speed = 5000;
+            const speed = 2500;
             const shift_count = 2;
             let count = 0;
             tools.mutter("begin - 开始初始化演示效果", "timer_init_demonstration");
             tools.dynamicInterval(() => {
-                count += Math.random();
                 CHARTLIST.forEach(chart => {
                     let option = chart[1], myChart = chart[0];
-                    let num = tools.perlinRandom(count, 0, 1);
+                    let num = tools.perlinRandom(count += Math.random(), 0, 1);
                     switch (option[CHART_UNIQUE]) {
                         case "frequency":
                         case "line_datazoom":

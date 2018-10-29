@@ -5,7 +5,7 @@ import {PARAMS_TABLE as ptable} from "./ParamsTable.js";
  *
  * @author dsy 2018/10/22
  */
-export var Tools = (() => {
+export let Tools = (() => {
     // I want to tell this honour with alacrity here( Our Talisman )
     const wxy = [
         `<--  Macho Tears  -->`, `!!;:;!;;;'\`:!!|||!||!||`, `\`'::''''%##&!:::::::;!!`,
@@ -102,14 +102,17 @@ export var Tools = (() => {
         }
 
     };
+    const noise = (n) => {
+        n = (n >> 0xd) ^ n;
+        let nn = (n * (n * n * 0xec4d + 0x131071f) + 0x5208dd0d) & 0x7fffffff;
+        return 1.0 - (nn / 0x40000000);
+    };
     window.watcher = {};
     let inner_lock = false;
     let FULL_FIELD_EVENT_MAP = new Map();
     let LISTENERS_STATS = [];
     _watch("paramsTable", ptable);
     _watch("listenersNum", LISTENERS_STATS);
-    console.error = (str) => _mutter(str, "error");
-    console.warn = (str) => _mutter(str, "warn");
 
     return {
         unique: (array) => {
@@ -162,7 +165,7 @@ export var Tools = (() => {
         hashCode: (strKey, max = 0x7fffffff, min = -0x80000000) => {
             let hash = 0;
             if (!(strKey === undefined || strKey === null || strKey.value === "")) {
-                for (var i = 0; i < strKey.length; i++) {
+                for (let i = 0; i < strKey.length; ++i) {
                     hash = hash * 31 + strKey.charCodeAt(i);
                     hash = intValue(hash, max, min);
                 }
@@ -185,11 +188,6 @@ export var Tools = (() => {
                 type: "GET",
                 dataType: "json"
             });
-        },
-        calRunTime: (callback) => {
-            let curTime = Date.now();
-            callback();
-            return Date.now() - curTime;
         },
         sGuid: () => {
             return 'xxxxxx-xx-4x-yx-xxxxxxxxxx'.replace(/[xy]/g, (c) => {
@@ -243,6 +241,14 @@ export var Tools = (() => {
                 rightBottom = leftTwo + widthTwo > leftOne && leftTwo + widthTwo < leftOne + widthOne
                     && topTwo + heightTwo > topOne && topTwo + heightTwo < topOne + heightOne;
             return leftTop || rightTop || leftBottom || rightBottom;
+        },
+        perlinRandom: (x, min, max) => {
+            let a = Math.abs(max - min) / 4;
+            let intX = parseInt(x);
+            let n0 = noise (intX);
+            let n1 = noise (intX + 1);
+            let weight = x - Math.floor (x);
+            return a * (Math.sin(n0 * (1 - weight)) +  Math.cos(n1 * weight) + 0.5);
         }
     }
 })();

@@ -79,6 +79,7 @@ export var SceneManager = () => {
     return {
         init: (props) => {
             if (props) {
+                tools.watch("tools", tools);
                 __init__(props);
             } else {
                 tools.mutter("props is undefined.", "error");

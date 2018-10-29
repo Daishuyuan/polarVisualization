@@ -53,7 +53,7 @@ export var SceneManager = () => {
                 tools.setEventInApp(ptable.events.VUE_CONTROL, () => props.vuePanel.application);
                 props.view.ui.empty('top-left'); // remove control panel in top left
                 props.view.ui._removeComponents(["attribution"]); // remove "Powered by esri"
-                props.staticGLayer = new GraphicsLayer();
+                props.map.add(props.staticGLayer = new GraphicsLayer());
                 props.view.when(() => {
                     $.when($.ajax({
                         url: `${props.scenesUrl}/common`,

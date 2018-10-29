@@ -43,5 +43,4 @@ public class ApiController {
     public String getThemePropsByName(@PathVariable String name) throws IOException {
         return readFileContentByPath(LOCAL_SCENES_RES_PATH + PolarCts.PATH_SPLIT + name + PolarCts.JSON_SUFFIX);
     }
-
 }

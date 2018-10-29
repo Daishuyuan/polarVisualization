@@ -48,7 +48,7 @@ public class TargetPathScheduledTaskService {
             String configStr = FileUtils.readFileToString(configFile, StandardCharsets.UTF_8); // 读取文件内容
             JsonObject config = GSON.fromJson(configStr, JsonObject.class); // 转换成Json对象格式
             for (DataProcessor processor : PROCESSORS) {
-                if (config.get(processor.getConfigName()) == null) {
+                if (StringUtils.isEmpty(config.get(processor.getConfigName()))) {
                     config.addProperty(processor.getConfigName(), PolarCts.DEFAULT_ERROR_CYCLE_TIME);
                     String configPath = PolarCts.UPDATE_DATA_CONFIG_FILE_PATH;
                     String configName = processor.getConfigName();
@@ -72,12 +72,13 @@ public class TargetPathScheduledTaskService {
     public void processDataByCycle() {
         try {
             BUILDER.delete(0, BUILDER.length());
-            BUILDER.append(SDF.format(new Date())).append(" processDataByCycle executing;\n");
+            BUILDER.append(SDF.format(new Date())).append(" processDataByCycle executing;");
             File configFile = ResourceUtils.getFile(PolarCts.UPDATE_DATA_CONFIG_FILE_PATH); // 读取配置文件
             String configStr = FileUtils.readFileToString(configFile, StandardCharsets.UTF_8); // 读取文件内容
             JsonObject config = GSON.fromJson(configStr, JsonObject.class); // 转换成Json对象格式
             if (!StringUtils.isEmpty(config)) {
                 long wakeTime = new Date().getTime(); // 获取当前时间
+                if (!PROCESSORS.isEmpty()) BUILDER.append("\n");
                 for (DataProcessor processor : PROCESSORS) {
                     final String processorName = processor.getConfigName(); // 获取配置名称
                     final String processorTimeName = processorName + "_" + TIME_STAMP; // 获取数据更新日期名称

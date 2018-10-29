@@ -5,10 +5,7 @@ import { SceneGenerator } from "./SceneGenerator.js";
 
 /**
  * This is a manager to manage scenes and init them
- * 1. init map and view (global map)
- * 2. init ships and stations (just add to map)
- * 3. init popup event
- * 4. init scenes (set props and load first scene)
+ *
  * @author dsy 2018/9/12
  * @returns {{init: init}} singleton
  * @constructor singleton
@@ -53,7 +50,7 @@ export var SceneManager = () => {
                 tools.setEventInApp(ptable.events.VUE_CONTROL, () => props.vuePanel.application);
                 props.view.ui.empty('top-left'); // remove control panel in top left
                 props.view.ui._removeComponents(["attribution"]); // remove "Powered by esri"
-                props.map.add(props.staticGLayer = new GraphicsLayer());
+                props.map.add(props.staticGLayer = new GraphicsLayer());　// add GraphicLayer to map
                 props.view.when(() => {
                     $.when($.ajax({
                         url: `${props.scenesUrl}/common`,

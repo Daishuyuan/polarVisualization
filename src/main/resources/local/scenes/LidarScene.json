@@ -58,14 +58,14 @@
                         "name": "温湿度、压强",
                         "title_class": "title_col",
                         "height": 16,
-                        "url": "/api/diagrams/gauge",
+                        "url": "gauge",
                         "column": "col-md-6",
                         "description": "第一列"
                       },
                       {
                         "type": "chart",
                         "height": 16,
-                        "url": "/api/diagrams/gauge",
+                        "url": "gauge",
                         "column": "col-md-6",
                         "description": "第二列"
                       }
@@ -78,14 +78,14 @@
                     "cols": [{
                         "type": "chart",
                         "height": 10,
-                        "url": "/api/diagrams/gauge",
+                        "url": "gauge",
                         "column": "col-md-6",
                         "description": "第一列"
                       },
                       {
                         "type": "chart",
                         "height": 10,
-                        "url": "/api/diagrams/gauge",
+                        "url": "gauge",
                         "column": "col-md-6",
                         "description": "第二列"
                       }
@@ -99,7 +99,7 @@
                 "name": "环境监控",
                 "title_class": "title_col",
                 "height": 30,
-                "url": "/api/diagrams/roomAlarm",
+                "url": "roomAlarm",
                 "column": "col-md-4",
                 "description": "第二列"
               },
@@ -108,7 +108,7 @@
                 "name": "风向、风力",
                 "title_class": "title_col",
                 "height": 30,
-                "url": "/api/diagrams/windRose",
+                "url": "windRose",
                 "column": "col-md-4",
                 "description": "第三列"
               }
@@ -135,7 +135,7 @@
                 "type": "chart",
                 "title_class": "title_col",
                 "height": 30,
-                "url": "/api/diagrams/gauge",
+                "url": "gauge",
                 "column": "col-md-4",
                 "description": "第一列"
               },
@@ -151,7 +151,7 @@
                       "name": "采样点数",
                       "title_class": "title_col",
                       "height": 13,
-                      "url": "/api/diagrams/pointCount",
+                      "url": "pointCount",
                       "column": "col-md-12",
                       "description": "第一列"
                     }]
@@ -165,7 +165,7 @@
                       "name": "采样频率",
                       "title_class": "title_col",
                       "height": 13,
-                      "url": "/api/diagrams/frequency",
+                      "url": "frequency",
                       "column": "col-md-12",
                       "description": "第一列"
                     }]
@@ -178,7 +178,7 @@
                 "name": "设备波长状态",
                 "title_class": "title_col",
                 "height": 30,
-                "url": "/api/diagrams/wave",
+                "url": "wave",
                 "column": "col-md-4",
                 "description": "第三列"
               }
@@ -216,7 +216,7 @@
                 "title_class": "title_col",
                 "name": "反演数据",
                 "height": 30,
-                "url": "/api/diagrams/heatmap",
+                "url": "heatmap",
                 "column": "col-md-5",
                 "description": "第一列"
               },
@@ -232,7 +232,7 @@
                       "title_class": "title_col",
                       "name": "三分量可视化",
                       "height": 12,
-                      "url": "/api/diagrams/line_geo",
+                      "url": "line_geo",
                       "column": "col-md-12",
                       "description": "第一列"
                     }]
@@ -243,7 +243,7 @@
                     "class": "body_row",
                     "cols": [{
                       "type": "chart",
-                      "url": "/api/diagrams/line_geo",
+                      "url": "line_geo",
                       "height": 9,
                       "column": "col-md-12",
                       "description": "第一列"
@@ -255,7 +255,7 @@
                     "class": "body_row",
                     "cols": [{
                       "type": "chart",
-                      "url": "/api/diagrams/line_geo",
+                      "url": "line_geo",
                       "height": 9,
                       "column": "col-md-12",
                       "description": "第一列"
@@ -295,7 +295,7 @@
                       "title_class": "title_col",
                       "name": "接收文件数量",
                       "height": 13,
-                      "url": "/api/diagrams/counter",
+                      "url": "counter",
                       "column": "col-md-12",
                       "description": "第一列"
                     }]
@@ -309,7 +309,7 @@
                       "title_class": "title_col",
                       "name": "处理文件数量",
                       "height": 13,
-                      "url": "/api/diagrams/counter",
+                      "url": "counter",
                       "column": "col-md-12",
                       "description": "第一列"
                     }]
@@ -322,7 +322,7 @@
                 "name": "完成进度",
                 "height": 18,
                 "column": "col-md-3",
-                "url": "/api/diagrams/ringComplete",
+                "url": "ringComplete",
                 "description": "第二列"
               },
               {
@@ -331,7 +331,7 @@
                 "name": "接收任务完成进度",
                 "height": 14,
                 "column": "col-md-3",
-                "url": "/api/diagrams/complete",
+                "url": "complete",
                 "description": "第三列"
               },
               {
@@ -340,7 +340,7 @@
                 "title_class": "title_col",
                 "column": "col-md-3",
                 "name": "接收文件种类",
-                "url": "/api/diagrams/fileType",
+                "url": "fileType",
                 "description": "第四列"
               }
             ]

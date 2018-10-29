@@ -16,7 +16,6 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
@@ -73,7 +72,7 @@ public class TargetPathScheduledTaskService {
     public void processDataByCycle() {
         try {
             BUILDER.delete(0, BUILDER.length());
-            BUILDER.append("\nprocessDataByCycle executing:\n");
+            BUILDER.append(SDF.format(new Date())).append(" processDataByCycle executing;\n");
             File configFile = ResourceUtils.getFile(PolarCts.UPDATE_DATA_CONFIG_FILE_PATH); // 读取配置文件
             String configStr = FileUtils.readFileToString(configFile, StandardCharsets.UTF_8); // 读取文件内容
             JsonObject config = GSON.fromJson(configStr, JsonObject.class); // 转换成Json对象格式

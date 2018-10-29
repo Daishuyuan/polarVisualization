@@ -76,6 +76,7 @@ export var SceneManager = () => {
         } else {
             // only init scenes without global map
             SceneGenerator.init_scenes(props);
+            SceneGenerator.init_demonstration(props);
         }
     };
 

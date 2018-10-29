@@ -19,7 +19,7 @@ export var PARAMS_TABLE = {
         "PRE_DATA_URL": "", // boot url
         "CHART_TEMP_URL":"/api/diagrams/",// chart template url
         "SCENE_DATA_URL": "/api/scenes", // link scene data url
-        "TABLE_DEBUG": false, // table debug model switch
+        "TABLE_DEBUG": true, // table debug model switch
         "USE_ERROR_LOG": false, // notice error log switch
         "MENU_ID": "menu", // menu id
         "DEMONSTRATE_EVENT":true,// only for demonstration

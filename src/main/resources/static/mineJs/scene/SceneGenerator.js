@@ -193,26 +193,47 @@ export let SceneGenerator = {
         if (props.demonstrate) {
             setInterval(() => {
                 CHARTLIST.forEach(chart => {
-                    switch (chart[CHART_UNIQUE]) {
+                    let option = chart[1], myChart = chart[0];
+                    switch (option[CHART_UNIQUE]) {
                         case "frequency":
                         case "line_datazoom":
                         case "line_geo":
                         case "line_geo_all":
                         case "pointCount":
                         case "wave":
+                            let data_buffer;
+                            for (let i = 0; i < 5; i++) {
+                                data_buffer = option.series[0].data[i];
+                                option.series[0].data.shift();
+                                option.series[0].data.push(data_buffer);
+                            }
+                            myChart.setOption(option);
                             break;
                         case "heatmap":
                             break;
                         case "complete":
                         case "gauge":
+                            option.series[0].data[0].value = (Math.random() * 100).toFixed(2);
+                            myChart.setOption(option, true);
+                            break;
                         case "ringComplete":
                         case "liquidFill":
+                            option.series[0].data[0] = Math.random().toFixed(2);
+                            myChart.setOption(option, true);
                             break;
                         case "counter":
+                            let basic = 400;
+                            basic = +Math.floor(Math.random() * 1000) + 60;
+                            myChart.setOption({
+                                title: {
+                                    text: (percent * 100).toFixed(0)
+                                }
+                            });
                             break;
                         case "windRose":
                         case "roomAlarm":
                         case "fileType":
+
                             break;
                     }
                 });

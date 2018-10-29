@@ -75,21 +75,21 @@ export class TableFactory {
         function loadChart(node) {
             let dom = node.dom;
             let myChart = echarts.init(dom[0]);
-            myChart[CHART_UNIQUE]=node.url;
-            CHARTLIST.push(myChart);
             $.ajax({
                 url: ptable.constants.CHART_TEMP_URL + node.url,
                 type: "GET",
                 dataType: "json",
                 success: function (option) {
+                    option[CHART_UNIQUE]=node.url;
+                    CHARTLIST.push([myChart,option]);
                     myChart.setOption(option);
                     myChart.resize();
-                    if (option.series[0].type === "gauge") {
-                        setInterval(function () {
-                            option.series[0].data[0].value = (Math.random() * 100 + 1).toFixed(1) - 0;
-                            myChart.setOption(option, true);
-                        }, 4000);
-                    }
+                    // if (option.series[0].type === "gauge") {
+                    //     setInterval(function () {
+                    //         option.series[0].data[0].value = (Math.random() * 100 + 1).toFixed(1) - 0;
+                    //         myChart.setOption(option, true);
+                    //     }, 4000);
+                    // }
                 }
             });
             return myChart;

@@ -36,6 +36,13 @@ export class Scene {
         this._recoverBtn = props.recoverBtn;
         this._popupItems = props.popupItems;
         this._eventName = Scene.GEN_EVENT_NAME(this.__proto__.constructor);
+        this._recoverSite =() => {
+            if(this._map && this._view && this.viewField) {
+                this._view.goTo(this.viewField, {
+                    animate: true
+                });
+            }
+        };
         // this._curScene = null;
         // this._preDataUrl = props.preDataUrl;
         // this._staticGLayer = props.staticGLayer;
@@ -63,14 +70,6 @@ export class Scene {
         return this._view;
     }
 
-    recoverSite() {
-        if(this._map && this._view && this.viewField) {
-            this._view.goTo(this.viewField, {
-                animate: true
-            });
-        }
-    }
-
     // do the work of themes initialization
     themeInit() {
         const INNER_ON_CLOSE = "onClose";
@@ -82,7 +81,7 @@ export class Scene {
         }
         // set title recover button
         $(tools.identify(this._recoverBtn)).click(() => {
-            this.recoverSite();
+            this._recoverSite();
         });
         // last scene close or other process
         if (LAST_SCENE) {
@@ -102,8 +101,6 @@ export class Scene {
                 LAST_SCENE[INNER_ON_CLOSE]();
             }
         }
-        // save handle of current scene
-        tools.watch("curSceneHandle", LAST_SCENE = this);
         // execute load function
         if (typeof (this[INNER_ON_LOAD]) === "function") {
             this[INNER_ON_LOAD]();
@@ -126,7 +123,7 @@ export class Scene {
             });
         }
         // look at defined view field
-        this.recoverSite();
+        this._recoverSite();
         // init tables
         if (this.created_tables.length > 0) {
             this.created_tables.forEach((dom) => {
@@ -158,5 +155,7 @@ export class Scene {
             };
             this.onUpdateEventId = setTimeout(inner_func, tick);
         }
+        // save handle of current scene
+        tools.watch("curSceneHandle", LAST_SCENE = this);
     }
 }

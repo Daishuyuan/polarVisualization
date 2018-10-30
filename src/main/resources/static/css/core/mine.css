@@ -148,3 +148,56 @@ body {
 [v-cloak] {
     display: none;
 }
+
+.WXY_floating_window {
+    position: relative;
+    left: 14px;
+    font-size: 11px;
+    background-color: #000;
+    color: #fff;
+    padding: 4px 8px;
+    font-family: 'Oswald', sans-serif;
+    transition: background-color 200ms ease-out;
+    opacity: 0.7;
+}
+
+.WXY_floating_window_obliteration {
+    position: relative;
+    font-size: 11px;
+    background-color: #000;
+    color: #fff;
+    padding: 4px 8px;
+    font-family: 'Oswald', sans-serif;
+    transition: background-color 200ms ease-out;
+    opacity: 0.7;
+}
+
+.WXY_floating_window_obliteration:hover {
+    box-shadow: 0 0 15px 1px wheat;
+}
+
+.WXY_floating_window:hover {
+    box-shadow: 0 0 15px 1px blue;
+}
+
+.WXY_line {
+    height: 12px;
+    width: 8px;
+    border-left: 2px solid black;
+    transform: skew(-40deg);
+    position: relative;
+    left: 8px;
+}
+
+.WXY_img_font {
+    display: flex;
+    align-items: center;
+}
+
+.WXY_label_title {
+    font-size: larger;
+}
+
+.WXY_label {
+    position: absolute;
+}

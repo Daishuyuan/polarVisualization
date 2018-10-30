@@ -107,8 +107,8 @@ export class TableFactory {
                                 switch (node.type) {
                                     case PANEL_SIGN:
                                         if (node.hasOwnProperty("src")) {
-                                            let height = node.height? node.height: "100%";
-                                            let panel = `<div class="${node.src}" style="height:${height};"></div>`;
+                                            let height = node.height? node.height: 100;
+                                            let panel = `<div class="${node.src}" style="height:${height}%;"></div>`;
                                             tbcnt.push(panel);
                                         } else {
                                             errors.push("type of panel don't define source of css.");

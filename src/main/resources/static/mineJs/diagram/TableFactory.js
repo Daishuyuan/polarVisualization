@@ -158,7 +158,7 @@ export class TableFactory {
                                         __row_owner__(node.rows);
                                         break;
                                     default:
-                                        tools.mutter(`unknown type:${node.type ? node.type : "null"}`, "error");
+                                        errors.push(`unknown type:${node.type ? node.type : "null"}`);
                                         break;
                                 }
                                 tbcnt.push("</div>");

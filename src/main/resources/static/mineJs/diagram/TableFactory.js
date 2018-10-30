@@ -178,7 +178,7 @@ export class TableFactory {
                     for (let i = 0; i < rows.length; i++) {
                         if (rows[i]) {
                             let row = rows[i];
-                            let row_style = `height:${nstd(row.height)}%;${ROW_MARGIN_STYLE};background-color: #0000;`;
+                            let row_style = `height:${nstd(row.height)}%;${ROW_MARGIN_STYLE};`;
                             tbcnt.push(`<div class='row ${sstd(row.class)}' style='${row_style}'>`);
                             __col_owner__(i, row, row.cols);
                             tbcnt.push("</div>");

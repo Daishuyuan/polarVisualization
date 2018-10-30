@@ -6,16 +6,16 @@
  * -----------------> rows [] -> row {} -> description 行描述信息
  * --------------------------------------> height 行高度 >= 0
  * --------------------------------------> class css样式类名
- * --------------------------------------> cols [] -> col {} -> type 类型 = title/chart/capsule
+ * --------------------------------------> cols [] -> col {} -> type 类型 = title/chart/capsule/panel
  * -----------------------------------------------------------> name(title/chart) 标题名称
  * -----------------------------------------------------------> title_class(chart) 标题的css类名
  * -----------------------------------------------------------> title_height(chart) 标题高度
  * -----------------------------------------------------------> style(title/chart) 主体的css类名
- * -----------------------------------------------------------> height(title/chart) 列高度 >= 0
+ * -----------------------------------------------------------> height(title/chart/panel) 列高度 >= 0
  * -----------------------------------------------------------> description(all) 列描述信息
  * -----------------------------------------------------------> column(all) 列样式，如col-md-?
  * -----------------------------------------------------------> url(chart) 图表加载的数据源地址
- * -----------------------------------------------------------> src(chart) 加载的数据源的名称
+ * -----------------------------------------------------------> src(chart/panel) 加载的数据源的名称
  * -----------------------------------------------------------> rows(capsule) capsule中的行元素
  * -----------------------------------------------------------> data_url(chart) 数据url拉取地址
  * -----------------------------------------------------------> data_proc(chart) 拉取到数据后的处理函数Str类型
@@ -40,6 +40,7 @@ export class TableFactory {
         const TITLE_SIGN = "title";
         const CHART_SIGN = "chart";
         const CAPSULE_SIGN = "capsule";
+        const PANEL_SIGN = "panel";
 
         // load event and update handle event
         function loadEvent(node) {
@@ -84,12 +85,6 @@ export class TableFactory {
                     CHARTLIST.push([myChart,option]);
                     myChart.setOption(option);
                     myChart.resize();
-                    // if (option.series[0].type === "gauge") {
-                    //     setInterval(function () {
-                    //         option.series[0].data[0].value = (Math.random() * 100 + 1).toFixed(1) - 0;
-                    //         myChart.setOption(option, true);
-                    //     }, 4000);
-                    // }
                 }
             });
             return myChart;
@@ -105,63 +100,76 @@ export class TableFactory {
                 // cols processing
                 function __col_owner__(i, row, cols) {
                     for (let j = 0; j < cols.length; j++) {
+                        let errors = [];
                         if (cols[j]) {
-                            let node = cols[j];
-                            tbcnt.push(`<div class='${sstd(node.column)}' style='height:100%;padding-left:1%;padding-right:0;'>`);
-                            switch (node.type) {
-                                case TITLE_SIGN:
-                                    let prefix_content = "",
-                                        title_content = "",
-                                        control = "",
-                                        content = sstd(node.name),
-                                        id = `TITLE${tools.guid().replace(/-/g, "")}`;
-                                    if (node.prefix) {
-                                        prefix_content = `<p class='${node.prefix}'></p>`;
-                                        control = "style='display: inline-flex;'";
-                                    }
-                                    title_content = `<p id='${id}' style='${NO_MARGIN}' class='${sstd(node.style)}'>${content}</p>`;
-                                    tbcnt.push(`<div ${control}>${prefix_content}${title_content}</div>`);
-                                    if (ptable.exists(node.event_id)) {
-                                        events.push({
-                                            domId: tools.identify(id),
-                                            event_id: node.event_id,
-                                            type: node.type
-                                        });
-                                    }
-                                    break;
-                                case CHART_SIGN:
-                                    let _id = `ZXJ${guid()}`.replace(/-/g, ""),
-                                        title_height = 0;
-                                    // if node exist name then init title above this chart
-                                    if (node.name) {
-                                        let content_title = `<p style='margin:0;'>${sstd(node.name)}</p>`;
-                                        title_height = node.hasOwnProperty("title_height") ? node.title_height : TITLE_DEFAULT_HEIGHT;
-                                        title_height = Math.min(Math.max(0, title_height), 100);
-                                        if (node.hasOwnProperty("title_class")) {
-                                            tbcnt.push(`<div class='${sstd(node.title_class)}' style="height: ${title_height}%;text-align: center;margin:0;">${content_title}</div>`);
+                                let node = cols[j];
+                                tbcnt.push(`<div class='${sstd(node.column)}' style='height:100%;padding-left:1%;padding-right:0;'>`);
+                                switch (node.type) {
+                                    case PANEL_SIGN:
+                                        if (node.hasOwnProperty("src")) {
+                                            let height = node.height? node.height: "100%";
+                                            let panel = `<div class="${node.src}" style="height:${height};"></div>`;
+                                            tbcnt.push(panel);
+                                        } else {
+                                            errors.push("type of panel don't define source of css.");
                                         }
-                                    }
-                                    tbcnt.push(`<div id='${_id}' style='height:${100 - title_height}%;' class='${sstd(node.style)}'></div>`);
-                                    echDelay.push({
-                                        event_id: node.event_id,
-                                        id: _id,
-                                        url: node.url,
-                                        data_url: node.data_url
-                                    });
-                                    break;
-                                case CAPSULE_SIGN:
-                                    __row_owner__(node.rows);
-                                    break;
-                                default:
-                                    tools.mutter(`unknown type:${node.type ? node.type : "null"}`, "error");
-                                    break;
-                            }
-                            tbcnt.push("</div>");
-                        } else {
+                                        break;
+                                    case TITLE_SIGN:
+                                        let prefix_content = "",
+                                            title_content = "",
+                                            control = "",
+                                            content = sstd(node.name),
+                                            id = `TITLE${tools.guid().replace(/-/g, "")}`;
+                                        if (node.prefix) {
+                                            prefix_content = `<p class='${node.prefix}'></p>`;
+                                            control = "style='display: inline-flex;'";
+                                        }
+                                        title_content = `<p id='${id}' style='${NO_MARGIN}' class='${sstd(node.style)}'>${content}</p>`;
+                                        tbcnt.push(`<div ${control}>${prefix_content}${title_content}</div>`);
+                                        if (ptable.exists(node.event_id)) {
+                                            events.push({
+                                                domId: tools.identify(id),
+                                                event_id: node.event_id,
+                                                type: node.type
+                                            });
+                                        }
+                                        break;
+                                    case CHART_SIGN:
+                                        let _id = `ZXJ${guid()}`.replace(/-/g, ""),
+                                            title_height = 0;
+                                        // if node exist name then init title above this chart
+                                        if (node.name) {
+                                            let content_title = `<p style='margin:0;'>${sstd(node.name)}</p>`;
+                                            title_height = node.hasOwnProperty("title_height") ? node.title_height : TITLE_DEFAULT_HEIGHT;
+                                            title_height = Math.min(Math.max(0, title_height), 100);
+                                            if (node.hasOwnProperty("title_class")) {
+                                                tbcnt.push(`<div class='${sstd(node.title_class)}' style="height: ${title_height}%;text-align: center;margin:0;">${content_title}</div>`);
+                                            }
+                                        }
+                                        tbcnt.push(`<div id='${_id}' style='height:${100 - title_height}%;' class='${sstd(node.style)}'></div>`);
+                                        echDelay.push({
+                                            event_id: node.event_id,
+                                            id: _id,
+                                            url: node.url,
+                                            data_url: node.data_url
+                                        });
+                                        break;
+                                    case CAPSULE_SIGN:
+                                        __row_owner__(node.rows);
+                                        break;
+                                    default:
+                                        tools.mutter(`unknown type:${node.type ? node.type : "null"}`, "error");
+                                        break;
+                                }
+                                tbcnt.push("</div>");
+                            } else {
+                            errors.push("cols elements can't be empty.");
+                        }
+                        errors.forEach((e) => {
                             let vrow = row.description ? row.description : i + 1,
                                 vcol = node.description ? node.description : j + 1;
-                            tools.mutter(`column error: ${vrow}-${vcol}`, "error");
-                        }
+                            tools.mutter(`${vrow}-${vcol} => ${e}`, "error");
+                        });
                     }
                 }
 
@@ -170,7 +178,8 @@ export class TableFactory {
                     for (let i = 0; i < rows.length; i++) {
                         if (rows[i]) {
                             let row = rows[i];
-                            tbcnt.push(`<div class='row ${sstd(row.class)}' style='height:${nstd(row.height)}%;${ROW_MARGIN_STYLE}'>`);
+                            let row_style = `height:${nstd(row.height)}%;${ROW_MARGIN_STYLE};background-color: #0000;`;
+                            tbcnt.push(`<div class='row ${sstd(row.class)}' style='${row_style}'>`);
                             __col_owner__(i, row, row.cols);
                             tbcnt.push("</div>");
                         } else {

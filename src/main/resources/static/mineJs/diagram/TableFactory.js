@@ -32,7 +32,7 @@ export const CHART_UNIQUE = "DSY_CHART_UNIQUE";// chart unique sign
 export class TableFactory {
     constructor() {
         const NO_MARGIN = "margin: 0px"; // no margin style
-        const ROW_MARGIN_STYLE = "margin-right: -0.79vw;margin-left: -0.79vw;"; // row margin style
+        const ROW_MARGIN_STYLE = "margin-right: -0.79vw;"; // row margin style
         const TITLE_DEFAULT_HEIGHT = 10; // default title height
         const guid = tools.sGuid; // guid generator
         const sstd = (x) => !!x ? x : ""; // string standard

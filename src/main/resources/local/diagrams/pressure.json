@@ -10,10 +10,11 @@
         "90%"
       ]
     },
+    "min":0,
+    "max":3,
     "radius": "100%",
     "axisLine": {
-      "lineStyle": {
-        "width": 10
+      "lineStyle": {"width": 10
       }
     },
     "axisLabel": {

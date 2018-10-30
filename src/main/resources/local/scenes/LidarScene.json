@@ -48,23 +48,27 @@
             "class": "body_row",
             "cols": [{
                 "type": "capsule",
-                "column": "col-md-4",
+                "column": "col-md-6",
                 "rows": [{
                     "height": 45,
-                    "description": "第一行",
-                    "class": "body_row",
+                    "description": "第2行",
+                    "class": "",
                     "cols": [{
                         "type": "chart",
-                        "name": "温湿度、压强",
+                      "name":"湿度",
                         "title_class": "title_col",
-                        "height": 16,
+                      "title_height":15,
+                        "height": 40,
                         "url": "humidity",
                         "column": "col-md-6",
                         "description": "第一列"
                       },
                       {
                         "type": "chart",
-                        "height": 16,
+                        "name":"气压",
+                        "title_class": "title_col",
+                        "title_height":15,
+                        "height": 40,
                         "url": "pressure",
                         "column": "col-md-6",
                         "description": "第二列"
@@ -73,21 +77,27 @@
                   },
                   {
                     "height": 45,
-                    "description": "第二行",
-                    "class": "body_row",
+                    "description": "第3行",
+                    "class": "",
                     "cols": [{
                         "type": "chart",
-                        "height": 10,
+                      "name":"温度",
+                      "title_class": "title_col",
+                      "title_height":15,
+                        "height": 40,
                         "url": "temperature",
                         "column": "col-md-6",
-                        "description": "第一列"
+                        "description": "第1列"
                       },
                       {
                         "type": "chart",
-                        "height": 10,
-                        "url": "humidity",
+                        "name": "风向、风力",
+                        "title_class": "title_col",
+                        "title_height":15,
+                        "height": 40,
+                        "url": "windRose",
                         "column": "col-md-6",
-                        "description": "第二列"
+                        "description": "第三列"
                       }
                     ]
                   }
@@ -100,17 +110,8 @@
                 "title_class": "title_col",
                 "height": 30,
                 "url": "roomAlarm",
-                "column": "col-md-4",
+                "column": "col-md-6",
                 "description": "第二列"
-              },
-              {
-                "type": "chart",
-                "name": "风向、风力",
-                "title_class": "title_col",
-                "height": 30,
-                "url": "windRose",
-                "column": "col-md-4",
-                "description": "第三列"
               }
             ]
           },
@@ -144,8 +145,8 @@
                 "column": "col-md-4",
                 "rows": [{
                     "height": 50,
-                    "description": "第一行",
-                    "class": "body_row",
+                    "description": "第1行",
+                    "class": "",
                     "cols": [{
                       "type": "chart",
                       "name": "采样点数",
@@ -158,8 +159,8 @@
                   },
                   {
                     "height": 50,
-                    "description": "第二行",
-                    "class": "body_row",
+                    "description": "第2行",
+                    "class": "",
                     "cols": [{
                       "type": "chart",
                       "name": "采样频率",
@@ -225,8 +226,8 @@
                 "column": "col-md-7",
                 "rows": [{
                     "height": 30,
-                    "description": "第一行",
-                    "class": "body_row",
+                    "description": "第1行",
+                    "class": "",
                     "cols": [{
                       "type": "chart",
                       "title_class": "title_col",
@@ -239,8 +240,8 @@
                   },
                   {
                     "height": 30,
-                    "description": "第二行",
-                    "class": "body_row",
+                    "description": "第2行",
+                    "class": "",
                     "cols": [{
                       "type": "chart",
                       "url": "line_geo",
@@ -251,8 +252,8 @@
                   },
                   {
                     "height": 30,
-                    "description": "第三行",
-                    "class": "body_row",
+                    "description": "第3行",
+                    "class": "",
                     "cols": [{
                       "type": "chart",
                       "url": "line_geo",
@@ -289,7 +290,7 @@
                 "rows": [{
                     "height": 50,
                     "description": "第1行",
-                    "class": "body_row",
+                    "class": "",
                     "cols": [{
                       "type": "chart",
                       "title_class": "title_col",
@@ -303,7 +304,7 @@
                   {
                     "height": 50,
                     "description": "第2行",
-                    "class": "body_row",
+                    "class": "",
                     "cols": [{
                       "type": "chart",
                       "title_class": "title_col",

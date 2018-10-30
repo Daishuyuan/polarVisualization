@@ -1,0 +1,38 @@
+{
+  "series": [{
+    "name": "温度",
+    "type": "gauge",
+    "detail": {
+      "formatter": "{value}℃",
+      "fontSize": 10,
+      "offsetCenter": [
+        0,
+        "90%"
+      ]
+    },
+    "radius": "100%",
+    "axisLine": {
+      "lineStyle": {
+        "width": 10
+      }
+    },
+    "axisLabel": {
+      "fontSize": 16
+    },
+    "splitNumber": 5,
+    "splitLine": {
+      "length": 10
+    },
+    "axisTick": {
+      "splitNumber": 4,
+      "length": 5
+    },
+    "pointer": {
+      "length": "60%",
+      "width": 4
+    },
+    "data": [{
+      "value": 50
+    }]
+  }]
+}

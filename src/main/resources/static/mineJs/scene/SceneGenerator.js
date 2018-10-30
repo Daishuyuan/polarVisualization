@@ -208,7 +208,6 @@ export let SceneGenerator = {
             tools.dynamicInterval(() => {
                 CHARTLIST.forEach(chart => {
                     let option = chart[1], myChart = chart[0];
-                    let num = tools.perlinRandom(count += Math.random(), 0, 1);
                     switch (option[CHART_UNIQUE]) {
                         case "frequency":
                         case "line_datazoom":
@@ -227,17 +226,25 @@ export let SceneGenerator = {
                         case "heatmap":
                             break;
                         case "complete":
-                        case "gauge":
-                            option.series[0].data[0].value = (num * 100).toFixed(2);
+                        case "temperature":
+                            let temp = tools.perlinRandom(count += Math.random(), -15, 15);
+                            option.series[0].data[0].value = temp.toFixed(2);
+                            myChart.setOption(option, true);
+                            break;
+                        case "pressure":
+                            let press = tools.perlinRandom(count += Math.random(), 0, 2);
+                            option.series[0].data[0].value = press.toFixed(2);
                             myChart.setOption(option, true);
                             break;
                         case "ringComplete":
-                        case "liquidFill":
-                            option.series[0].data[0] = (num).toFixed(2);
+                        case "humidity":
+                            let hum = tools.perlinRandom(count += Math.random(), 0, 1);
+                            option.series[0].data[0] = (hum).toFixed(2);
                             myChart.setOption(option, true);
                             break;
                         case "counter":
                             let basic = 400;
+                            let num =tools.perlinRandom(count += Math.random(), 0, 1);
                             basic = +Math.floor(num * 1000) + 60;
                             myChart.setOption({
                                 title: {

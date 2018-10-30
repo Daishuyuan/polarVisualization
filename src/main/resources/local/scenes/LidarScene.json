@@ -58,14 +58,14 @@
                         "name": "温湿度、压强",
                         "title_class": "title_col",
                         "height": 16,
-                        "url": "gauge",
+                        "url": "humidity",
                         "column": "col-md-6",
                         "description": "第一列"
                       },
                       {
                         "type": "chart",
                         "height": 16,
-                        "url": "gauge",
+                        "url": "pressure",
                         "column": "col-md-6",
                         "description": "第二列"
                       }
@@ -78,14 +78,14 @@
                     "cols": [{
                         "type": "chart",
                         "height": 10,
-                        "url": "gauge",
+                        "url": "temperature",
                         "column": "col-md-6",
                         "description": "第一列"
                       },
                       {
                         "type": "chart",
                         "height": 10,
-                        "url": "gauge",
+                        "url": "humidity",
                         "column": "col-md-6",
                         "description": "第二列"
                       }
@@ -135,7 +135,7 @@
                 "type": "chart",
                 "title_class": "title_col",
                 "height": 30,
-                "url": "gauge",
+                "url": "pressure",
                 "column": "col-md-4",
                 "description": "第一列"
               },

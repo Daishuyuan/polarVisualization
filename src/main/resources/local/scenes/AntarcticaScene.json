@@ -52,7 +52,7 @@
             "name": "温度",
             "title_class": "title_col",
             "height": 30,
-            "url": "gauge",
+            "url": "temperature",
             "column": "col-md-3",
             "description": "第一列"
           },
@@ -61,7 +61,7 @@
               "name": "气压",
               "title_class": "title_col",
               "height": 30,
-              "url": "gauge",
+              "url": "pressure",
               "column": "col-md-3",
               "description": "第二列"
             },
@@ -70,7 +70,7 @@
               "name": "湿度",
               "title_class": "title_col",
               "height": 30,
-              "url": "liquidFill",
+              "url": "humidity",
               "column": "col-md-3",
               "description": "第三列"
             },
@@ -109,7 +109,7 @@
             "title_class": "title_col",
 
             "height": 30,
-            "url": "gauge",
+            "url": "temperature",
             "column": "col-md-3",
             "description": "第一列"
           },
@@ -119,7 +119,7 @@
               "title_class": "title_col",
 
               "height": 30,
-              "url": "gauge",
+              "url": "pressure",
               "column": "col-md-3",
               "description": "第二列"
             },
@@ -129,7 +129,7 @@
               "title_class": "title_col",
 
               "height": 30,
-              "url": "liquidFill",
+              "url": "humidity",
               "column": "col-md-3",
               "description": "第三列"
             },

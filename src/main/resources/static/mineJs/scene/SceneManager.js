@@ -10,7 +10,7 @@ import { SceneGenerator } from "./SceneGenerator.js";
  * @returns {{init: init}} singleton
  * @constructor singleton
  */
-export var SceneManager = () => {
+export let SceneManager = () => {
     const __init__ = (props) => {
         tools.watch("props", props);
         props.factory = new TableFactory();

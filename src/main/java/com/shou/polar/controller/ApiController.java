@@ -17,8 +17,6 @@ import com.shou.polar.configure.PolarCts;
 @RequestMapping("/api")
 public class ApiController {
     private final ControllersAdviceService advice;
-    private static final String LOCAL_SCENES_RES_PATH = PolarCts.LOCAL_RES_PATH + "/scenes";
-    private static final String LOCAL_DIAGRAMS_RES_PATH = PolarCts.LOCAL_RES_PATH + "/diagrams";
 
     @Autowired
     public ApiController(ControllersAdviceService advice) {
@@ -36,11 +34,16 @@ public class ApiController {
 
     @RequestMapping("/diagrams/{name}")
     public String getDiagramsByName(@PathVariable String name) throws IOException {
-        return readFileContentByPath(LOCAL_DIAGRAMS_RES_PATH + PolarCts.PATH_SPLIT + name + PolarCts.JSON_SUFFIX);
+        return readFileContentByPath(PolarCts.DIAGRAMS_RES_PATH + PolarCts.PATH_SPLIT + name + PolarCts.JSON_SUFFIX);
     }
 
     @RequestMapping("/scenes/{name}")
     public String getThemePropsByName(@PathVariable String name) throws IOException {
-        return readFileContentByPath(LOCAL_SCENES_RES_PATH + PolarCts.PATH_SPLIT + name + PolarCts.JSON_SUFFIX);
+        return readFileContentByPath(PolarCts.SCENES_RES_PATH + PolarCts.PATH_SPLIT + name + PolarCts.JSON_SUFFIX);
+    }
+
+    @RequestMapping("/display/{name}")
+    public String getDisplayDataByName(@PathVariable String name) throws IOException {
+        return readFileContentByPath(PolarCts.DISPLAY_RES_PATH + PolarCts.PATH_SPLIT + name + PolarCts.JSON_SUFFIX);
     }
 }

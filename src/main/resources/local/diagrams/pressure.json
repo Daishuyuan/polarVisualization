@@ -3,7 +3,7 @@
     "name": "温湿气",
     "type": "gauge",
     "detail": {
-      "formatter": "{value}%",
+      "formatter": "{value}KPa",
       "fontSize": 10,
       "offsetCenter": [
         0,

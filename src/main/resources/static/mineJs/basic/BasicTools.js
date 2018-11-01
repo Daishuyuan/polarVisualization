@@ -248,7 +248,7 @@ export let Tools = (() => {
             let n0 = noise (intX);
             let n1 = noise (intX + 1);
             let weight = x - Math.floor (x);
-            return a * (Math.sin(n0 * (1 - weight)) +  Math.cos(n1 * weight) + 0.5);
+            return a * (Math.sin(n0 * (1 - weight)) +  Math.cos(n1 * weight) + 2) + min;
         }
     }
 })();

@@ -203,17 +203,40 @@ export let SceneGenerator = {
         if (props.demonstrate) {
             const speed = 2500;
             const shift_count = 2;
-            let count = 0;
+            let counts = {};
+            let basic = 0;
             tools.mutter("begin - 开始初始化演示效果", "timer_init_demonstration");
             tools.dynamicInterval(() => {
                 CHARTLIST.forEach(chart => {
-                    let option = chart[1], myChart = chart[0];
-                    switch (option[CHART_UNIQUE]) {
+                    let option = chart[1],
+                        myChart = chart[0],
+                        id = option[CHART_UNIQUE],
+                        count = counts.hasOwnProperty(id)? counts[id]: counts[id] = 0;
+                    switch (id) {
                         case "frequency":
+                        case "pointCount":
+                            let date_buffer;
+                            for (let i = 0; i < shift_count; i++) {
+                                date_buffer = option.series[0].data[i];
+                                option.series[0].data.shift();
+                                option.series[0].data.push(date_buffer);
+                            }
+                            myChart.setOption(option);
+                            break;
                         case "line_datazoom":
                         case "line_geo":
                         case "line_geo_all":
-                        case "pointCount":
+                            let dataBuffer,dateBuffer;
+                            for (let i = 0; i < shift_count; i++) {
+                                dataBuffer = option.series[0].data[i];
+                                dateBuffer = option.xAxis.data[i];
+                                option.xAxis.data.shift();
+                                option.xAxis.data.push(date_buffer);
+                                option.series[0].data.shift();
+                                option.series[0].data.push(dataBuffer);
+                            }
+                            myChart.setOption(option);
+                            break;
                         case "wave":
                             let data_buffer;
                             for (let i = 0; i < shift_count; i++) {
@@ -243,21 +266,26 @@ export let SceneGenerator = {
                             myChart.setOption(option, true);
                             break;
                         case "counter":
-                            let basic = 400;
                             let num =tools.perlinRandom(count += Math.random(), 0, 1);
-                            basic = +Math.floor(num * 1000) + 60;
+                            basic += Math.floor(num * 10);
                             myChart.setOption({
                                 title: {
-                                    text: (num * 100).toFixed(0)
+                                    text: (basic).toFixed(0)
                                 }
                             });
                             break;
                         case "windRose":
+                            let order = parseInt(tools.perlinRandom(count += Math.random(), 0, 15));
+                            let level = tools.perlinRandom(count += Math.random(), 8, 13);
+                            option.series[0].data.fill(0);
+                            option.series[0].data[order] =level;
+                            myChart.setOption(option);
+                            break;
                         case "roomAlarm":
                         case "fileType":
-
                             break;
                     }
+                    counts[id] = count;
                 });
             }, speed);
             tools.mutter("end - 演示效果初始化完毕", "timer_init_demonstration");

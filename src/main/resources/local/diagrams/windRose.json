@@ -1,5 +1,7 @@
 {
   "angleAxis": {
+    "min":6,
+    "max":15,
     "type": "category",
     "data": [
       "N",

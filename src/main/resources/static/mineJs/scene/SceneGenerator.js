@@ -231,7 +231,7 @@ export let SceneGenerator = {
                                 dataBuffer = option.series[0].data[i];
                                 dateBuffer = option.xAxis.data[i];
                                 option.xAxis.data.shift();
-                                option.xAxis.data.push(date_buffer);
+                                option.xAxis.data.push(dateBuffer);
                                 option.series[0].data.shift();
                                 option.series[0].data.push(dataBuffer);
                             }

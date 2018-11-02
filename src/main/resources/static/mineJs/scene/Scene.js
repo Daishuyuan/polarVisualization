@@ -77,6 +77,7 @@ export class Scene {
         const INNER_ON_CLOSE = "onClose";
         const INNER_ON_UPDATE = "onUpdate";
         const INNER_ON_LOAD = "onLoad";
+        const TABLE_LAYER = "tableLayer";
         // check existence of private name
         if (!this.name) {
             tools.mutter("the name of scene is invalid", "error");
@@ -134,10 +135,10 @@ export class Scene {
             });
         } else {
             tools.req(`${this._scenesUrl}/${this._wkid}`).then((scene) => {
-                if (scene.hasOwnProperty("tableLayer")) {
-                    for (let name in scene.tableLayer) {
-                        if (scene.tableLayer.hasOwnProperty(name)) {
-                            let dom = this._factory.generate(this._tableViewId, scene.tableLayer[name]);
+                if (scene.hasOwnProperty(TABLE_LAYER)) {
+                    for (let name in scene[TABLE_LAYER]) {
+                        if (scene[TABLE_LAYER].hasOwnProperty(name)) {
+                            let dom = this._factory.generate(this._tableViewId, scene[TABLE_LAYER][name]);
                             dom.id = `${this._wkid}_${name}`;
                             this._popupItems.push(dom);
                             this.created_tables.push(dom);
@@ -163,6 +164,8 @@ export class Scene {
         console.timeEnd(this.name);
         console.log(`场景实体类: ${this.__proto__.constructor.name}`);
         console.log(`场景菜单列表: ${this.menu.map(x => x.event.name).join(",")}`);
+        console.log(`可见DOM元素统计: ${tools.countDomNum(document.body)}`);
+        console.log(``);
         console.groupEnd();
     }
 }

@@ -7,6 +7,7 @@ export let SceneGenerator = {
     /**
      * add 3d model of ships into our global map
      *
+     * @author dsy
      * @param props essential properties
      */
 
@@ -76,6 +77,7 @@ export let SceneGenerator = {
     /**
      * add stations into our global map
      *
+     * @author dsy
      * @param props essential properties
      */
     init_stations: function (props) {
@@ -133,6 +135,7 @@ export let SceneGenerator = {
     /**
      * scenes initialization
      *
+     * @author dsy
      * @param props essential properties
      */
     init_scenes: function (props) {
@@ -156,6 +159,7 @@ export let SceneGenerator = {
     /**
      * popup initialization
      *
+     * @author dsy
      * @param props essential properties
      */
     init_popup: function (props) {
@@ -197,6 +201,7 @@ export let SceneGenerator = {
     /**
      * demonstration initialization
      *
+     * @author zxj
      * @param props essential properties
      */
     init_demonstration: function (props) {

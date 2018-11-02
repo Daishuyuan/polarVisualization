@@ -9,6 +9,7 @@ export let SceneGenerator = {
      *
      * @param props essential properties
      */
+
     init_ships: function (props) {
         tools.mutter("begin - 开始初始化考察船", "timer_init_ships");
         require([
@@ -214,6 +215,14 @@ export let SceneGenerator = {
                         count = counts.hasOwnProperty(id)? counts[id]: counts[id] = 0;
                     switch (id) {
                         case "frequency":
+                            let buffer;
+                            for (let i = 0; i < shift_count; i++) {
+                                buffer = option.series[0].data[i];
+                                option.series[0].data.shift();
+                                option.series[0].data.push(buffer);
+                            }
+                            myChart.setOption(option);
+                            break;
                         case "pointCount":
                             let date_buffer;
                             for (let i = 0; i < shift_count; i++) {

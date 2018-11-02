@@ -286,7 +286,7 @@
             "class": "body_row",
             "cols": [{
                 "type": "capsule",
-                "column": "col-md-3",
+                "column": "col-md-4",
                 "rows": [{
                     "height": 50,
                     "description": "第1行",
@@ -318,28 +318,44 @@
                 ]
               },
               {
-                "type": "chart",
-                "title_class": "title_col",
-                "name": "完成进度",
-                "height": 18,
-                "column": "col-md-3",
-                "url": "ringComplete",
-                "description": "第二列"
-              },
-              {
-                "type": "chart",
-                "title_class": "title_col",
-                "name": "接收任务完成进度",
-                "height": 14,
-                "column": "col-md-3",
-                "url": "complete",
-                "description": "第三列"
+                "type": "capsule",
+                "column": "col-md-4",
+                "rows": [{
+                  "height": 50,
+                  "description": "第1行",
+                  "class": "",
+                  "cols": [{
+                    "type": "chart",
+                    "title_class": "title_col",
+                    "name": "完成进度",
+                    "height": 18,
+                    "column": "col-md-12",
+                    "url": "ringComplete",
+                    "description": "第二列"
+                  }]
+                },
+                  {
+                    "height": 50,
+                    "description": "第2行",
+                    "class": "",
+                    "cols": [
+                      {
+                        "type": "chart",
+                        "title_class": "title_col",
+                        "name": "接收任务完成进度",
+                        "height": 14,
+                        "column": "col-md-12",
+                        "url": "complete",
+                        "description": "第二列"
+                      }]
+                  }
+                ]
               },
               {
                 "type": "chart",
                 "height": 30,
                 "title_class": "title_col",
-                "column": "col-md-3",
+                "column": "col-md-4",
                 "name": "接收文件种类",
                 "url": "fileType",
                 "description": "第四列"

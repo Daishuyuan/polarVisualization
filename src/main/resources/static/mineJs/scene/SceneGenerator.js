@@ -214,7 +214,7 @@ export let SceneGenerator = {
             const speed = 2500;
             const shift_count = 2;
             let counts = {};
-            let basic = 0, ring = 0;
+            let basic = 0, ring = 0, minIndex = 8;
             let rings = [0];
             console.time("初始化演示效果");
             tools.dynamicInterval(() => {
@@ -324,6 +324,16 @@ export let SceneGenerator = {
                             myChart.setOption(option);
                             break;
                         case "fileType":
+                            let lenOut = option.series.length;
+                            for(let i = 0; i < lenOut; i++ ){
+                                let lenIn = option.series[i].data.length;
+                                for(let j = 0; j < lenIn; j++){
+                                    option.series[i].data[j] = tools.perlinRandom(count += Math.random(), 4, 13) | 0;
+                                }
+                            }
+                            option.angleAxis.data.shift();
+                            option.angleAxis.data.push(minIndex++);
+                            myChart.setOption(option);
                             break;
                     }
                     counts[id] = count;

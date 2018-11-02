@@ -4,11 +4,27 @@
   },
   "angleAxis": {
     "type": "category",
-    "data": ["第一次", "第二次", "第三次", "第四次", "第五次", "第六次", "第七次"],
+    "data": [1, 2, 3, 4, 5, 6, 7],
     "axisLabel":{"color":"#fff"},
+    "axisLine":{
+      "lineStyle":{
+        "color":"#fff"
+      }
+    },
     "z": 10
   },
-  "radiusAxis": {},
+  "radiusAxis": {
+    "axisLine":{
+      "lineStyle":{
+        "color":"#fff"
+      }
+    },
+    "splitLine":{
+      "lineStyle":{
+        "color":"#fff"
+      }
+    }
+  },
   "polar": {},
   "series": [{
     "type": "bar",

@@ -9,7 +9,7 @@
     "nameGap": 1,
     "indicator": [{
       "name": "温度",
-      "max": 40
+      "max": 30
     }, {
       "name": "气压",
       "max": 3

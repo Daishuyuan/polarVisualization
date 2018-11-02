@@ -309,6 +309,20 @@ export let SceneGenerator = {
                             myChart.setOption(option);
                             break;
                         case "roomAlarm":
+                            let seeds = [];
+                            let seedTemp = tools.perlinRandom(count += Math.random(), 5, 22).toFixed(2);
+                            let seedHum = parseInt(tools.perlinRandom(count += Math.random(), 40, 70));
+                            let seedPres = parseInt(tools.perlinRandom(count += Math.random(), 0.5, 1.3));
+                            let seedCo2 = parseInt(tools.perlinRandom(count += Math.random(), 500, 1000));
+                            seeds.push(seedTemp);
+                            seeds.push(seedPres);
+                            seeds.push(seedHum);
+                            seeds.push(seedCo2);
+                            for(let i =0; i < 4; i++){
+                                option.series[0].data[1].value[i] = seeds[i];
+                            }
+                            myChart.setOption(option);
+                            break;
                         case "fileType":
                             break;
                     }

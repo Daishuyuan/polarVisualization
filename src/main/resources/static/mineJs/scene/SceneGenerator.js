@@ -91,7 +91,7 @@ export let SceneGenerator = {
             let station_cache = [];
             stations.forEach((station) => {
                 let lon = parseFloat(station.lon), lat = parseFloat(station.lat);
-                // let eventName = `${station.name}_event`;
+                let eventName = `${station.name}_event`;
                 let station_model = null;
                 let handle = {
                     id: `${station.name}_id`,
@@ -100,9 +100,9 @@ export let SceneGenerator = {
                     lat: station.lat,
                     switch: true,
                     extend: false,
-                    // event: eventName,
+                    event: eventName,
                     popup: true,
-                    // url:"./img/ui/location.png"
+                    url: "./img/ui/location.png"
                 };
                 if (!isNaN(lon) && !isNaN(lat)) {
                     station_model = new Graphic({
@@ -125,6 +125,11 @@ export let SceneGenerator = {
                     });
                     station_cache.push(station_model);
                     props.vuePanel.application.popups.push(handle);
+                    (function (station_model) {
+                        props.vuePanel.popupEvents.set(eventName, () => {
+                            tools.getEventByName(ptable.events.STATION_LOAD_EVENT)(station_model);
+                        });
+                    })(station_model);
                 }
             });
             // add all station

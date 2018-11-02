@@ -164,8 +164,6 @@ export class Scene {
         console.timeEnd(this.name);
         console.log(`场景实体类: ${this.__proto__.constructor.name}`);
         console.log(`场景菜单列表: ${this.menu.map(x => x.event.name).join(",")}`);
-        console.log(`可见DOM元素统计: ${tools.countDomNum(document.body)}`);
-        console.log(``);
         console.groupEnd();
     }
 }

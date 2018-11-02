@@ -1,5 +1,6 @@
 package com.shou.polar;
 
+import com.google.common.base.Joiner;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.shou.polar.configure.PolarCts;
@@ -14,15 +15,14 @@ import org.springframework.util.ResourceUtils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Set;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class PolarApplicationTests {
 
     @Test
     public void contextLoads() {
-
-        System.out.print(StringUtils.getCommonPrefix("abc", "abbd", "abbc"));
+        System.out.print(Joiner.on(',').join(Set.of(1,2,3,4,5)));
     }
 
     @Test

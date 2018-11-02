@@ -4,6 +4,7 @@ import com.shou.polar.component.ResUpdateListener;
 import com.shou.polar.configure.PolarCts;
 import com.shou.polar.process.LidarDataProcessor;
 import com.shou.polar.service.TargetPathScheduledTaskService;
+import com.shou.polar.utils.MessagesUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,8 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @EnableScheduling
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 public class PolarApplication {
-    private static final String PUSH_HEAD = "data:";
-    private static final String PUSH_TAIL = "\n\n";
     private final ResUpdateListener resUpdateListener;
 
     @Autowired
@@ -29,7 +28,7 @@ public class PolarApplication {
 
     @RequestMapping(value = "/push", produces = "text/event-stream")
     public @ResponseBody String push() {
-        return PUSH_HEAD + resUpdateListener.receiveMsg() + PUSH_TAIL;
+        return MessagesUtils.getEventMessage(resUpdateListener.receiveMsg());
     }
 
     @RequestMapping("/")

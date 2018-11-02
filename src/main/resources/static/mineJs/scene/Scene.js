@@ -72,6 +72,8 @@ export class Scene {
 
     // do the work of themes initialization
     themeInit() {
+        console.groupCollapsed(this.name);
+        console.time(this.name);
         const INNER_ON_CLOSE = "onClose";
         const INNER_ON_UPDATE = "onUpdate";
         const INNER_ON_LOAD = "onLoad";
@@ -157,5 +159,10 @@ export class Scene {
         }
         // save handle of current scene
         tools.watch("curSceneHandle", LAST_SCENE = this);
+        // statistic scene performance
+        console.timeEnd(this.name);
+        console.log(`场景实体类: ${this.__proto__.constructor.name}`);
+        console.log(`场景菜单列表: ${this.menu.map(x => x.event.name).join(",")}`);
+        console.groupEnd();
     }
 }

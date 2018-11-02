@@ -68,44 +68,48 @@ export let Tools = (() => {
     };
     const log_error = console.error;
     const log_warn = console.warn;
-    let timer_map = new Map();
     const _mutter = (msg, level) => {
-        if (level.indexOf("timer") >= 0) {
-            if (timer_map.has(level)) {
-                let time = timer_map.get(level) - Date.now();
-                _mutter(`${msg} - ${time}ms`, "info");
-                timer_map.delete(level);
-            } else {
-                timer_map.set(level, Date.now());
-                _mutter(msg, "info");
-            }
-        } else {
-            // to dye our information with different color
-            let content = `WXY(id:${generator.next().value},lv:wxy_${level}):%c ${msg}`;
-            switch (level) {
-                case "fatal":
-                    console.log(content, "color:#750000");
-                    break;
-                case "error":
-                    log_error(content, "color:#8600FF");
-                    break;
-                case "warn":
-                    log_warn(content, "color: #005AB5");
-                    break;
-                case "info":
-                    console.log(content, "color:#02C874");
-                    break;
-                default:
-                    console.log(`unknown msg level:${level}`);
-                    break;
-            }
+        // to dye our information with different color
+        let content = `WXY(id:${generator.next().value},lv:wxy_${level}):%c ${msg}`;
+        switch (level) {
+            case "fatal":
+                console.log(content, "color:#750000");
+                break;
+            case "error":
+                log_error(content, "color:#8600FF");
+                break;
+            case "warn":
+                log_warn(content, "color: #005AB5");
+                break;
+            case "info":
+                console.log(content, "color:#02C874");
+                break;
+            default:
+                console.log(`unknown msg level:${level}`);
+                break;
         }
-
     };
     const noise = (n) => {
         n = (n >> 0xd) ^ n;
         let nn = (n * (n * n * 0xec4d + 0x131071f) + 0x5208dd0d) & 0x7fffffff;
         return 1.0 - (nn / 0x40000000);
+    };
+    const countDoms = (node) => {
+        //  计算自身
+        let count = 1;
+        //  判断是否存在子节点
+        if (node.hasChildNodes()) {
+            //  获取子节点
+            let children = node.childNodes;
+            //  对子节点进行递归统计
+            for (let i = 0; i < children.length; i++) {
+                let jqDom = $(children[i]);
+                if (jqDom.is(":visible")) {
+                    count = count + countDoms(children[i]);
+                }
+            }
+        }
+        return count;
     };
     window.watcher = {};
     let inner_lock = false;
@@ -245,10 +249,13 @@ export let Tools = (() => {
         perlinRandom: (x, min, max) => {
             let a = Math.abs(max - min) / 4;
             let intX = parseInt(x);
-            let n0 = noise (intX);
-            let n1 = noise (intX + 1);
-            let weight = x - Math.floor (x);
-            return a * (Math.sin(n0 * (1 - weight)) +  Math.cos(n1 * weight) + 2) + min;
+            let n0 = noise(intX);
+            let n1 = noise(intX + 1);
+            let weight = x - Math.floor(x);
+            return a * (Math.sin(n0 * (1 - weight)) + Math.cos(n1 * weight) + 2) + min;
+        },
+        countDomNum: function (node) {
+            return countDoms(node);
         }
     }
 })();

@@ -59,11 +59,15 @@ export let SceneManager = () => {
                         props.ships = common.ships;
                         props.stations = common.stations;
                     })).done(() => {
+                        console.groupCollapsed("初始化性能分析列表");
                         SceneGenerator.init_ships(props);
                         SceneGenerator.init_stations(props);
                         SceneGenerator.init_demonstration(props);
                         SceneGenerator.init_popup(props);
                         SceneGenerator.init_scenes(props);
+                        console.groupEnd();
+                        props.scenes[0].themeInit(); // load scene 1
+                        props.vuePanel.init(); // vue panel init
                     });
                 }, (error)=> {
                     tools.mutter(error, "error");

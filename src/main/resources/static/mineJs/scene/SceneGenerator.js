@@ -183,8 +183,8 @@ export let SceneGenerator = {
                     }));
                     let map_point = props.view.toMap(screen_point);
                     let dom = $(tools.identify(item.id));
-                    let testList = items.map(x => x.is(":visible")? tools.hitTest(x, dom): false);
-                    let hitTest = testList.length > 0? testList.reduce((x,y) => x || y): false;
+                    let testList = items.map(x => x.is(":visible") ? tools.hitTest(x, dom) : false);
+                    let hitTest = testList.length > 0 ? testList.reduce((x, y) => x || y) : false;
                     item.extend = !!(props.view.scale < 1000000);
                     item.switch = !!(map_point && Math.abs(map_point.longitude - lon) <= threshold &&
                         Math.abs(map_point.latitude - lat) <= threshold && !hitTest);
@@ -209,24 +209,16 @@ export let SceneGenerator = {
             const speed = 2500;
             const shift_count = 2;
             let counts = {};
-            let basic = 0;
+            let basic = 0, ring = 0;
+            let rings = [0];
             console.time("初始化演示效果");
             tools.dynamicInterval(() => {
                 CHARTLIST.forEach(chart => {
                     let option = chart[1],
                         myChart = chart[0],
                         id = option[CHART_UNIQUE],
-                        count = counts.hasOwnProperty(id)? counts[id]: counts[id] = 0;
+                        count = counts.hasOwnProperty(id) ? counts[id] : counts[id] = 0;
                     switch (id) {
-                        case "frequency":
-                            let buffer;
-                            for (let i = 0; i < shift_count; i++) {
-                                buffer = option.series[0].data[i];
-                                option.series[0].data.shift();
-                                option.series[0].data.push(buffer);
-                            }
-                            myChart.setOption(option);
-                            break;
                         case "pointCount":
                             let date_buffer;
                             for (let i = 0; i < shift_count; i++) {
@@ -236,10 +228,11 @@ export let SceneGenerator = {
                             }
                             myChart.setOption(option);
                             break;
+                        case "frequency":
                         case "line_datazoom":
                         case "line_geo":
                         case "line_geo_all":
-                            let dataBuffer,dateBuffer;
+                            let dataBuffer, dateBuffer;
                             for (let i = 0; i < shift_count; i++) {
                                 dataBuffer = option.series[0].data[i];
                                 dateBuffer = option.xAxis.data[i];
@@ -262,6 +255,23 @@ export let SceneGenerator = {
                         case "heatmap":
                             break;
                         case "complete":
+                            let seed = tools.perlinRandom(count += Math.random(), 0, 10);
+                            ring = (ring + seed) % 100;
+                            option.series[1].data[0].value = ring;
+                            option.series[1].data[1].value = 100 - ring;
+                            myChart.setOption(option);
+                            break;
+                        case "ringComplete":
+                            let len = option.series.length;
+                            for (let i = 0; i < len; i++) {
+                                rings[i] = rings[i] ? rings[i] : 0;
+                                let rand = rings[i] + Math.random()*10;
+                                rings[i] = rand % 100;
+                                option.series[i].data[0].value = rings[i];
+                                option.series[i].data[1].value = 100 - rings[i];
+                            }
+                            myChart.setOption(option);
+                            break;
                         case "temperature":
                             let temp = tools.perlinRandom(count += Math.random(), -15, 15);
                             option.series[0].data[0].value = temp.toFixed(2);
@@ -272,14 +282,13 @@ export let SceneGenerator = {
                             option.series[0].data[0].value = press.toFixed(2);
                             myChart.setOption(option, true);
                             break;
-                        case "ringComplete":
                         case "humidity":
                             let hum = tools.perlinRandom(count += Math.random(), 0, 1);
                             option.series[0].data[0] = (hum).toFixed(2);
                             myChart.setOption(option, true);
                             break;
                         case "counter":
-                            let num =tools.perlinRandom(count += Math.random(), 0, 1);
+                            let num = tools.perlinRandom(count += Math.random(), 0, 1);
                             basic += Math.floor(num * 10);
                             myChart.setOption({
                                 title: {
@@ -291,7 +300,7 @@ export let SceneGenerator = {
                             let order = parseInt(tools.perlinRandom(count += Math.random(), 0, 15));
                             let level = tools.perlinRandom(count += Math.random(), 8, 13);
                             option.series[0].data.fill(0);
-                            option.series[0].data[order] =level;
+                            option.series[0].data[order] = level;
                             myChart.setOption(option);
                             break;
                         case "roomAlarm":

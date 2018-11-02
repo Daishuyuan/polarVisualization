@@ -214,7 +214,7 @@
             "name": "地磁X分量",
             "title_class": "title_col",
             "height": 30,
-            "url": "line_geo",
+            "url": "line_geo_all",
             "column": "col-md-6",
             "description": "第一列"
           },

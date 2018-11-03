@@ -88,8 +88,9 @@ export class Scene {
         // set title recover button
         let titleEntity = $(tools.identify(this._recoverBtn));
         titleEntity.click(() => {
-            titleEntity.hide().removeClass(ANIMATE_CSS_TITLE);   // remove class
-            titleEntity.show().addClass(ANIMATE_CSS_TITLE);      // add class
+            titleEntity.removeClass(ANIMATE_CSS_TITLE);   // remove class
+            titleEntity.hide().show();
+            titleEntity.addClass(ANIMATE_CSS_TITLE);      // add class
             this._recoverSite();
         });
         // last scene close or other process
@@ -107,12 +108,18 @@ export class Scene {
             }
             // execute close function in last scene
             if (typeof(LAST_SCENE[INNER_ON_CLOSE]) === "function") {
+                let timerName = `${LAST_SCENE.name} ${INNER_ON_CLOSE}`;
+                console.time(timerName);
                 LAST_SCENE[INNER_ON_CLOSE]();
+                console.timeEnd(timerName);
             }
         }
         // execute load function
         if (typeof (this[INNER_ON_LOAD]) === "function") {
+            let timerName = `${this.name} ${INNER_ON_LOAD}`;
+            console.time(timerName);
             this[INNER_ON_LOAD]();
+            console.timeEnd(timerName);
         }
         // set title name
         if (this.name) {
@@ -122,7 +129,7 @@ export class Scene {
         // common process
         if (this.hasOwnProperty("menu")) {
             let delay = new DelayTime(0, 0.1);
-            $(this._menuId).children().hide().show(); // reactivate animation in menu elements
+            $(tools.identify(this._menuId)).children().hide().show(); // reactivate animation in menu elements
             this._vuePanel.application.mbuttons = this.menu.map((x) => {
                 return {
                     name: x.name,

@@ -25,7 +25,9 @@
       }
     }
   },
-  "polar": {},
+  "polar": {
+    "radius":"70%"
+  },
   "series": [{
     "type": "bar",
     "data": [1, 2, 3, 4, 3, 5, 1],

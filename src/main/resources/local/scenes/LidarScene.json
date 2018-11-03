@@ -59,7 +59,7 @@
                         "type": "chart",
                       "name":"湿度",
                         "title_class": "title_col",
-                      "title_height":15,
+                      "title_height":25,
                         "height": 40,
                         "url": "humidity",
                         "column": "col-md-6",
@@ -69,9 +69,9 @@
                         "type": "chart",
                         "name":"气压",
                         "title_class": "title_col",
-                        "title_height":15,
+                        "title_height":25,
                         "height": 40,
-                        "url": "pressure",
+                        "url": "pressureLidar",
                         "column": "col-md-6",
                         "description": "第2列"
                       }
@@ -85,9 +85,9 @@
                         "type": "chart",
                       "name":"温度",
                       "title_class": "title_col",
-                      "title_height":15,
+                      "title_height":25,
                         "height": 40,
-                        "url": "temperature",
+                        "url": "temperatureLidar",
                         "column": "col-md-6",
                         "description": "第1列"
                       },
@@ -95,9 +95,9 @@
                         "type": "chart",
                         "name": "风向、风力",
                         "title_class": "title_col",
-                        "title_height":15,
+                        "title_height":25,
                         "height": 40,
-                        "url": "windRose",
+                        "url": "windRoseLidar",
                         "column": "col-md-6",
                         "description": "第2列"
                       }
@@ -218,54 +218,29 @@
             "cols": [{
                 "type": "chart",
                 "title_class": "title_col",
-                "name": "反演数据",
+                "name": "反演风",
                 "height": 30,
-                "url": "heatmap",
-                "column": "col-md-5",
+                "url": "inversionWind",
+                "column": "col-md-4",
                 "description": "第一列"
               },
               {
-                "type": "capsule",
-                "column": "col-md-7",
-                "rows": [{
-                    "height": 30,
-                    "description": "第1行",
-                    "class": "",
-                    "cols": [{
-                      "type": "chart",
-                      "title_class": "title_col",
-                      "name": "三分量可视化",
-                      "height": 12,
-                      "url": "line_geo",
-                      "column": "col-md-12",
-                      "description": "第1列"
-                    }]
-                  },
-                  {
-                    "height": 30,
-                    "description": "第2行",
-                    "class": "",
-                    "cols": [{
-                      "type": "chart",
-                      "url": "line_geo",
-                      "height": 9,
-                      "column": "col-md-12",
-                      "description": "第1列"
-                    }]
-                  },
-                  {
-                    "height": 30,
-                    "description": "第3行",
-                    "class": "",
-                    "cols": [{
-                      "type": "chart",
-                      "url": "line_geo",
-                      "height": 9,
-                      "column": "col-md-12",
-                      "description": "第1列"
-                    }]
-                  }
-                ]
+                "type": "chart",
+                "title_class": "title_col",
+                "name": "反演温度",
+                "height": 30,
+                "url": "inversionTemperature",
+                "column": "col-md-4",
+                "description": "第一列"
+              },
+              {
+                "type": "chart",
+                "title_class": "title_col",
+                "name": "反演钠密度",
+                "height": 30,
+                "url": "inversionNa",
+                "column": "col-md-4",
+                "description": "第一列"
               }
             ]
 

@@ -1,0 +1,37 @@
+{
+  "series": [{
+    "name": "温湿气",
+    "type": "gauge",
+    "detail": {
+      "formatter": "{value}KPa",
+      "fontSize": 9,
+      "offsetCenter": [0,"90%"]
+    },
+    "min":0,
+    "max":3,
+    "radius": "100%",
+    "axisLine": {
+      "lineStyle": {
+        "width": 10
+      }
+    },
+    "axisLabel": {
+      "fontSize": 12
+    },
+    "splitNumber": 3,
+    "splitLine": {
+      "length": 10
+    },
+    "axisTick": {
+      "splitNumber": 3,
+      "length": 5
+    },
+    "pointer": {
+      "length": "60%",
+      "width": 3
+    },
+    "data": [{
+      "value": 50
+    }]
+  }]
+}

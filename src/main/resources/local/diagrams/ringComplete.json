@@ -7,7 +7,7 @@
     "name": "gauge.json",
     "type": "pie",
     "clockWise": false,
-    "radius": [35, 45],
+    "radius": [20, 25],
     "itemStyle": {
       "normal": {
         "label": {
@@ -44,7 +44,7 @@
     "name": "index.html",
     "type": "pie",
     "clockWise": false,
-    "radius": [25, 35],
+    "radius": [15, 20],
     "itemStyle": {
       "normal": {
         "label": {
@@ -82,7 +82,7 @@
     "type": "pie",
     "clockWise": false,
     "hoverAnimation": false,
-    "radius": [15, 25],
+    "radius": [10, 15],
     "itemStyle": {
       "normal": {
         "label": {
@@ -119,7 +119,7 @@
     "type": "pie",
     "clockWise": false,
     "hoverAnimation": false,
-    "radius": [5, 15],
+    "radius": [5, 10],
     "itemStyle": {
       "normal": {
         "label": {

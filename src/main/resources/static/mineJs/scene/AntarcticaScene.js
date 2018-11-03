@@ -3,7 +3,7 @@ import { Tools as tools} from "../basic/BasicTools.js"
 import { PARAMS_TABLE as ptable } from "../basic/ParamsTable.js"
 import { GlobalScene } from "./GlobalScene.js"
 import { LidarScene } from "./LidarScene.js"
-import  {HighPhysics} from "./HighPhysics.js"
+import { HighAlttitudePhysicsScene } from "./HighAlttitudePhysicsScene.js"
 
 /**
  * Antarctica Scene
@@ -25,7 +25,7 @@ export class AntarcticaScene extends Scene {
             event: "eventIceLakeDrillingScene"
         }, {
             name: "高空物理",
-            event: HighPhysics
+            event: HighAlttitudePhysicsScene
         }];
         require(["esri/Camera", "esri/geometry/Point"], (Camera, Point) => {
             super.viewField = new Camera({

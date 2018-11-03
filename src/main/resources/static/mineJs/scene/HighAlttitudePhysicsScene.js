@@ -1,7 +1,7 @@
 import {Scene} from "./Scene.js";
 import  {AntarcticaScene} from "./AntarcticaScene.js";
 
-export class HighPhysics extends Scene {
+export class HighAlttitudePhysicsScene extends Scene {
     constructor(props) {
         super(props);
         super.name = "高空物理场景";

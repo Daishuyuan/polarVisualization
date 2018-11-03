@@ -2,7 +2,7 @@ import { GlobalScene } from "../scene/GlobalScene.js";
 import { AntarcticaScene } from "../scene/AntarcticaScene.js";
 import { ArcticScene } from "../scene/ArcticScene.js"
 import { LidarScene } from "../scene/LidarScene.js"
-import  {HighPhysics} from "../scene/HighPhysics.js"
+import  {HighAlttitudePhysicsScene} from "../scene/HighAlttitudePhysicsScene.js"
 
 
 
@@ -26,7 +26,7 @@ export var PARAMS_TABLE = {
         "USE_ERROR_LOG": false, // notice error log switch
         "MENU_ID": "menu", // menu id
         "DEMONSTRATE_EVENT": true,// only for demonstration
-        "SCENES_LIST": [ GlobalScene, LidarScene, AntarcticaScene, ArcticScene,HighPhysics] // current scenes list
+        "SCENES_LIST": [ GlobalScene, LidarScene, AntarcticaScene, ArcticScene,HighAlttitudePhysicsScene] // current scenes list
     },
     events: {
         "SHIP_LOAD_EVENT": "ship_load_event", // ship zoom in invigorating event

@@ -161,11 +161,11 @@
             "rows": [{
               "height": 6,
               "description": "第1行",
-              "class": "title_row",
+              "class": "",
               "cols": [{
                 "type": "title",
                 "name": "三分量",
-                "style": "chart_title",
+                "style": "title_col",
                 "height": 6,
                 "column": "col-md-12",
                 "description": "第一列"
@@ -340,7 +340,7 @@
                     "type": "chart",
                     "name": "",
                     "title_class": "title_col",
-                    "height": 13,
+                    "height_col": 13,
                     "url": "frequency",
                     "column": "col-md-12",
                     "description": "第一列"
@@ -353,21 +353,20 @@
               "type": "capsule",
               "column": "col-md-4",
               "description": "第三列",
-              "name": "云量占比",
               "rows": [{
                 "height": 6,
                 "description": "第1行",
-                "class": "title_row",
+                "class": "",
                 "cols": [{
                   "type": "title",
                   "name": "云量占比",
-                  "style": "chart_title",
-                  "height": 6,
+                  "style": "title_col",
+                  "height": 50,
                   "column": "col-md-12",
                   "description": "第一列"
                 }]
               },{
-                "height": 50,
+                "height": 47,
                 "description": "第2行",
                 "class": "",
                 "cols": [{
@@ -390,7 +389,7 @@
                   }]
               },
                 {
-                  "height": 50,
+                  "height": 47,
                   "description": "第3行",
                   "class": "",
                   "cols": [{

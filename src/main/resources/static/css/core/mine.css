@@ -7,7 +7,6 @@
     font-family: 'sciFont';
     src: url('../../../../fonts/sciFont.ttf') format('truetype');
 }
-
 html,
 body {
     overflow: hidden;
@@ -66,7 +65,7 @@ body {
     font-size: 2vw;
     -webkit-text-fill-color: transparent;
     opacity: 0.8;
-    text-shadow: 0 0 1vw #0085f7ed, 0 0 1vw #0085f7d6; 
+    text-shadow: 0 0 1vw #0085f7ed, 0 0 1vw #0085f7d6;
     /* text-decoration:none; 
     -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
@@ -151,11 +150,10 @@ body {
 
 .WXY_floating_window {
     position: relative;
-    left: 14px;
-    font-size: 11px;
-    background-color: #000;
-    color: #fff;
-    padding: 4px 8px;
+    font-size: 10px;
+    background-color: #252b2f;
+    color: #f2f2f2;
+    padding: -1px 0px;
     font-family: 'Oswald', sans-serif;
     transition: background-color 200ms ease-out;
     opacity: 0.7;
@@ -163,9 +161,9 @@ body {
 
 .WXY_floating_window_obliteration {
     position: relative;
-    font-size: 11px;
-    background-color: #000;
-    color: #fff;
+    font-size: 8px;
+    background-color: rgba(50, 50, 50, 0.82);
+    color: #eee;
     padding: 4px 8px;
     font-family: 'Oswald', sans-serif;
     transition: background-color 200ms ease-out;

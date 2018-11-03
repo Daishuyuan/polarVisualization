@@ -29,7 +29,9 @@
           "top": "10%",
           "width": "31%",
           "height": "100%",
+          "background":"#5f5858",
           "class": ["animated", "slideInLeft"]
+
         },
         "rows": [{
             "height": 6,
@@ -196,6 +198,7 @@
           "top": "10%",
           "width": "33%",
           "height": "100%",
+          "background":"#5f5858",
           "class": ["animated", "slideInRight"]
         },
         "rows": [{
@@ -298,6 +301,7 @@
               {
                 "type": "capsule",
                 "column": "col-md-4",
+
                 "rows": [{
                   "height": 50,
                   "description": "第1行",

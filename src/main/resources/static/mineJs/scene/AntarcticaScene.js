@@ -3,6 +3,7 @@ import { Tools as tools} from "../basic/BasicTools.js"
 import { PARAMS_TABLE as ptable } from "../basic/ParamsTable.js"
 import { GlobalScene } from "./GlobalScene.js"
 import { LidarScene } from "./LidarScene.js"
+import  {HighPhysics} from "./HighPhysics.js"
 
 /**
  * Antarctica Scene
@@ -24,7 +25,7 @@ export class AntarcticaScene extends Scene {
             event: "eventIceLakeDrillingScene"
         }, {
             name: "高空物理",
-            event: "eventHighAltitudePhysicsScene"
+            event: HighPhysics
         }];
         require(["esri/Camera", "esri/geometry/Point"], (Camera, Point) => {
             super.viewField = new Camera({
@@ -38,7 +39,7 @@ export class AntarcticaScene extends Scene {
         });
     }
 
-    onLoad() {
+    onLoad(  ) {
         tools.setEventInApp(ptable.events.SHIP_LOAD_EVENT, (ship) => {
             ship.attributes.extend = true;
             let title_entity = tools.getEventByName(ptable.events.SHIP_TITLE_CHANGE)();

@@ -1,0 +1,423 @@
+{
+  "tableLayer": {
+    "titlePanel": {
+      "pane": {
+        "position": "absolute",
+        "left": "0%",
+        "top": "0%",
+        "width": "35%",
+        "height": "8%"
+      },
+      "rows": [{
+        "height": 100,
+        "description": "第一行",
+        "cols": [{
+          "type": "title",
+          "name": "极地大屏可视化系统",
+          "style": "system_title",
+          "height": 100,
+          "column": "col-md-12",
+          "description": "第一列"
+        }]
+      }]
+    },
+    "leftPanel": {
+      "pane": {
+        "position": "absolute",
+        "left": "0%",
+        "top": "10%",
+        "width": "31%",
+        "height": "100%"
+      },
+      "rows": [{
+        "height": 6,
+        "description": "第一行",
+        "class": "title_row",
+        "cols": [{
+          "type": "title",
+          "name": "电离层数据",
+          "style": "chart_title",
+          "height": 6,
+          "column": "col-md-12",
+          "description": "第一列"
+        }]
+      },
+        {
+          "height": 34,
+          "description": "第二行",
+          "class": "body_row",
+          "cols": [{
+            "type": "chart",
+            "title_class": "title_col",
+            "height": 30,
+            "name": "电离层分布",
+            "url": "line_datazoom",
+            "column": "col-md-3",
+            "description": "第一列"
+          },
+            {
+              "type": "chart",
+              "title_class": "title_col",
+              "height": 30,
+              "name": "电离层热力",
+              "url": "heatmap",
+              "column": "col-md-3",
+              "description": "第二列"
+            },
+            {
+              "type": "capsule",
+              "column": "col-md-3",
+              "description": "第三列",
+              "rows": [{
+                "height": 50,
+                "description": "第1行",
+                "class": "",
+                "cols": [{
+                  "type": "chart",
+                  "name": "电离层吸收",
+                  "title_class": "title_col",
+                  "height": 13,
+                  "url": "line_geo_all",
+                  "column": "col-md-12",
+                  "description": "第一列"
+                }]
+              },
+                {
+                  "height": 50,
+                  "description": "第2行",
+                  "class": "",
+                  "cols": [{
+                    "type": "chart",
+                    "name": "高程雷达",
+                    "title_class": "title_col",
+                    "height": 13,
+                    "url": "windRose",
+                    "column": "col-md-12",
+                    "description": "第一列"
+                  }]
+
+                }
+              ]
+            },
+            {
+              "type": "capsule",
+              "column": "col-md-3",
+              "description": "第三列",
+              "rows": [{
+                "height": 50,
+                "description": "第1行",
+                "class": "",
+                "cols": [{
+                  "type": "chart",
+                  "name": "电离层闪烁",
+                  "title_class": "title_col",
+                  "height": 13,
+                  "url": "pointCount",
+                  "column": "col-md-12",
+                  "description": "第一列"
+                }]
+              },
+                {
+                  "height": 50,
+                  "description": "第2行",
+                  "class": "",
+                  "cols": [{
+                    "type": "chart",
+                    "name": "测高仪",
+                    "title_class": "title_col",
+                    "height": 13,
+                    "url": "pressure",
+                    "column": "col-md-12",
+                    "description": "第一列"
+                  }]
+
+                }
+              ]
+            }
+
+          ]
+        },
+        {
+          "height": 6,
+          "description": "第三行",
+          "class": "title_row",
+          "cols": [{
+            "type": "title",
+            "name": "地磁数据",
+            "style": "chart_title",
+            "height": 6,
+            "column": "col-md-12",
+            "description": "第一列"
+          }]
+        },
+        {
+          "height": 34,
+          "description": "第四行",
+          "class": "body_row",
+          "cols": [{
+            "type": "capsule",
+            "column": "col-md-8",
+            "description": "第一列",
+            "rows": [{
+              "height": 6,
+              "description": "第1行",
+              "class": "title_row",
+              "cols": [{
+                "type": "title",
+                "name": "三分量",
+                "style": "chart_title",
+                "height": 6,
+                "column": "col-md-12",
+                "description": "第一列"
+              }]
+            },{
+              "height": 50,
+              "description": "第2行",
+              "class": "",
+              "cols": [{
+                "type": "chart",
+                "name": "",
+                "title_class": "title_col",
+                "height": 13,
+                "url": "line_geo",
+                "column": "col-md-6",
+                "description": "第1列"
+              },
+                {
+                  "type": "chart",
+                  "name": "",
+                  "title_class": "title_col",
+                  "height": 13,
+                  "url": "line_geo",
+                  "column": "col-md-6",
+                  "description": "第2列"
+                }]
+            },
+              {
+                "height": 50,
+                "description": "第3行",
+                "class": "",
+                "cols": [{
+                  "type": "chart",
+                  "name": "",
+                  "title_class": "title_col",
+                  "height": 13,
+                  "url": "line_geo",
+                  "column": "col-md-6",
+                  "description": "第1列"
+                },
+                  {
+                    "type": "chart",
+                    "name": "",
+                    "title_class": "title_col",
+                    "height": 13,
+                    "url": "frequency",
+                    "column": "col-md-6",
+                    "description": "第2列"
+                  }]
+
+              }
+            ]
+          },
+
+            {
+              "type": "chart",
+              "name": "地磁偏移",
+              "title_class": "title_col",
+              "height": 30,
+              "url": "pressure",
+              "column": "col-md-4",
+              "description": "第二列"
+            }
+          ]
+        }
+      ]
+    },
+    "rightPanel": {
+      "pane": {
+        "position": "absolute",
+        "right": "0%",
+        "top": "10%",
+        "width": "33%",
+        "height": "100%"
+      },
+      "rows": [{
+        "height": 6,
+        "description": "第一行",
+        "class": "title_row",
+        "cols": [{
+          "type": "title",
+          "name": "极光数据",
+          "style": "chart_title",
+          "height": 6,
+          "column": "col-md-12",
+          "description": "第一列"
+        }]
+      },
+        {
+          "height": 34,
+          "description": "第二行",
+          "class": "body_row",
+          "cols": [{
+            "type": "chart",
+            "title_class": "title_col",
+            "name": "极光数据分析",
+            "height": 30,
+            "url": "fileType",
+            "column": "col-md-4",
+            "description": "第一列"
+          },
+            {
+              "type": "chart",
+              "title_class": "title_col",
+              "name": "极光变化",
+              "height": 30,
+              "url": "frequency",
+              "column": "col-md-4",
+              "description": "第二列"
+            },
+            {
+              "type": "chart",
+              "title_class": "title_col",
+              "name": "站点极光监测",
+              "height": 30,
+              "url": "pressure",
+              "column": "col-md-4",
+              "description": "第三列"
+            }
+          ]
+
+        },
+        {
+          "height": 6,
+          "description": "第三行",
+          "class": "title_row",
+          "cols": [{
+            "type": "title",
+            "style": "chart_title",
+            "height": 6,
+            "name": "站点云图",
+            "column": "col-md-12",
+            "description": "第一列"
+          }]
+        },
+        {
+          "height": 34,
+          "description": "第四行",
+          "class": "body_row",
+          "cols": [{
+            "type": "chart",
+            "title_class": "title_col",
+            "name": "实时云图展示",
+            "height": 30,
+            "url": "heatmap",
+            "column": "col-md-4",
+            "description": "第一列"
+          },
+            {
+              "type": "capsule",
+              "column": "col-md-4",
+              "description": "第二列",
+              "rows": [{
+                "height": 50,
+                "description": "第1行",
+                "class": "",
+                "cols": [{
+                  "type": "chart",
+                  "name": "云量变化",
+                  "title_class": "title_col",
+                  "height": 13,
+                  "url": "frequency",
+                  "column": "col-md-12",
+                  "description": "第一列"
+                }]
+              },
+                {
+                  "height": 50,
+                  "description": "第2行",
+                  "class": "",
+                  "cols": [{
+                    "type": "chart",
+                    "name": "",
+                    "title_class": "title_col",
+                    "height": 13,
+                    "url": "frequency",
+                    "column": "col-md-12",
+                    "description": "第一列"
+                  }]
+
+                }
+              ]
+            },
+            {
+              "type": "capsule",
+              "column": "col-md-4",
+              "description": "第三列",
+              "name": "云量占比",
+              "rows": [{
+                "height": 6,
+                "description": "第1行",
+                "class": "title_row",
+                "cols": [{
+                  "type": "title",
+                  "name": "云量占比",
+                  "style": "chart_title",
+                  "height": 6,
+                  "column": "col-md-12",
+                  "description": "第一列"
+                }]
+              },{
+                "height": 50,
+                "description": "第2行",
+                "class": "",
+                "cols": [{
+                  "type": "chart",
+                  "name": "",
+                  "title_class": "title_col",
+                  "height": 13,
+                  "url": "ringComplete",
+                  "column": "col-md-6",
+                  "description": "第1列"
+                },
+                  {
+                    "type": "chart",
+                    "name": "",
+                    "title_class": "title_col",
+                    "height": 13,
+                    "url": "ringComplete",
+                    "column": "col-md-6",
+                    "description": "第2列"
+                  }]
+              },
+                {
+                  "height": 50,
+                  "description": "第3行",
+                  "class": "",
+                  "cols": [{
+                    "type": "chart",
+                    "name": "",
+                    "title_class": "title_col",
+                    "height": 13,
+                    "url": "ringComplete",
+                    "column": "col-md-6",
+                    "description": "第1列"
+                  },
+                    {
+                      "type": "chart",
+                      "name": "",
+                      "title_class": "title_col",
+                      "height": 13,
+                      "url": "ringComplete",
+                      "column": "col-md-6",
+                      "description": "第2列"
+                    }]
+
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

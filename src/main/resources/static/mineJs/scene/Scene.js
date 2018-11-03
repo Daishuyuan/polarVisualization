@@ -36,11 +36,11 @@ export class Scene {
         this._recoverBtn = props.recoverBtn;
         this._popupItems = props.popupItems;
         this._eventName = Scene.GEN_EVENT_NAME(this.__proto__.constructor);
-        this._recoverSite =() => {
+        this._recoverSite =(callback) => {
             if(this._map && this._view && this.viewField) {
                 this._view.goTo(this.viewField, {
                     animate: true
-                });
+                }).then(() => callback && callback());
             }
         };
         // this._curScene = null;
@@ -78,12 +78,18 @@ export class Scene {
         const INNER_ON_UPDATE = "onUpdate";
         const INNER_ON_LOAD = "onLoad";
         const TABLE_LAYER = "tableLayer";
-        // check existence of private name
-        if (!this.name) {
-            tools.mutter("the name of scene is invalid", "error");
+        const ANIMATE_CSS_TITLE = "animated bounceIn";
+        // check existence of private name, viewField and menu
+        if (!this.name || !this.viewField || !this.menu) {
+            let params = `name: ${this.name} or viewField: ${this.viewField} or menu: ${this.menu}`;
+            tools.mutter(`${params} couldn't be invalid.`, "error");
+            return;
         }
         // set title recover button
-        $(tools.identify(this._recoverBtn)).click(() => {
+        let titleEntity = $(tools.identify(this._recoverBtn));
+        titleEntity.click(() => {
+            titleEntity.hide().removeClass(ANIMATE_CSS_TITLE);   // remove class
+            titleEntity.show().addClass(ANIMATE_CSS_TITLE);      // add class
             this._recoverSite();
         });
         // last scene close or other process
@@ -126,38 +132,39 @@ export class Scene {
             });
         }
         // look at defined view field
-        this._recoverSite();
-        // init tables
-        if (this.created_tables.length > 0) {
-            this.created_tables.forEach((dom) => {
-                dom.initEvents();
-                dom.show();
-            });
-        } else {
-            tools.req(`${this._scenesUrl}/${this._wkid}`).then((scene) => {
-                if (scene.hasOwnProperty(TABLE_LAYER)) {
-                    for (let name in scene[TABLE_LAYER]) {
-                        if (scene[TABLE_LAYER].hasOwnProperty(name)) {
-                            let dom = this._factory.generate(this._tableViewId, scene[TABLE_LAYER][name]);
-                            dom.id = `${this._wkid}_${name}`;
-                            this._popupItems.push(dom);
-                            this.created_tables.push(dom);
+        this._recoverSite(() => {
+            // init tables
+            if (this.created_tables.length > 0) {
+                this.created_tables.forEach((dom) => {
+                    dom.initEvents();
+                    dom.show();
+                });
+            } else {
+                tools.req(`${this._scenesUrl}/${this._wkid}`).then((scene) => {
+                    if (scene.hasOwnProperty(TABLE_LAYER)) {
+                        for (let name in scene[TABLE_LAYER]) {
+                            if (scene[TABLE_LAYER].hasOwnProperty(name)) {
+                                let dom = this._factory.generate(this._tableViewId, scene[TABLE_LAYER][name]);
+                                dom.id = `${this._wkid}_${name}`;
+                                this._popupItems.push(dom);
+                                this.created_tables.push(dom);
+                            }
                         }
+                    } else {
+                        tools.mutter("tableLayer isn't exist.", "error");
                     }
-                } else {
-                    tools.mutter("tableLayer isn't exist.", "error");
-                }
-            });
-        }
-        // execute update function
-        if (typeof (this[INNER_ON_UPDATE]) === "function") {
-            let tick = 0, inner_func = () => {
-                if (tick = this[INNER_ON_UPDATE]()) {
-                    this.onUpdateEventId = setTimeout(inner_func, tick);
-                }
-            };
-            this.onUpdateEventId = setTimeout(inner_func, tick);
-        }
+                });
+            }
+            // execute update function
+            if (typeof (this[INNER_ON_UPDATE]) === "function") {
+                let tick = 0, inner_func = () => {
+                    if (tick = this[INNER_ON_UPDATE]()) {
+                        this.onUpdateEventId = setTimeout(inner_func, tick);
+                    }
+                };
+                this.onUpdateEventId = setTimeout(inner_func, tick);
+            }
+        });
         // save handle of current scene
         tools.watch("curSceneHandle", LAST_SCENE = this);
         // statistic scene performance

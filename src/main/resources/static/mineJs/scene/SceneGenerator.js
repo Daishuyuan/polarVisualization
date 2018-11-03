@@ -188,15 +188,20 @@ export let SceneGenerator = {
                     }));
                     let map_point = props.view.toMap(screen_point);
                     let dom = $(tools.identify(item.id));
-                    let testList = items.map(x => x.is(":visible") ? tools.hitTest(x, dom) : false);
+                    let testList = items.map(x => x.is(":visible") ? tools.hitTest(x, 'absolute', dom, 'transform') : false);
                     let hitTest = testList.length > 0 ? testList.reduce((x, y) => x || y) : false;
                     item.extend = !!(props.view.scale < 1000000);
                     item.switch = !!(map_point && Math.abs(map_point.longitude - lon) <= threshold &&
                         Math.abs(map_point.latitude - lat) <= threshold && !hitTest);
-                    dom.css({
-                        "left": `${screen_point.x}px`,
-                        "top": `${screen_point.y - dom.height()}px`
-                    });
+                    if (dom.length > 0) {
+                        if (parseInt(dom.css("left")) != 0 || parseInt(dom.css("top")) != 0) {
+                            dom.css("left", "0px"); // locate x to 0
+                            dom.css("top", "0px");  // locate y to 0
+                        }
+                        let translate_x = `translateX(${screen_point.x}px)`;
+                        let translate_y = `translateY(${screen_point.y - dom.height()}px)`;
+                        dom.css("transform", `${translate_x} ${translate_y}`);
+                    }
                 });
             };
             tools.dynamicInterval(firePopup, updateTick);

@@ -68,6 +68,22 @@ export let Tools = (() => {
     };
     const log_error = console.error;
     const log_warn = console.warn;
+    const _transformXY = (jqDom, model) => {
+        switch (model) {
+            case "transform":
+                let sign = jqDom.is(":visible");
+                if (!sign) jqDom.toggle();
+                let transform = jqDom.css("transform");
+                let matrix = transform.replace('matrix(', '[').replace(')', ']');
+                matrix = JSON.parse(matrix);
+                if(!sign) jqDom.toggle();
+                return [matrix[4], matrix[5]];
+            case "absolute":
+                return [parseFloat(jqDom.css("left")), parseFloat(jqDom.css("top"))];
+            default:
+                _mutter(`not find this model: ${model}`, "error");
+        }
+    };
     const _mutter = (msg, level) => {
         // to dye our information with different color
         let content = `WXY(id:${generator.next().value},lv:wxy_${level}):%c ${msg}`;
@@ -227,11 +243,9 @@ export let Tools = (() => {
             timer_func();
             return timerId;
         },
-        hitTest: (a, b) => {
-            let topOne = parseFloat(a.css("top")),
-                topTwo = parseFloat(b.css("top")),
-                leftOne = parseFloat(a.css("left")),
-                leftTwo = parseFloat(b.css("left")),
+        hitTest: (a, a_model, b, b_model) => {
+            let [leftOne, topOne] = _transformXY(a, a_model),
+                [leftTwo, topTwo] = _transformXY(b, b_model),
                 widthOne = a.width(),
                 widthTwo = b.width(),
                 heightOne = a.height(),

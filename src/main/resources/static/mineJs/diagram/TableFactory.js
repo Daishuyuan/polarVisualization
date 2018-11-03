@@ -75,7 +75,7 @@ export class TableFactory {
         // load chart
         function loadChart(node) {
             let dom = node.dom;
-            let myChart = echarts.init(dom[0]);
+            let myChart = echarts.init(dom[0], 'macarons');
             $.ajax({
                 url: ptable.constants.CHART_TEMP_URL + node.url,
                 type: "GET",

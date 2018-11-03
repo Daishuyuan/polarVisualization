@@ -194,7 +194,7 @@ export let SceneGenerator = {
                     item.switch = !!(map_point && Math.abs(map_point.longitude - lon) <= threshold &&
                         Math.abs(map_point.latitude - lat) <= threshold && !hitTest);
                     if (dom.length > 0) {
-                        if (parseInt(dom.css("left")) != 0 || parseInt(dom.css("top")) != 0) {
+                        if (0 !== parseInt(dom.css("left")) || 0 !== parseInt(dom.css("top"))) {
                             dom.css("left", "0px"); // locate x to 0
                             dom.css("top", "0px");  // locate y to 0
                         }

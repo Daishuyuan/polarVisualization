@@ -31,7 +31,7 @@
         <iframe v-cloak v-show="!loaded" v-bind:src="fakePage" class="GlassPlate" style="z-index: 20000;"></iframe>
         <!-- main layer -->
         <template v-cloak v-show="loaded">
-            <div id="threeJsView" class="GlassPlate" style="background: rgb(29, 58, 84)  url(./img/ui/bg.png);"></div>
+            <div id="threeJsView" class="GlassPlate" style="background: rgb(29, 58, 84)  url(./img/ui/1.png);"></div>
             <!-- popup template -->
             <div v-for="popup in popups" v-cloak v-show="popup.switch" v-bind:id="popup.id" v-on:click="pop(popup.event);" class="WXY_label">
                 <div v-cloak v-show="popup.extend == true" class="WXY_floating_window WXY_img_font animated fadeIn pulse">

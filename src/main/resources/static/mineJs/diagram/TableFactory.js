@@ -196,7 +196,13 @@ export class TableFactory {
                         if (config.hasOwnProperty("pane")) {
                             for (let name in config.pane) {
                                 if (config.pane.hasOwnProperty(name)) {
-                                    jqDom.css(name, config.pane[name]);
+                                    switch (name) {
+                                        case "class":
+                                            config.pane[name].forEach(css => jqDom.addClass(css));
+                                            break;
+                                        default:
+                                            jqDom.css(name, config.pane[name]);
+                                    }
                                 }
                             }
                         } else {

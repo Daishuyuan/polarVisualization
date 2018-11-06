@@ -284,7 +284,7 @@
               "title_class": "title_col",
               "name": "站点极光监测",
               "height": 30,
-              "url": "pressure",
+              "url": "KPvalue",
               "column": "col-md-4",
               "description": "第三列"
             }

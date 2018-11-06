@@ -1,0 +1,60 @@
+{
+
+  "color": [
+    "#37A2DA",
+    "#32C5E9",
+    "#67E0E3"
+  ],
+  "series": [
+    {
+      "name": "业务指标",
+      "type": "gauge",
+      "min": 0,
+      "max": 10,
+      "detail": {
+        "formatter": "当前KP值：{value}",
+        "fontSize": 15,
+        "offsetCenter": [
+          0,
+          "90%"
+        ]
+      },
+      "axisLine": {
+        "show": true,
+        "lineStyle": {
+          "width": 10,
+          "shadowBlur": 0,
+          "color": [
+            [
+              0.3,
+              "#67e0e3"
+            ],
+            [
+              0.7,
+              "#37a2da"
+            ],
+            [
+              1,
+              "#fd666d"
+            ]
+          ]
+        }
+      },
+      "axisLabel": {
+        "fontSize": 12
+      },
+      "splitNumber": 5,
+      "pointer": {
+        "length": "60%",
+        "width": 4
+      },
+      "data": [
+        {
+          "value": 5,
+          "name": "",
+          "fontSize": 16
+        }
+      ]
+    }
+  ]
+}

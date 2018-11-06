@@ -53,7 +53,7 @@
             "title_class": "title_col",
             "height": 30,
             "name": "电离层分布",
-            "url": "line_datazoom",
+            "url": "Ionospheric ",
             "column": "col-md-3",
             "description": "第一列"
           },

@@ -1,0 +1,126 @@
+{
+  "tooltip": {
+    "trigger": "axis",
+    "axisPointer": {
+      "type": "cross",
+      "label": {
+        "backgroundColor": "#6a7985"
+      }
+    }
+  },
+  "grid": {
+    "top": "10%",
+    "right": "5%",
+    "left": "10%",
+    "bottom": "20%",
+    "containLabel": true
+  },
+  "xAxis": [
+    {
+      "type": "category",
+      "boundaryGap": true,
+      "data": [
+        "2018.11.6",
+        "2018.11.7",
+        "2018.11.8",
+        "2018.11.7",
+        "2018.11.7",
+        "2018.11.7",
+        "2018.11.7"
+      ]
+    }
+  ],
+  "yAxis": [
+    {
+      "type": "value"
+    },
+    {
+      "nameLocation": "start",
+      "type": "value"
+    }
+  ],
+  "series": [
+    {
+      "name": "分布值",
+      "type": "line",
+      "smooth": "true",
+      "areaStyle": {},
+      "itemStyle": {
+        "normal": {
+          "color": "#191970"
+        }
+      },
+      "data": [
+        230,
+        132,
+        101,
+        134,
+        90,
+        230,
+        210
+      ]
+    },
+    {
+      "name": "分布值",
+      "type": "line",
+      "smooth": "true",
+      "areaStyle": {},
+      "itemStyle": {
+        "normal": {
+          "color": "#1E90FF"
+        }
+      },
+      "data": [
+        220,
+        182,
+        191,
+        234,
+        290,
+        330,
+        310
+      ]
+    },
+    {
+      "name": "分布值",
+      "type": "line",
+      "smooth": "true",
+      "itemStyle": {
+        "normal": {
+          "color": "#00BFFF"
+        }
+      },
+      "areaStyle": {},
+      "data": [
+        150,
+        232,
+        201,
+        154,
+        190,
+        330,
+        410
+      ]
+    },
+    {
+      "name": "分布值",
+      "type": "line",
+      "smooth": "true",
+      "itemStyle": {
+        "normal": {
+          "color": "#87CEEB"
+        }
+      },
+      "areaStyle": {
+        "normal": {}
+      },
+      "data": [
+        320,
+        332,
+        301,
+        334,
+        390,
+        330,
+        320
+      ]
+    }
+  ]
+}

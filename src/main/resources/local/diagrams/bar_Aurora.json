@@ -1,1 +1,36 @@
-{"angleAxis":{"type":"category","data":["周一","周二","周三","周四","周五"],"z":10},"radiusAxis":{},"polar":{},"series":[{"type":"bar","data":[5,2,3,4,3,5,1],"coordinateSystem":"polar","name":"A","stack":"a"}],"color":"#67e0e3"}
+{
+
+  "angleAxis": {
+    "type": "category",
+    "data": [
+      "周一",
+      "周二",
+      "周三",
+      "周四",
+      "周五"
+    ],
+    "z": 10
+  },
+  "radiusAxis": {},
+  "polar": {},
+  "series": [
+    {
+
+      "type": "bar",
+      "data": [
+        5,
+        2,
+        3,
+        4,
+        3,
+        5,
+        1
+      ],
+      "coordinateSystem": "polar",
+      "name": "A",
+      "stack": "a"
+    }
+  ],
+
+  "color": "#67e0e3"
+}

@@ -275,7 +275,7 @@
               "title_class": "title_col",
               "name": "极光变化",
               "height": 30,
-              "url": "frequency",
+              "url": "line_Aurora",
               "column": "col-md-4",
               "description": "第二列"
             },

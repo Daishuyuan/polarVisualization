@@ -36,7 +36,7 @@ export let SceneManager = () => {
                         lighting: {
                             // date: Date.now(),
                             // directShadowsEnabled: false,
-                            ambientOcclusionEnabled: true,
+                            ambientOcclusionEnabled: false,
                             cameraTrackingEnabled: true
                         },
                         background: {

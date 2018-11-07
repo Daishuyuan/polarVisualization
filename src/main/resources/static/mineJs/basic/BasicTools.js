@@ -227,8 +227,9 @@ export let Tools = (() => {
             _mutter(msg, level);
         },
         dynamicInterval: (func, tick) => {
-            let _tick = tick;
-            let timerId = 0;
+            let _tick = tick,
+                timerId = 0,
+                halt = false;
             let timer_func = () => {
                 let start = Date.now();
                 if (typeof(func) === "function") {
@@ -238,10 +239,16 @@ export let Tools = (() => {
                     return false;
                 }
                 _tick = Math.max(1, tick - (Date.now() - start));
-                timerId = setTimeout(timer_func, _tick);
+                if(!halt) {
+                    timerId = setTimeout(timer_func, _tick);
+                }
             };
             timer_func();
-            return timerId;
+            return {
+                getTimerId: () => timerId,
+                halt: () => halt = false,
+                start: () => timer_func(halt = true)
+            };
         },
         hitTest: (a, a_model, b, b_model) => {
             let [leftOne, topOne] = _transformXY(a, a_model),

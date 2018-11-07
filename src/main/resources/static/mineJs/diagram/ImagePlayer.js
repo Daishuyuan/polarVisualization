@@ -1,6 +1,5 @@
 import {Tools as tools} from "../basic/BasicTools.js"
 
-
 export class ImagePlayer {
     constructor(dom, option) {
         if (!option) {
@@ -40,7 +39,6 @@ export class ImagePlayer {
                 imgLi.append(img).hide();
                 this.imgList.append(imgLi);
             }
-
         }
     }
 
@@ -48,7 +46,7 @@ export class ImagePlayer {
         if (!this.option.tick) {
             tools.mutter("Please set the interval of player.", "error", ImagePlayer);
         } else {
-            setInterval(() => {
+            tools.dynamicInterval(() => {
                 let child = this.imgList.children();
                 let len = child.length;
                 child.hide();

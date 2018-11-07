@@ -34,9 +34,7 @@ export class ImagePlayer {
                         $(child[(this.index++) % len]).show();
                     }
                 }, this.option.tick, false);
-            }
-            if (this.option.autoStart) {
-                this.start();
+                this.option.autoStart && this.start();
             }
         }
     }

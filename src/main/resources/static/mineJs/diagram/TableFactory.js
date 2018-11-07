@@ -202,7 +202,7 @@ export class TableFactory {
                                     });
                                     break;
                                 case PLAYER_SIGN:
-                                    let pid = `DSY${guid()}`.replace(/-/g, ""),
+                                    let pid = `ZXJ${guid()}`.replace(/-/g, ""),
                                         name_height = 0;
                                     // if node exist name then init title above this player
                                     if (node.name) {

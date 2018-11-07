@@ -44,194 +44,202 @@ export class TableFactory {
         const PANEL_SIGN = "panel";
         const PLAYER_SIGN = "player";
 
-        // load event and update handle event
-        function loadEvent(node) {
-            switch (node.type) {
-                case TITLE_SIGN:
-                    let jqId = node.domId, content = $(jqId).html();
-                    delete node.name;
-                    Object.defineProperty(node, "name", {
-                        configurable: true,
-                        get() {
-                            return content;
-                        },
-                        set(name)
-                        {
-                            $(jqId).html(content = name);
-                        }
-                    });
-                    tools.setEventInApp(node.event_id, () => node);
-                    break;
-                case CHART_SIGN:
-                    if (node.url) {
-                        let entity = {
-                            type: TYPE_ECHARTS,
-                            url: node.url,
-                            target: node.chart
-                        };
-                        tools.setEventInApp(node.event_id, () => entity);
-                    }
-                    break;
-            }
-        }
+        // diagram initialization
+        this.__init__ = (jqDom, config) => {
+            const tbcnt = [],
+                echDelay = [],
+                events = [],
+                players = [],
+                startsHandleEvents = [],
+                closeHandleEvents = [];
 
-        // load chart
-        function loadChart(node) {
-            let dom = node.dom;
-            let myChart = echarts.init(dom[0], 'macarons');
-            $.ajax({
-                url: `${ptable.constants.CHART_TEMP_URL}/${node.url}`,
-                type: "GET",
-                dataType: "json",
-                success: function (option) {
-                    option[CHART_UNIQUE]=node.url;
-                    CHARTLIST.push([myChart,option]);
-                    myChart.setOption(option);
-                    myChart.resize();
-                }
-            });
-            return myChart;
-        }
-
-        //load player
-        function loadPlayer(node){
-            const imageLoader = (player) =>{
-                let path = `${ptable.constants.FILE_DATA_URL}/${node.type}`;
-                $.ajax({
-                    url: path,
-                    type:"GET",
-                    dataType:"json",
-                    success: function (names) {
-                        names.forEach(name =>{
-                            player.addImage(`${ptable.constants.DOWNLOAD_IMAGE_URL}/${node.type}/${name}`);
+            // load event and update handle event
+            function loadEvent(node) {
+                switch (node.type) {
+                    case TITLE_SIGN:
+                        let jqId = node.domId, content = $(jqId).html();
+                        delete node.name;
+                        Object.defineProperty(node, "name", {
+                            configurable: true,
+                            get() {
+                                return content;
+                            },
+                            set(name) {
+                                $(jqId).html(content = name);
+                            }
                         });
-                    },
-                    error:function () {
-                        tools.mutter(`Can not find the file ${path}.`, "error");
-                    }
-                });
-            };
-            if (node.hasOwnProperty("type")){
-                let path =`${ptable.constants.CHART_TEMP_URL}/${node.url}`;
+                        tools.setEventInApp(node.event_id, () => node);
+                        break;
+                    case CHART_SIGN:
+                        if (node.url) {
+                            let entity = {
+                                type: TYPE_ECHARTS,
+                                url: node.url,
+                                target: node.chart
+                            };
+                            tools.setEventInApp(node.event_id, () => entity);
+                        }
+                        break;
+                }
+            }
+
+            // load chart
+            function loadChart(node) {
+                let dom = node.dom;
+                let myChart = echarts.init(dom[0], 'macarons');
                 $.ajax({
-                    url:path,
+                    url: `${ptable.constants.CHART_TEMP_URL}/${node.url}`,
                     type: "GET",
                     dataType: "json",
                     success: function (option) {
-                        option.width = node.dom.width();
-                        option.height = node.dom.height();
-                        imageLoader(new ImagePlayer(node.dom, option));
+                        option[CHART_UNIQUE] = node.url;
+                        CHARTLIST.push([myChart, option]);
+                        myChart.setOption(option);
+                        myChart.resize();
                     }
                 });
-            }else{
-                tools.mutter(`Can not find the file ${path}.`, "error");
+                return myChart;
             }
-        }
 
-        // diagram initialization
-        this.__init__ = (jqDom, config) => {
+            //load player
+            function loadPlayer(node) {
+                const imageLoader = (player) => {
+                    let path = `${ptable.constants.FILE_DATA_URL}/${node.type}`;
+                    $.ajax({
+                        url: path,
+                        type: "GET",
+                        dataType: "json",
+                        success: function (names) {
+                            names.forEach(name => {
+                                player.addImage(`${ptable.constants.DOWNLOAD_IMAGE_URL}/${node.type}/${name}`);
+                            });
+                        },
+                        error: function () {
+                            tools.mutter(`Can not find the file ${path}.`, "error", TableFactory);
+                        }
+                    });
+                };
+                if (node.hasOwnProperty("type")) {
+                    let path = `${ptable.constants.CHART_TEMP_URL}/${node.url}`;
+                    $.ajax({
+                        url: path,
+                        type: "GET",
+                        dataType: "json",
+                        success: function (option) {
+                            option.width = node.dom.width();
+                            option.height = node.dom.height();
+                            let loader = new ImagePlayer(node.dom, option);
+                            imageLoader(loader);
+                            startsHandleEvents.push(() => {
+                                loader.start();
+                            });
+                            closeHandleEvents.push(() => {
+                                loader.halt();
+                            });
+                        }
+                    });
+                } else {
+                    tools.mutter(`Can not find the file ${path}.`, "error", TableFactory);
+                }
+            }
+
             jqDom.ready(function () {
-                const tbcnt = [],
-                    echDelay = [],
-                    events = [],
-                    players = [];
-
                 // cols processing
                 function __col_owner__(i, row, cols) {
                     for (let j = 0; j < cols.length; j++) {
                         let errors = [];
                         if (cols[j]) {
-                                let node = cols[j];
-                                tbcnt.push(`<div class='${sstd(node.column)}' style='height:100%;padding-left:1%;padding-right:0;'>`);
-                                switch (node.type) {
-                                    case PANEL_SIGN:
-                                        if (node.hasOwnProperty("src")) {
-                                            let height = node.height? node.height: 100;
-                                            let panel = `<div class="${node.src}" style="height:${height}%;"></div>`;
-                                            tbcnt.push(panel);
-                                        } else {
-                                            errors.push("type of panel don't define source of css.");
-                                        }
-                                        break;
-                                    case TITLE_SIGN:
-                                        let prefix_content = "",
-                                            title_content = "",
-                                            control = "",
-                                            content = sstd(node.name),
-                                            id = `TITLE${tools.guid().replace(/-/g, "")}`;
-                                        if (node.prefix) {
-                                            prefix_content = `<p class='${node.prefix}'></p>`;
-                                            control = "style='display: inline-flex;'";
-                                        }
-                                        title_content = `<p id='${id}' style='${NO_MARGIN}' class='${sstd(node.style)}'>${content}</p>`;
-                                        tbcnt.push(`<div ${control}>${prefix_content}${title_content}</div>`);
-                                        if (ptable.exists(node.event_id)) {
-                                            events.push({
-                                                domId: tools.identify(id),
-                                                event_id: node.event_id,
-                                                type: node.type
-                                            });
-                                        }
-                                        break;
-                                    case CHART_SIGN:
-                                        let _id = `ZXJ${guid()}`.replace(/-/g, ""),
-                                            title_height = 0;
-                                        // if node exist name then init title above this chart
-                                        if (node.name) {
-                                            let content_title = `<p style='margin:0;'>${sstd(node.name)}</p>`;
-                                            title_height = node.hasOwnProperty("title_height") ? node.title_height : TITLE_DEFAULT_HEIGHT;
-                                            title_height = Math.min(Math.max(0, title_height), 100);
-                                            if (node.hasOwnProperty("title_class")) {
-                                                tbcnt.push(`<div class='${sstd(node.title_class)}' style="height: ${title_height}%;text-align: center;margin:0;">${content_title}</div>`);
-                                            }
-                                        }
-                                        tbcnt.push(`<div id='${_id}' style='height:${100 - title_height}%;' class='${sstd(node.style)}'></div>`);
-                                        echDelay.push({
+                            let node = cols[j];
+                            tbcnt.push(`<div class='${sstd(node.column)}' style='height:100%;padding-left:1%;padding-right:0;'>`);
+                            switch (node.type) {
+                                case PANEL_SIGN:
+                                    if (node.hasOwnProperty("src")) {
+                                        let height = node.height ? node.height : 100;
+                                        let panel = `<div class="${node.src}" style="height:${height}%;"></div>`;
+                                        tbcnt.push(panel);
+                                    } else {
+                                        errors.push("type of panel don't define source of css.");
+                                    }
+                                    break;
+                                case TITLE_SIGN:
+                                    let prefix_content = "",
+                                        title_content = "",
+                                        control = "",
+                                        content = sstd(node.name),
+                                        id = `TITLE${tools.guid().replace(/-/g, "")}`;
+                                    if (node.prefix) {
+                                        prefix_content = `<p class='${node.prefix}'></p>`;
+                                        control = "style='display: inline-flex;'";
+                                    }
+                                    title_content = `<p id='${id}' style='${NO_MARGIN}' class='${sstd(node.style)}'>${content}</p>`;
+                                    tbcnt.push(`<div ${control}>${prefix_content}${title_content}</div>`);
+                                    if (ptable.exists(node.event_id)) {
+                                        events.push({
+                                            domId: tools.identify(id),
                                             event_id: node.event_id,
-                                            id: _id,
-                                            url: node.url,
-                                            data_url:node.data_url
+                                            type: node.type
                                         });
-                                        break;
-                                    case PLAYER_SIGN:
-                                        let pid = `DSY${guid()}`.replace(/-/g, ""),
-                                            name_height = 0;
-                                        // if node exist name then init title above this player
-                                        if (node.name) {
-                                            let content_title = `<p style='margin:0;'>${sstd(node.name)}</p>`;
-                                            name_height = node.hasOwnProperty("title_height") ? node.title_height : TITLE_DEFAULT_HEIGHT;
-                                            name_height = Math.min(Math.max(0, name_height), 100);
-                                            if (node.hasOwnProperty("title_class")) {
-                                                tbcnt.push(`<div class='${sstd(node.title_class)}' style="height: ${name_height}%;text-align: center;margin:0;">${content_title}</div>`);
-                                            }
+                                    }
+                                    break;
+                                case CHART_SIGN:
+                                    let _id = `ZXJ${guid()}`.replace(/-/g, ""),
+                                        title_height = 0;
+                                    // if node exist name then init title above this chart
+                                    if (node.name) {
+                                        let content_title = `<p style='margin:0;'>${sstd(node.name)}</p>`;
+                                        title_height = node.hasOwnProperty("title_height") ? node.title_height : TITLE_DEFAULT_HEIGHT;
+                                        title_height = Math.min(Math.max(0, title_height), 100);
+                                        if (node.hasOwnProperty("title_class")) {
+                                            tbcnt.push(`<div class='${sstd(node.title_class)}' style="height: ${title_height}%;text-align: center;margin:0;">${content_title}</div>`);
                                         }
-                                        tbcnt.push(`<div id='${pid}' style='height:${100 - name_height}%; ${sstd(node.style)}'></div>`);
-                                        if(node.hasOwnProperty("category")){
-                                            players.push({
-                                                id: pid,
-                                                type:node.category,
-                                                url: node.url
-                                            });
-                                        }else{
-                                            errors.push("Can not find the path.")
+                                    }
+                                    tbcnt.push(`<div id='${_id}' style='height:${100 - title_height}%;' class='${sstd(node.style)}'></div>`);
+                                    echDelay.push({
+                                        event_id: node.event_id,
+                                        id: _id,
+                                        url: node.url,
+                                        data_url: node.data_url
+                                    });
+                                    break;
+                                case PLAYER_SIGN:
+                                    let pid = `DSY${guid()}`.replace(/-/g, ""),
+                                        name_height = 0;
+                                    // if node exist name then init title above this player
+                                    if (node.name) {
+                                        let content_title = `<p style='margin:0;'>${sstd(node.name)}</p>`;
+                                        name_height = node.hasOwnProperty("title_height") ? node.title_height : TITLE_DEFAULT_HEIGHT;
+                                        name_height = Math.min(Math.max(0, name_height), 100);
+                                        if (node.hasOwnProperty("title_class")) {
+                                            tbcnt.push(`<div class='${sstd(node.title_class)}' style="height: ${name_height}%;text-align: center;margin:0;">${content_title}</div>`);
                                         }
+                                    }
+                                    tbcnt.push(`<div id='${pid}' style='height:${100 - name_height}%; ${sstd(node.style)}'></div>`);
+                                    if (node.hasOwnProperty("category")) {
+                                        players.push({
+                                            id: pid,
+                                            type: node.category,
+                                            url: node.url
+                                        });
+                                    } else {
+                                        errors.push("Can not find the path.")
+                                    }
 
-                                        break;
-                                    case CAPSULE_SIGN:
-                                        __row_owner__(node.rows);
-                                        break;
-                                    default:
-                                        errors.push(`unknown type:${node.type ? node.type : "null"}`);
-                                        break;
-                                }
-                                tbcnt.push("</div>");
-                            } else {
+                                    break;
+                                case CAPSULE_SIGN:
+                                    __row_owner__(node.rows);
+                                    break;
+                                default:
+                                    errors.push(`unknown type:${node.type ? node.type : "null"}`);
+                                    break;
+                            }
+                            tbcnt.push("</div>");
+                        } else {
                             errors.push("cols elements can't be empty.");
                         }
                         errors.forEach((e) => {
                             let vrow = row.description ? row.description : i + 1,
                                 vcol = node.description ? node.description : j + 1;
-                            tools.mutter(`${vrow}-${vcol} => ${e}`, "error");
+                            tools.mutter(`${vrow}-${vcol} => ${e}`, "error", TableFactory);
                         });
                     }
                 }
@@ -247,7 +255,7 @@ export class TableFactory {
                             tbcnt.push("</div>");
                         } else {
                             let description = row.hasOwnProperty("description") ? row.description : i + 1;
-                            tools.mutter(`row error: ${description}`, "error");
+                            tools.mutter(`row error: ${description}`, "error", TableFactory);
                         }
                     }
                 }
@@ -269,19 +277,19 @@ export class TableFactory {
                                 }
                             }
                         } else {
-                            tools.mutter("pane not in config.", "error");
+                            tools.mutter("pane not in config.", "error", TableFactory);
                         }
                         tbcnt.push(`<div class='container-fluid' style='height:100%;'>`);
                         if (config.rows) {
                             __row_owner__(config.rows);
                         } else {
-                            tools.mutter("rows not in config.", "error");
+                            tools.mutter("rows not in config.", "error", TableFactory);
                         }
                         tbcnt.push("</div>");
                         // echarts initialization
                         jqDom.append(tbcnt.join('\n'));
-                        for (let i = 0; i < echDelay.length; ++i) {
-                            let node = echDelay[i];
+                        // delay processing
+                        echDelay.forEach(node => {
                             node.dom = jqDom.find(tools.identify(node.id));
                             let chart = loadChart(node);
                             if (node.event_id) {
@@ -292,23 +300,24 @@ export class TableFactory {
                                     type: node.type
                                 });
                             }
-                        }
-                        players.forEach(node =>{
+                        });
+                        players.forEach(node => {
                             node.dom = jqDom.find(tools.identify(node.id));
                             loadPlayer(node);
                         });
-
-                        // initialize events (These events are used soon after)
-                        jqDom.initEvents = () => {
-                            for (let i = 0, len = events.length; i < len; ++i) {
-                                loadEvent(events[i]);
-                            }
-                        };
-                        jqDom.initEvents();
                     }
                 }();
             });
-            return jqDom;
+            return {
+                dom: jqDom,
+                initEvents: () => {
+                    for (let i = 0, len = events.length; i < len; ++i) {
+                        loadEvent(events[i]);
+                    }
+                },
+                start: () => startsHandleEvents.forEach((event) => event()),
+                close: () => closeHandleEvents.forEach((event) => event())
+            }
         }
     }
 

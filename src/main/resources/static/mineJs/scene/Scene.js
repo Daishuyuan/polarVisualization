@@ -102,8 +102,9 @@ export class Scene {
             }
             // hide all tables in last scene
             if(LAST_SCENE.created_tables.length > 0) {
-                LAST_SCENE.created_tables.forEach((dom) => {
-                    dom.hide();
+                LAST_SCENE.created_tables.forEach((entity) => {
+                    entity.close();
+                    entity.dom.hide();
                 });
             }
             // execute close function in last scene
@@ -142,19 +143,20 @@ export class Scene {
         this._recoverSite(() => {
             // init tables
             if (this.created_tables.length > 0) {
-                this.created_tables.forEach((dom) => {
-                    dom.initEvents();
-                    dom.show();
+                this.created_tables.forEach((entity) => {
+                    entity.dom.show();
+                    entity.initEvents();
+                    entity.start();
                 });
             } else {
                 tools.req(`${this._scenesUrl}/${this._wkid}`).then((scene) => {
                     if (scene.hasOwnProperty(TABLE_LAYER)) {
                         for (let name in scene[TABLE_LAYER]) {
                             if (scene[TABLE_LAYER].hasOwnProperty(name)) {
-                                let dom = this._factory.generate(this._tableViewId, scene[TABLE_LAYER][name]);
-                                dom.id = `${this._wkid}_${name}`;
-                                this._popupItems.push(dom);
-                                this.created_tables.push(dom);
+                                let entity = this._factory.generate(this._tableViewId, scene[TABLE_LAYER][name]);
+                                entity.id = `${this._wkid}_${name}`;
+                                this._popupItems.push(entity);
+                                this.created_tables.push(entity);
                             }
                         }
                     } else {

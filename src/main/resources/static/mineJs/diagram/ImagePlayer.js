@@ -23,6 +23,18 @@ export class ImagePlayer {
             this.index = 0;
             this.imgList = $("<ul style='padding: 0;'></ul>");
             dom.append(this.imgList);
+            if (!this.option.tick) {
+                tools.mutter("Please set the interval of player.", "error", ImagePlayer);
+            } else {
+                this.timer = tools.dynamicInterval(() => {
+                    let child = this.imgList.children();
+                    let len = child.length;
+                    if (len > 0) {
+                        child.hide();
+                        $(child[(this.index++) % len]).show();
+                    }
+                }, this.option.tick, false);
+            }
             if (this.option.autoStart) {
                 this.start();
             }
@@ -47,17 +59,10 @@ export class ImagePlayer {
     }
 
     start() {
-        if (!this.option.tick) {
-            tools.mutter("Please set the interval of player.", "error", ImagePlayer);
-        } else {
-            tools.dynamicInterval(() => {
-                let child = this.imgList.children();
-                let len = child.length;
-                if (len > 0) {
-                    child.hide();
-                    $(child[(this.index++) % len]).show();
-                }
-            }, this.option.tick);
-        }
+        this.timer.start();
+    }
+
+    halt() {
+        this.timer.halt();
     }
 }

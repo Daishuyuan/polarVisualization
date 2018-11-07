@@ -84,9 +84,10 @@ export let Tools = (() => {
                 _mutter(`not find this model: ${model}`, "error");
         }
     };
-    const _mutter = (msg, level) => {
+    const _mutter = (msg, level, class_type) => {
         // to dye our information with different color
-        let content = `WXY(id:${generator.next().value},lv:wxy_${level}):%c ${msg}`;
+        let class_str = class_type instanceof Object? `,class:${class_type.name}`: "";
+        let content = `WXY(id:${generator.next().value},lv:wxy_${level})${class_str}:%c ${msg}`;
         switch (level) {
             case "fatal":
                 console.log(content, "color:#750000");

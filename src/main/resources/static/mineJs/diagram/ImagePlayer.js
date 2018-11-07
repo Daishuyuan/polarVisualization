@@ -1,5 +1,9 @@
 import {Tools as tools} from "../basic/BasicTools.js"
 
+/**
+ * @name ImagePlayer 图片播放器
+ * @author zxj 2018/11/07
+ */
 export class ImagePlayer {
     constructor(dom, option) {
         if (!option) {

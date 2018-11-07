@@ -49,8 +49,10 @@ export class ImagePlayer {
             tools.dynamicInterval(() => {
                 let child = this.imgList.children();
                 let len = child.length;
-                child.hide();
-                $(child[(this.index++) % len]).show();
+                if (len > 0) {
+                    child.hide();
+                    $(child[(this.index++) % len]).show();
+                }
             }, this.option.tick);
         }
     }

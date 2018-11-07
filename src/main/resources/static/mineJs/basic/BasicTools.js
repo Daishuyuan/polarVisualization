@@ -245,7 +245,6 @@ export let Tools = (() => {
             };
             timer_func();
             return {
-                getTimerId: () => timerId,
                 halt: () => halt = false,
                 start: () => timer_func(halt = true)
             };

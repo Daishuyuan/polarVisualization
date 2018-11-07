@@ -20,8 +20,10 @@ export var PARAMS_TABLE = {
         "MASK_HTML_PATH": "/cutScene", // cur scene url
         "RECOVER_BTN": "homeTitle", // title button id
         "PRE_DATA_URL": "", // boot url
-        "CHART_TEMP_URL":"/api/diagrams/",// chart template url
+        "CHART_TEMP_URL":"/api/diagrams",// chart template url
         "SCENE_DATA_URL": "/api/scenes", // link scene data url
+        "FILE_DATA_URL":"/api/getTarFilesNames",// file data url
+        "DOWNLOAD_IMAGE_URL":"/api/downloadImage", //download images
         "TABLE_DEBUG": false, // table debug model switch
         "USE_ERROR_LOG": false, // notice error log switch
         "MENU_ID": "menu", // menu id

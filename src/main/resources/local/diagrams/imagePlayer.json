@@ -1,0 +1,8 @@
+{
+  "autoStart":true,
+  "pauseOnHover":true,
+  "tick":1000,
+  "loop":true,
+  "animate":"pulse",
+  "radius":"2vw"
+}

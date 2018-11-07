@@ -25,6 +25,7 @@
 import {Tools as tools} from "../basic/BasicTools.js"
 import {PARAMS_TABLE as ptable} from "../basic/ParamsTable.js"
 import {TYPE_ECHARTS} from "../basic/DataPublisher.js"
+import {ImagePlayer} from "./ImagePlayer.js"
 
 export let CHARTLIST = [];
 export const CHART_UNIQUE = "DSY_CHART_UNIQUE";// chart unique sign
@@ -41,6 +42,7 @@ export class TableFactory {
         const CHART_SIGN = "chart";
         const CAPSULE_SIGN = "capsule";
         const PANEL_SIGN = "panel";
+        const PLAYER_SIGN = "player";
 
         // load event and update handle event
         function loadEvent(node) {
@@ -53,7 +55,8 @@ export class TableFactory {
                         get() {
                             return content;
                         },
-                        set(name) {
+                        set(name)
+                        {
                             $(jqId).html(content = name);
                         }
                     });
@@ -77,7 +80,7 @@ export class TableFactory {
             let dom = node.dom;
             let myChart = echarts.init(dom[0], 'macarons');
             $.ajax({
-                url: ptable.constants.CHART_TEMP_URL + node.url,
+                url: `${ptable.constants.CHART_TEMP_URL}/${node.url}`,
                 type: "GET",
                 dataType: "json",
                 success: function (option) {
@@ -90,12 +93,48 @@ export class TableFactory {
             return myChart;
         }
 
+        //load player
+        function loadPlayer(node){
+            const imageLoader = (player) =>{
+                let path = `${ptable.constants.FILE_DATA_URL}/${node.type}`;
+                $.ajax({
+                    url: path,
+                    type:"GET",
+                    dataType:"json",
+                    success: function (names) {
+                        names.forEach(name =>{
+                            player.addImage(`${ptable.constants.DOWNLOAD_IMAGE_URL}/${node.type}/${name}`);
+                        });
+                    },
+                    error:function () {
+                        tools.mutter(`Can not find the file ${path}.`, "error");
+                    }
+                });
+            };
+            if (node.hasOwnProperty("type")){
+                let path =`${ptable.constants.CHART_TEMP_URL}/${node.url}`;
+                $.ajax({
+                    url:path,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (option) {
+                        option.width = node.dom.width();
+                        option.height = node.dom.height();
+                        imageLoader(new ImagePlayer(node.dom, option));
+                    }
+                });
+            }else{
+                tools.mutter(`Can not find the file ${path}.`, "error");
+            }
+        }
+
         // diagram initialization
         this.__init__ = (jqDom, config) => {
             jqDom.ready(function () {
                 const tbcnt = [],
                     echDelay = [],
-                    events = [];
+                    events = [],
+                    players = [];
 
                 // cols processing
                 function __col_owner__(i, row, cols) {
@@ -151,8 +190,32 @@ export class TableFactory {
                                             event_id: node.event_id,
                                             id: _id,
                                             url: node.url,
-                                            data_url: node.data_url
+                                            data_url:node.data_url
                                         });
+                                        break;
+                                    case PLAYER_SIGN:
+                                        let pid = `DSY${guid()}`.replace(/-/g, ""),
+                                            name_height = 0;
+                                        // if node exist name then init title above this player
+                                        if (node.name) {
+                                            let content_title = `<p style='margin:0;'>${sstd(node.name)}</p>`;
+                                            name_height = node.hasOwnProperty("title_height") ? node.title_height : TITLE_DEFAULT_HEIGHT;
+                                            name_height = Math.min(Math.max(0, name_height), 100);
+                                            if (node.hasOwnProperty("title_class")) {
+                                                tbcnt.push(`<div class='${sstd(node.title_class)}' style="height: ${name_height}%;text-align: center;margin:0;">${content_title}</div>`);
+                                            }
+                                        }
+                                        tbcnt.push(`<div id='${pid}' style='height:${100 - name_height}%; ${sstd(node.style)}'></div>`);
+                                        if(node.hasOwnProperty("category")){
+                                            players.push({
+                                                id: pid,
+                                                type:node.category,
+                                                url: node.url
+                                            });
+                                        }else{
+                                            errors.push("Can not find the path.")
+                                        }
+
                                         break;
                                     case CAPSULE_SIGN:
                                         __row_owner__(node.rows);
@@ -230,6 +293,11 @@ export class TableFactory {
                                 });
                             }
                         }
+                        players.forEach(node =>{
+                            node.dom = jqDom.find(tools.identify(node.id));
+                            loadPlayer(node);
+                        });
+
                         // initialize events (These events are used soon after)
                         jqDom.initEvents = () => {
                             for (let i = 0, len = events.length; i < len; ++i) {

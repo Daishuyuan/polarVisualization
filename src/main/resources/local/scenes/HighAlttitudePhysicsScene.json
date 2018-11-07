@@ -309,12 +309,14 @@
           "description": "第四行",
           "class": "body_row",
           "cols": [{
-            "type": "chart",
+            "type": "player",
+            "category":"aurora",
             "title_class": "title_col",
             "name": "实时云图展示",
             "height": 30,
-            "url": "heatmap",
+            "url": "imagePlayer",
             "column": "col-md-4",
+            "style": "padding:0.5vw;",
             "description": "第一列"
           },
             {

@@ -79,7 +79,7 @@
                   "name": "电离层吸收",
                   "title_class": "title_col",
                   "height": 13,
-                  "url": "line_geo_all",
+                  "url": "iono-absorption",
                   "column": "col-md-12",
                   "description": "第一列"
                 }]
@@ -128,7 +128,7 @@
                     "name": "测高仪",
                     "title_class": "title_col",
                     "height": 13,
-                    "url": "pressure",
+                    "url": "Altimetry",
                     "column": "col-md-12",
                     "description": "第一列"
                   }]

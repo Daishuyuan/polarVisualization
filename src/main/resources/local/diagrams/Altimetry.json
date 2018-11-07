@@ -1,0 +1,66 @@
+{
+  "title": {
+    "text": "测高",
+    "x": "center",
+    "textStyle":{
+      "fontSize":10
+
+    },
+    "top":40
+  },
+  "color": [
+    "#3398DB"
+  ],
+  "tooltip": {
+    "trigger": "axis",
+    "axisPointer": {
+      "type": "shadow"
+    }
+  },
+  "grid": {
+    "left": "15%",
+    "right": "20%",
+    "bottom": "3%",
+    "containLabel": true
+  },
+  "xAxis": [
+    {
+      "type": "category",
+      "data": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "axisTick": {
+        "alignWithLabel": true
+      }
+    }
+  ],
+  "yAxis": [
+    {
+      "type": "value",
+      "name": "y轴"
+    }
+  ],
+  "series": [
+    {
+      "name": "高度",
+      "type": "bar",
+      "barWidth": "60%",
+      "color": "#87CEEB",
+      "data": [
+        10,
+        52,
+        200,
+        334,
+        390,
+        330,
+        220
+      ]
+    }
+  ]
+}

@@ -230,7 +230,7 @@ export let Tools = (() => {
         dynamicInterval: (func, tick, sign) => {
             let _tick = tick,
                 timerId = 0,
-                beginToRun = !!sign;
+                beginToRun = !sign;
             let timer_func = () => {
                 if(beginToRun) {
                     let start = Date.now();

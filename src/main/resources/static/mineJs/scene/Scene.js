@@ -155,7 +155,7 @@ export class Scene {
                             if (scene[TABLE_LAYER].hasOwnProperty(name)) {
                                 let entity = this._factory.generate(this._tableViewId, scene[TABLE_LAYER][name]);
                                 entity.id = `${this._wkid}_${name}`;
-                                this._popupItems.push(entity);
+                                this._popupItems.push(entity.dom);
                                 this.created_tables.push(entity);
                             }
                         }

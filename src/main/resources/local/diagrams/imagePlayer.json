@@ -4,5 +4,5 @@
   "tick":1000,
   "loop":true,
   "animate":"pulse",
-  "radius":"2vw"
+  "radius":"0.6vw"
 }

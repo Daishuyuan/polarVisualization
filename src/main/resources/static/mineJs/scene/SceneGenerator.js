@@ -180,7 +180,7 @@ export let SceneGenerator = {
             // bind on drag event
             const firePopup = () => {
                 items.forEach((item) => {
-                    let lon = item.lon, lat = item.lat, items = props.popupItems;
+                    let lon = item.lon, lat = item.lat, popupItems = props.popupItems;
                     let screen_point = props.view.toScreen(new Point({
                         spatialReference: props.view.spatialReference,
                         longitude: lon,
@@ -188,7 +188,12 @@ export let SceneGenerator = {
                     }));
                     let map_point = props.view.toMap(screen_point);
                     let dom = $(tools.identify(item.id));
-                    let testList = items.map(x => x.is(":visible") ? tools.hitTest(x, 'absolute', dom, 'transform') : false);
+                    let testList = popupItems.map(x => {
+                        if (x.is(":visible")) {
+                            return tools.hitTest(x, 'absolute', dom, 'transform');
+                        }
+                        return false;
+                    });
                     let hitTest = testList.length > 0 ? testList.reduce((x, y) => x || y) : false;
                     item.extend = !!(props.view.scale < 1000000);
                     item.switch = !!(map_point && Math.abs(map_point.longitude - lon) <= threshold &&

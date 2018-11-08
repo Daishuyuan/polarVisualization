@@ -1,0 +1,69 @@
+{
+  "series": [
+    {
+      "color": [
+        "#CD00CD",
+        "#AEEEEE"
+      ],
+      "name": "访问来源",
+      "type": "pie",
+      "radius": [
+        "100%",
+        "70%"
+      ],
+      "avoidLabelOverlap": false,
+      "label": {
+        "normal": {
+          "show": true,
+          "position": "center"
+        },
+        "emphasis": {
+          "show": true,
+          "textStyle": {
+            "fontSize": "30",
+            "fontWeight": "bold"
+          }
+        }
+      },
+      "labelLine": {
+        "normal": {
+          "show": false
+        }
+      },
+      "data": [
+        {
+          "value": 75,
+          "name": "云量\n75%",
+          "label": {
+            "normal": {
+              "textStyle": {
+                "fontSize": "20 ",
+                "fontWeight": "bold",
+                "color":"#5CACEE"
+              }
+            }
+          }
+        },
+        {
+          "value": 100,
+          "name": "北京时间 8:00",
+          "label": {
+            "normal": {
+              "textStyle": {
+                "fontSize": "8",
+                "color": "#7EC0EE",
+                "fontWeight": "bold"
+              },
+              "padding": [
+                100,
+                0,
+                0,
+                0
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -379,7 +379,7 @@
                   "name": "",
                   "title_class": "title_col",
                   "height": 13,
-                  "url": "ringComplete",
+                  "url": "pie_cloud8",
                   "column": "col-md-6",
                   "description": "第1列"
                 },
@@ -388,7 +388,7 @@
                     "name": "",
                     "title_class": "title_col",
                     "height": 13,
-                    "url": "ringComplete",
+                    "url": "pie_cloud18",
                     "column": "col-md-6",
                     "description": "第2列"
                   }]
@@ -402,7 +402,7 @@
                     "name": "",
                     "title_class": "title_col",
                     "height": 13,
-                    "url": "ringComplete",
+                    "url": "pie_cloud12",
                     "column": "col-md-6",
                     "description": "第1列"
                   },
@@ -411,7 +411,7 @@
                       "name": "",
                       "title_class": "title_col",
                       "height": 13,
-                      "url": "ringComplete",
+                      "url": "pie_cloud8",
                       "column": "col-md-6",
                       "description": "第2列"
                     }]

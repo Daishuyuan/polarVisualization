@@ -22,10 +22,10 @@
  * -----------------------------------------------------------> prefix(title) 标题装饰性前缀
  * -----------------------------------------------------------> event_id(title) 绑定变更函数名称
  **/
-import {Tools as tools} from "../basic/BasicTools.js"
-import {PARAMS_TABLE as ptable} from "../basic/ParamsTable.js"
-import {TYPE_ECHARTS} from "../basic/DataPublisher.js"
-import {ImagePlayer} from "./ImagePlayer.js"
+import { Tools as tools } from "../basic/BasicTools.js"
+import { PARAMS_TABLE as ptable } from "../basic/ParamsTable.js"
+import { TYPE_ECHARTS } from "../basic/DataPublisher.js"
+import { ImagePlayer } from "./ImagePlayer.js"
 
 export let CHARTLIST = [];
 export const CHART_UNIQUE = "DSY_CHART_UNIQUE";// chart unique sign

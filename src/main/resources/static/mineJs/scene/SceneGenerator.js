@@ -152,6 +152,7 @@ export let SceneGenerator = {
                 let scene = new SceneFactory(props);
                 props.vuePanel.menuEvents.set(scene.eventName, () => scene.themeInit());
                 scenes.push(scene);
+                delete props.wkid;
             } else {
                 tools.mutter(`${SceneFactory.name} is not a subclass of Scene`, "error");
                 return false;

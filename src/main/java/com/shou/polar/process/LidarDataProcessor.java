@@ -1,11 +1,8 @@
 package com.shou.polar.process;
 
-public class LidarDataProcessor extends DataProcessor {
-    private static final String CONFIG_NAME = "lidarTWNData";
+import com.shou.polar.pojo.DataProcessor;
 
-    public LidarDataProcessor() {
-        super(CONFIG_NAME);
-    }
+public class LidarDataProcessor extends DataProcessor {
 
     @Override
     public void execute() {

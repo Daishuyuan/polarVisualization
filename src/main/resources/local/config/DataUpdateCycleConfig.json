@@ -1,3 +1,6 @@
-{
-    "lidarTWNData": 3600000
-}
+[{
+    "name": "lidar_wind_na_temp_processor",
+    "description": "雷达三分量（风速、钠离子密度、温度）数据批量处理器",
+    "scheduledCycle": 3600000,
+    "entityClass": "com.shou.polar.process.LidarDataProcessor"
+}]

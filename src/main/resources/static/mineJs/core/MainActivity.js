@@ -26,7 +26,8 @@ import { DataPublisher } from "../basic/DataPublisher.js";
             table_debug: ptable.constants.TABLE_DEBUG,
             menuId: ptable.constants.MENU_ID,
             scenes: ptable.constants.SCENES_LIST,
-            demonstrate: ptable.constants.DEMONSTRATE_EVENT
+            demonstrate: ptable.constants.DEMONSTRATE_EVENT,
+            arcgis_debug: ptable.constants.ARCGIS_DEBUG
         });
     } catch (e) {
         tools.mutter(`outermost error msg: ${e}`, "fatal");

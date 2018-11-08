@@ -6,17 +6,12 @@ import com.google.gson.JsonObject;
 import com.shou.polar.configure.PolarCts;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.core.util.IOUtils;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.ResourceUtils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Set;
 
 public class PolarApplicationTests {
@@ -41,4 +36,5 @@ public class PolarApplicationTests {
         System.out.println(StringUtils.isEmpty(null));
         System.out.println(StringUtils.isEmpty(""));
     }
+
 }

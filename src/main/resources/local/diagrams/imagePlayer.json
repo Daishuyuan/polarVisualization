@@ -1,7 +1,7 @@
 {
   "autoStart":true,
   "pauseOnHover":true,
-  "tick":1000,
+  "tick":5000,
   "loop":true,
   "animate":"animated pulse",
   "radius":"0.6vw"

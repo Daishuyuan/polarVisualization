@@ -316,7 +316,7 @@
             "height": 30,
             "url": "imagePlayer",
             "column": "col-md-4",
-            "style": "padding:0.5vw;",
+            "style": "padding:0.3vw 1vw;",
             "description": "第一列"
           },
             {

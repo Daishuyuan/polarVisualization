@@ -1,6 +1,8 @@
 # Polar Visualization Platform
-
 ---
+
+## Author
+Dsy SynchronizedThread 2250649759@qq.com
 
 ## Notice
 1. 在Settings -> Version Control -> Ignored Files 中添加规则忽略Log日志文件夹；
@@ -12,23 +14,39 @@
 ## Architectures
 - 前端架构(resources/static/mineJs)
 1. basic 基础库
-    1. BasicTools 基本工具集
+    1. BasicTools 基本工具集合
     2. DataPublisher 数据更新和推送模块
-    3. ParamsTable 参数表 
+    3. ParamsTable 参数表，包含本应用全部配置
 2. core 核心库
-    1. MainActivity Js程序入口
+    1. MainActivity 系统程序主入口，用于初始化检测和运行
     2. VueLayer 基于vue的前端控制层
 3. diagram 图表库
     1. TableFactory 图表构建工厂模块
+    2. ImagePlayer 图片播放器模块
+    3. ThreeJsPlayer 3d物体播放器模块
 4. scene 场景库
-    1. Scene 所有场景的父类，负责一般性的场景操作
+    1. Scene 所有场景的父类，负责核心场景的切换操作
     2. XXXScene 继承自Scene，实现特殊的场景功能
+        1. constructor 构造函数，全部生命周期只执行一次，负责场景全局资源初始化
+        2. onLoad 每次场景进入时都会执行
+        3. onUpdate 场景进入后会反复周期性执行，下次执行的周期通过返回值获得
+        4. onClose 每次退出场景时都会执行，负责一些资源的释放
     3. SceneManager 负责管理和初始化所有的场景
+    4. SceneGenerator 场景初始化器，负责初始化场景的一些模块
+
+- 后端架构(src/main/java/com.shou.polar)
+
 
 ## Js Coding Rule
 1. 所有公有变量的命名采用驼峰命名法，如myName, checkHandle等；
 2. 私有变量（即仅在你自己写的模块内部使用的变量）前面加上‘_’，如_name, _handle；
 3. 常量全部大写，且分割的单词用‘_’连接，如MY_NAME, HER_NAME；
+4. 判定是否为奇数或者偶数，请使用(num & 1) === 0进行判断；
+
+## Java Coding Rule
+1. Java中的字符串请不要使用new String的方式创建，拼接大量字符串时，推荐使用StringBuilder或者StringBuffer
+2. 对所有传入的外来参数（如从数据库中获得的、从文件中获得的等）应当检查其是否为null
+3. 对文件进行操作，推荐使用FileUtils读取内容，防止文件未被正确关闭；
 
 ## Download Operations
 1. 下载安装Idea JavaWeb专业版并使用你的学校邮箱激活软件

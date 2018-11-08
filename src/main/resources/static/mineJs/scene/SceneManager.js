@@ -68,6 +68,8 @@ export let SceneManager = () => {
                         }
                         if (common.hasOwnProperty("lidarObjects")) {
                             props.lidarObjects = common.lidarObjects;
+                        } else {
+                            tools.mutter("the data of lidarObjects isn't exist.", "error");
                         }
                     })).done(() => {
                         console.groupCollapsed("初始化性能分析列表");

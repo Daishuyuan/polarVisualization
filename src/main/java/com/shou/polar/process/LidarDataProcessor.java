@@ -6,6 +6,6 @@ public class LidarDataProcessor extends DataProcessor {
 
     @Override
     public void execute() {
-
+        System.out.print("hello world");
     }
 }

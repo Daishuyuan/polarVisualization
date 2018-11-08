@@ -90,7 +90,7 @@ public class TargetPathScheduledTaskService {
                     ConfigEntity configEntity = GSON.fromJson(configs.get(i), ConfigEntity.class);
                     long UDCTime = Long.parseLong(configEntity.getCycleTimeRecord()); // 上一次更新日期
                     long UDC = configEntity.getScheduledCycle(); // 更新间隔
-                    if (UDCTime - wakeTime >= UDC) { // 间隔时间大于更新间隔
+                    if (Math.abs(wakeTime - UDCTime) >= UDC) { // 间隔时间大于更新间隔
                         long nextTime = UDCTime + UDC;
                         configEntity.setCycleTimeRecord(String.valueOf(nextTime)); // 刷新更新日期
                         DataProcessor processor = PROCESSORS.get(configEntity.getName());

@@ -227,7 +227,7 @@
               "name": "地磁偏移",
               "title_class": "title_col",
               "height": 30,
-              "url": "pressure",
+              "url": "Geomagnetic-offset",
               "column": "col-md-4",
               "description": "第二列"
             }

@@ -1,0 +1,69 @@
+{
+
+  "series": [
+    {
+      "color": [
+        "#00E5EE",
+        "\t#DCDCDC"
+      ],
+      "name": "访问来源",
+      "type": "pie",
+      "radius": [
+        "70%",
+        "90%"
+      ],
+      "avoidLabelOverlap": false,
+      "label": {
+        "normal": {
+          "show": true,
+          "position": "center"
+        },
+        "emphasis": {
+          "show": true,
+          "textStyle": {
+            "fontSize": "30",
+            "fontWeight": "bold"
+          }
+        }
+      },
+      "labelLine": {
+        "normal": {
+          "show": false
+        }
+      },
+      "data": [
+        {
+          "value": 10.5,
+          "name": "10.5\n偏移尺度",
+          "label": {
+            "normal": {
+              "textStyle": {
+                "fontSize": "auto",
+                "fontWeight": "bold",
+                "color": "#00FFFF"
+              }
+            }
+          }
+        },
+        {
+          "value": 89.5,
+          "label": {
+            "normal": {
+              "textStyle": {
+                "fontSize": "20",
+                "color": "#7EC0EE",
+                "fontWeight": "bold"
+              },
+              "padding": [
+                500,
+                0,
+                0,
+                0
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -29,7 +29,13 @@ export var PARAMS_TABLE = {
         "USE_ERROR_LOG": false, // notice error log switch
         "MENU_ID": "menu", // menu id
         "DEMONSTRATE_EVENT": true,// only for demonstration
-        "SCENES_LIST": [ GlobalScene, LidarScene, AntarcticaScene, ArcticScene, HighAlttitudePhysicsScene] // current scenes list
+        "SCENES_LIST": [
+            GlobalScene,
+            LidarScene,
+            AntarcticaScene,
+            ArcticScene,
+            HighAlttitudePhysicsScene
+        ] // current scenes list
     },
     events: {
         "SHIP_LOAD_EVENT": "ship_load_event", // ship zoom in invigorating event

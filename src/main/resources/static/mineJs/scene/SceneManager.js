@@ -66,6 +66,9 @@ export let SceneManager = () => {
                         } else {
                             tools.mutter("the data of stations isn't exist.", "error");
                         }
+                        if (common.hasOwnProperty("lidarObjects")) {
+                            props.lidarObjects = common.lidarObjects;
+                        }
                     })).done(() => {
                         console.groupCollapsed("初始化性能分析列表");
                         SceneGenerator.init_ships(props);

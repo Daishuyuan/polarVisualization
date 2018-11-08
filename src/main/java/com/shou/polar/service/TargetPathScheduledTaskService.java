@@ -60,7 +60,7 @@ public class TargetPathScheduledTaskService {
                 }
                 configs.set(i, GSON.toJsonTree(configEntity, ConfigEntity.class));
             }
-            saveConfig(configFile, configs);
+            saveConfig(configFile, configs); // 写回配置
             isInit.set(true);
         } catch (IOException |
                 InstantiationException |
@@ -95,10 +95,9 @@ public class TargetPathScheduledTaskService {
                         configEntity.setCycleTimeRecord(String.valueOf(nextTime)); // 刷新更新日期
                         DataProcessor processor = PROCESSORS.get(configEntity.getName());
                         executeProcess(processor); // 异步执行
-                        ConfigEntity entity = processor.getConfigEntity();
-                        logger.info(entity.getDescription() + "," + SDF.format(new Date(wakeTime)));
+                        logger.info(configEntity.getDescription() + "," + SDF.format(new Date(wakeTime)));
                     }
-                    configs.set(i, GSON.toJsonTree(configEntity, ConfigEntity.class));
+                    configs.set(i, GSON.toJsonTree(configEntity, ConfigEntity.class)); // 写回配置
                 }
                 saveConfig(configFile, configs);
             }

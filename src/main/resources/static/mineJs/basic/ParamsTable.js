@@ -25,7 +25,7 @@ export var PARAMS_TABLE = {
         "FILE_DATA_URL":"/api/getTarFilesNames",// file data url
         "DOWNLOAD_IMAGE_URL":"/api/downloadImage", //download images
         "TABLE_DEBUG": false, // table debug model switch
-        "ARCGIS_DEBUG": true, // arcgis debug model switch
+        "ARCGIS_DEBUG": false, // arcgis debug model switch
         "USE_ERROR_LOG": false, // notice error log switch
         "MENU_ID": "menu", // menu id
         "DEMONSTRATE_EVENT": true,// only for demonstration

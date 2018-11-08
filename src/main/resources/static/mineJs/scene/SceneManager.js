@@ -56,8 +56,16 @@ export let SceneManager = () => {
                         url: `${props.scenesUrl}/common`,
                         dataType: "json"
                     }).done((common) => {
-                        props.ships = common.ships;
-                        props.stations = common.stations;
+                        if (common.hasOwnProperty("ships")) {
+                            props.ships = common.ships;
+                        } else {
+                            tools.mutter("the data of ships isn't exist.", "error");
+                        }
+                        if (common.hasOwnProperty("stations")) {
+                            props.stations = common.stations;
+                        } else {
+                            tools.mutter("the data of stations isn't exist.", "error");
+                        }
                     })).done(() => {
                         console.groupCollapsed("初始化性能分析列表");
                         SceneGenerator.init_ships(props);

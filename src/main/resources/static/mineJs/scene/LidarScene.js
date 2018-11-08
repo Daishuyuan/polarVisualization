@@ -16,9 +16,8 @@ export class LidarScene extends Scene {
         }];
         require([
             "esri/Graphic",
-            "esri/Camera",
-            "esri/geometry/Point"
-        ], (Graphic, Camera, Point) => {
+            "esri/Camera"
+        ], (Graphic, Camera) => {
             this.lidarObjectsArr = [];
             for (let obj of props.lidarObjects) {
                 let object = new Graphic({
@@ -42,14 +41,12 @@ export class LidarScene extends Scene {
                 });
                 this.lidarObjectsArr.push(object);
             }
-
-            let cameraPos = {
-                x: props.lidarObjects[0].position.x - 0.0011,
-                y: props.lidarObjects[0].position.y,
-                z: 31
-            };
             super.viewField = new Camera({
-                position: cameraPos,
+                position: {
+                    x: props.lidarObjects[0].position.x - 0.0011,
+                    y: props.lidarObjects[0].position.y,
+                    z: 31
+                },
                 heading: 85,
                 tilt: 73
             });

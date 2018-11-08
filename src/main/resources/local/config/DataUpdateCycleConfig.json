@@ -1,7 +1,8 @@
 [{
     "name": "lidar_wind_na_temp_processor",
+    "startInInit": true,
     "description": "雷达三分量（风速、钠离子密度、温度）数据批量处理器",
-    "scheduledCycle": 10000,
+    "scheduledCycle": 60000000,
     "entityClass": "com.shou.polar.process.LidarDataProcessor",
     "superParam": ""
 }]

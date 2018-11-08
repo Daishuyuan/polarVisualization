@@ -34,7 +34,7 @@ public class ControllersAdviceService {
         }
         ERROR_POOL.get(sessionId).add(e.getMessage());
         logger.error(e.getMessage());
-        context.publishEvent(new UpdateEvent(this, ResNameSpace.ERROR.getName()));
+        context.publishEvent(new UpdateEvent(this, ResNameSpace.ERROR));
     }
 
     @InitBinder

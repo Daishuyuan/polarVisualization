@@ -85,6 +85,11 @@
 6. 回退到某一个版本
 - git reset --hard 版本序列号
 - 版本序列号可以在commit列表上找到
+7. 合并分支到master上
+- git checkout master
+- git merge 希望合并的分支
+- git push
+- 注意：合并到master上的代码必须是没有错误的代码
 
 ## Authors
 1. DSY 负责前后端统筹规划开发和设计

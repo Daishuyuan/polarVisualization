@@ -1,6 +1,7 @@
 package com.shou.polar.controller;
 
 import com.shou.polar.component.ComponentsUtils;
+import com.shou.polar.pojo.ResNameSpace;
 import com.shou.polar.pojo.UpdateEvent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,6 @@ public class AllTestController {
     @RequestMapping("/pushData/{name}")
     public void pushData(@PathVariable String name)  {
         ApplicationContext context = ComponentsUtils.getApplicationContext();
-        context.publishEvent(new UpdateEvent(this, name));
+        context.publishEvent(new UpdateEvent(this, ResNameSpace.reflect(name)));
     }
 }

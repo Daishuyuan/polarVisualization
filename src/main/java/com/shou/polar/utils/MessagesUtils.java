@@ -1,13 +1,12 @@
 package com.shou.polar.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class MessagesUtils {
     private static final String PUSH_HEAD = "data:";
     private static final String PUSH_TAIL = "\n\n";
-    private static StringBuilder cache = new StringBuilder();
 
     public static String getEventMessage(String msg) {
-        cache.delete(0, cache.length());
-        cache.append(PUSH_HEAD).append(msg).append(PUSH_TAIL);
-        return cache.toString();
+        return StringUtils.join(PUSH_HEAD, msg, PUSH_TAIL);
     }
 }

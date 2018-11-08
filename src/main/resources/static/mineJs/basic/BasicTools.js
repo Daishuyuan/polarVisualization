@@ -16,6 +16,7 @@ export let Tools = (() => {
         `;!!;;$#$;;|&#&|;;;!|||!`, `::;;!$#%!!;$#&|;:::::;;`,
         `\`''\`'%#|':'!@#$'.\`\`\`\`\`:`, `!::::%@|::''!@&|;;;'';;`
     ];
+    const ERROR_LOG_NUM = 20;
     const idGenerator = () => {
         let id = 0;
 
@@ -86,13 +87,14 @@ export let Tools = (() => {
     };
     const _mutter = (msg, level, class_type) => {
         // to dye our information with different color
-        let class_str = class_type instanceof Object? `,class:${class_type.name}`: "";
-        let content = `WXY(id:${generator.next().value},lv:wxy_${level})${class_str}:%c ${msg}`;
+        let class_str = (class_type && class_type.name)? class_type.name: "undef";
+        let content = `WXY(id:${generator.next().value},lv:wxy_${level},class:${class_str}):%c ${msg}`;
         switch (level) {
-            case "fatal":
-                console.log(content, "color:#750000");
-                break;
             case "error":
+                let errorsLib = JSON.parse(localStorage.errorsLib);
+                errorsLib.push(content.replace("%c", ""));
+                while(errorsLib.length > ERROR_LOG_NUM) errorsLib.shift();
+                localStorage.errorsLib = JSON.stringify(errorsLib);
                 log_error(content, "color:#8600FF");
                 break;
             case "warn":
@@ -102,7 +104,7 @@ export let Tools = (() => {
                 console.log(content, "color:#02C874");
                 break;
             default:
-                console.log(`unknown msg level:${level}`);
+                _mutter(`unknown msg level:${level}`, "error", Tools);
                 break;
         }
     };
@@ -128,6 +130,7 @@ export let Tools = (() => {
         }
         return count;
     };
+    localStorage.errorsLib = "[]";
     window.watcher = {};
     let inner_lock = false;
     let FULL_FIELD_EVENT_MAP = new Map();
@@ -224,8 +227,8 @@ export let Tools = (() => {
             console.log(`%c ${wxy.join('\n')}`, "color:#008B45;text-shadow:5px 5px 2px #fff," +
                 "5px 5px 2px #373E40, 5px 5px 5px #A2B4BA, 5px 5px 10px #82ABBA;font-weight:bolder;");
         },
-        mutter: (msg, level) => {
-            _mutter(msg, level);
+        mutter: (msg, level, class_type) => {
+            _mutter(msg, level, class_type);
         },
         dynamicInterval: (func, tick, sign) => {
             let _tick = tick,

@@ -2,7 +2,7 @@ import { GlobalScene } from "../scene/GlobalScene.js";
 import { AntarcticaScene } from "../scene/AntarcticaScene.js";
 import { ArcticScene } from "../scene/ArcticScene.js"
 import { LidarScene } from "../scene/LidarScene.js"
-import  {HighAlttitudePhysicsScene} from "../scene/HighAlttitudePhysicsScene.js"
+import { HighAlttitudePhysicsScene } from "../scene/HighAlttitudePhysicsScene.js"
 
 
 
@@ -25,10 +25,17 @@ export var PARAMS_TABLE = {
         "FILE_DATA_URL":"/api/getTarFilesNames",// file data url
         "DOWNLOAD_IMAGE_URL":"/api/downloadImage", //download images
         "TABLE_DEBUG": false, // table debug model switch
+        "ARCGIS_DEBUG": false, // arcgis debug model switch
         "USE_ERROR_LOG": false, // notice error log switch
         "MENU_ID": "menu", // menu id
         "DEMONSTRATE_EVENT": true,// only for demonstration
-        "SCENES_LIST": [ GlobalScene, LidarScene, AntarcticaScene, ArcticScene,HighAlttitudePhysicsScene] // current scenes list
+        "SCENES_LIST": [
+            GlobalScene,
+            LidarScene,
+            AntarcticaScene,
+            ArcticScene,
+            HighAlttitudePhysicsScene
+        ] // current scenes list
     },
     events: {
         "SHIP_LOAD_EVENT": "ship_load_event", // ship zoom in invigorating event

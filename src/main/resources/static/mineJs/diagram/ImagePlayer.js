@@ -35,6 +35,12 @@ export class ImagePlayer {
                     }
                 }, this.option.tick, false);
                 this.option.autoStart && this.start();
+                if(this.option.hasOwnProperty("pauseOnHover")) {
+                    this.option.pauseOnHover && this.imgList.hover(
+                        () => this.timer.halt(),
+                        () => this.timer.start()
+                    );
+                }
             }
         }
     }

@@ -42,5 +42,157 @@
       "lon": -56.58,
       "lat": -62.24
     }
+  ],
+  "lidarObjects": [
+    {
+      "name": "lidar",
+      "position": {
+        "x": 76.36938888888888,
+        "y": -69.37300555555555,
+        "z": 12
+      },
+      "shape": {
+        "width": 2,
+        "height": 4,
+        "depth": 2,
+        "heading": 0
+      },
+      "href": "./models/Lidar/lidar_refine.json"
+    },
+    {
+      "name": "house01",
+      "position": {
+        "x": 76.37078333333332,
+        "y": -69.37256388888888,
+        "z": 11.5
+      },
+      "shape": {
+        "width": 25,
+        "height": 9,
+        "depth": 12,
+        "heading": 0
+      },
+      "href": "./models/Lidar/house01.json"
+    },
+    {
+      "name": "house02",
+      "position": {
+        "x": 76.37053055555555,
+        "y": -69.37300555555555,
+        "z": 11.5
+      },
+      "shape": {
+        "width": 30,
+        "height": 5,
+        "depth": 16,
+        "heading": 90
+      },
+      "href": "./models/Lidar/house02.json"
+    },
+    {
+      "name": "house03",
+      "position": {
+        "x": 76.37004722222221,
+        "y": -69.37338333333332,
+        "z": 12.5
+      },
+      "shape": {
+        "width": 30,
+        "height": 9,
+        "depth": 15,
+        "heading": 180
+      },
+      "href": "./models/Lidar/house03.json"
+    },
+    {
+      "name": "house04",
+      "position": {
+        "x": 76.37172777777778,
+        "y": -69.37361666666666,
+        "z": 13.9
+      },
+      "shape": {
+        "width": 35,
+        "height": 10,
+        "depth": 18,
+        "heading": 45
+      },
+      "href": "./models/Lidar/house04.json"
+    },
+    {
+      "name": "house05",
+      "position": {
+        "x": 76.37186388888888,
+        "y": -69.37389722222221,
+        "z": 17
+      },
+      "shape": {
+        "width": 16,
+        "height": 4,
+        "depth": 8,
+        "heading": 0
+      },
+      "href": "./models/Lidar/house05.json"
+    },
+    {
+      "name": "house06",
+      "position": {
+        "x": 76.37199166666666,
+        "y": -69.3742361111111,
+        "z": 16
+      },
+      "shape": {
+        "width": 20,
+        "height": 3,
+        "depth": 15,
+        "heading": 90
+      },
+      "href": "./models/Lidar/house06.json"
+    },
+    {
+      "name": "house07",
+      "position": {
+        "x": 76.37300833333333,
+        "y": -69.37429999999999,
+        "z": 17
+      },
+      "shape": {
+        "width": 13,
+        "height": 3,
+        "depth": 13,
+        "heading": 0
+      },
+      "href": "./models/Lidar/house07.json"
+    },
+    {
+      "name": "house08",
+      "position": {
+        "x": 76.37463888888888,
+        "y": -69.37375833333333,
+        "z": 8
+      },
+      "shape": {
+        "width": 12,
+        "height": 6,
+        "depth": 12,
+        "heading": 45
+      },
+      "href": "./models/Lidar/house08.json"
+    },
+    {
+      "name": "house09",
+      "position": {
+        "x": 76.37564444444443,
+        "y": -69.3740111111111,
+        "z": 10.5
+      },
+      "shape": {
+        "width": 30,
+        "height": 6,
+        "depth": 9,
+        "heading": 45
+      },
+      "href": "./models/Lidar/house09.json"
+    }
   ]
 }

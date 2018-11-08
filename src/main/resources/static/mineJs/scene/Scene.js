@@ -18,7 +18,7 @@ let LAST_SCENE;
 export class Scene {
     constructor(props) {
         if (!props.wkid) {
-            tools.mutter("wkid can't be null or undefined.", "error");
+            tools.mutter("wkid can't be null or undefined.", "error", Scene);
         }
         this.created_tables = [];
         this.viewField = undefined;
@@ -36,6 +36,7 @@ export class Scene {
         this._recoverBtn = props.recoverBtn;
         this._popupItems = props.popupItems;
         this._eventName = Scene.GEN_EVENT_NAME(this.__proto__.constructor);
+        this._arcgisDebug = props.arcgis_debug;
         this._recoverSite =(callback) => {
             if(this._map && this._view && this.viewField) {
                 this._view.goTo(this.viewField, {
@@ -82,7 +83,7 @@ export class Scene {
         // check existence of private name, viewField and menu
         if (!this.name || !this.viewField || !this.menu) {
             let params = `name: ${this.name} or viewField: ${this.viewField} or menu: ${this.menu}`;
-            tools.mutter(`${params} couldn't be invalid.`, "error");
+            tools.mutter(`${params} couldn't be invalid.`, "error", Scene);
             return;
         }
         // set title recover button
@@ -142,27 +143,29 @@ export class Scene {
         // look at defined view field
         this._recoverSite(() => {
             // init tables
-            if (this.created_tables.length > 0) {
-                this.created_tables.forEach((entity) => {
-                    entity.dom.show();
-                    entity.initEvents();
-                    entity.start();
-                });
-            } else {
-                tools.req(`${this._scenesUrl}/${this._wkid}`).then((scene) => {
-                    if (scene.hasOwnProperty(TABLE_LAYER)) {
-                        for (let name in scene[TABLE_LAYER]) {
-                            if (scene[TABLE_LAYER].hasOwnProperty(name)) {
-                                let entity = this._factory.generate(this._tableViewId, scene[TABLE_LAYER][name]);
-                                entity.id = `${this._wkid}_${name}`;
-                                this._popupItems.push(entity.dom);
-                                this.created_tables.push(entity);
+            if (!this._arcgisDebug) {
+                if (this.created_tables.length > 0) {
+                    this.created_tables.forEach((entity) => {
+                        entity.dom.show();
+                        entity.initEvents();
+                        entity.start();
+                    });
+                } else {
+                    tools.req(`${this._scenesUrl}/${this._wkid}`).then((scene) => {
+                        if (scene.hasOwnProperty(TABLE_LAYER)) {
+                            for (let name in scene[TABLE_LAYER]) {
+                                if (scene[TABLE_LAYER].hasOwnProperty(name)) {
+                                    let entity = this._factory.generate(this._tableViewId, scene[TABLE_LAYER][name]);
+                                    entity.id = `${this._wkid}_${name}`;
+                                    this._popupItems.push(entity.dom);
+                                    this.created_tables.push(entity);
+                                }
                             }
+                        } else {
+                            tools.mutter("tableLayer isn't exist.", "error", Scene);
                         }
-                    } else {
-                        tools.mutter("tableLayer isn't exist.", "error");
-                    }
-                });
+                    });
+                }
             }
             // execute update function
             if (typeof (this[INNER_ON_UPDATE]) === "function") {

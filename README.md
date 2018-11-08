@@ -7,6 +7,7 @@
 2. 在上传代码前务必先拉取代码，且不要修改随意别人负责的代码模块；
 3. 写代码尽量加上注释和注解，解释代码的功能和影响；
 4. 上传的代码务必是没有警告和错误的代码，最坏情况下也应该是能够运行通过的代码；
+5. 更改超过100项内容的commit必须向项目的负责人通知，征求许可；
 
 ## Architectures
 - 前端架构(resources/static/mineJs)
@@ -25,7 +26,7 @@
     3. SceneManager 负责管理和初始化所有的场景
 
 ## Js Coding Rule
-1. 所有变量的命名采用驼峰命名法，如myName, checkHandle等；
+1. 所有公有变量的命名采用驼峰命名法，如myName, checkHandle等；
 2. 私有变量（即仅在你自己写的模块内部使用的变量）前面加上‘_’，如_name, _handle；
 3. 常量全部大写，且分割的单词用‘_’连接，如MY_NAME, HER_NAME；
 
@@ -81,6 +82,14 @@
 - git rm 文件名称
 - git commit -m '理由'
 - git push
+6. 回退到某一个版本
+- git reset --hard 版本序列号
+- 版本序列号可以在commit列表上找到
+7. 合并分支到master上
+- git checkout master
+- git merge 希望合并的分支
+- git push
+- 注意：合并到master上的代码必须是没有错误的代码
 
 ## Authors
 1. DSY 负责前后端统筹规划开发和设计

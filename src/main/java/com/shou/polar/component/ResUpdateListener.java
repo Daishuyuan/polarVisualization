@@ -4,6 +4,7 @@ import com.shou.polar.pojo.ResNameSpace;
 import com.shou.polar.pojo.UpdateEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.logging.Logger;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
@@ -20,20 +21,20 @@ public class ResUpdateListener implements ApplicationListener<UpdateEvent> {
     // sign of split msg;
     private static final String SPLIT = ",";
     // all resource names in this set and must initialized soon after;
-    private static Set<String> RES_NAMES;
+    private static Set<ResNameSpace> RES_NAMES;
     // all messages received in this queue;
     private static Queue<String> MSG_QUEUE;
 
     public ResUpdateListener() {
-        RES_NAMES = Set.of(ResNameSpace.getNames());
+        RES_NAMES = Set.of(ResNameSpace.values());
         MSG_QUEUE = new ConcurrentLinkedQueue<>();
     }
 
     @Override
-    public void onApplicationEvent(UpdateEvent updateEvent) {
-        String updateMsg = updateEvent.getMsg();
-        if (RES_NAMES.contains(updateMsg)) {
-            MSG_QUEUE.add(updateMsg);
+    public void onApplicationEvent(@NotNull UpdateEvent updateEvent) {
+        ResNameSpace updateMsg = updateEvent.getMsg();
+        if (RES_NAMES.contains(updateMsg) && !ResNameSpace.VOID.equals(updateMsg)) {
+            MSG_QUEUE.add(updateMsg.getName());
         }
     }
 

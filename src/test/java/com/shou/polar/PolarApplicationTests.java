@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.DigestUtils;
 import org.springframework.util.ResourceUtils;
 
 import java.io.*;
@@ -29,6 +30,7 @@ public class PolarApplicationTests {
     public void readUDCConfigTest() throws IOException {
         Gson gson = new Gson();
         File configuration = ResourceUtils.getFile(PolarCts.UPDATE_DATA_CONFIG_FILE_PATH);
+        byte[] md5 = DigestUtils.md5Digest(FileUtils.readFileToByteArray(configuration));
         String configStr = FileUtils.readFileToString(configuration, StandardCharsets.UTF_8); // 读取文件内容
         JsonObject config = gson.fromJson(configStr, JsonObject.class);
         System.out.print(config);

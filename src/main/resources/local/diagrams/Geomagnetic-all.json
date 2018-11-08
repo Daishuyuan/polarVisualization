@@ -19,9 +19,8 @@
   "xAxis": {
     "type": "category",
     "splitLine": {
-
+      "show":"true",
       "lineStyle": {
-        "show":true,
         "type": "dashed"
       }
     },

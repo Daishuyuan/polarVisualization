@@ -227,7 +227,7 @@
     "right": "5%",
     "left": "10%",
     "bottom": "23%"
-  },
+},
   "dataZoom": [{
     "type": "inside",
     "start": 0,

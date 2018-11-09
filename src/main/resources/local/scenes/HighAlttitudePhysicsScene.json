@@ -37,6 +37,7 @@
         "class": "title_row",
         "cols": [{
           "type": "title",
+          "prefix": "title_icon",
           "name": "电离层数据",
           "style": "chart_title",
           "height": 6,
@@ -145,6 +146,7 @@
           "class": "title_row",
           "cols": [{
             "type": "title",
+            "prefix": "title_icon",
             "name": "地磁数据",
             "style": "chart_title",
             "height": 6,
@@ -250,6 +252,7 @@
         "class": "title_row",
         "cols": [{
           "type": "title",
+          "prefix": "title_icon",
           "name": "极光数据",
           "style": "chart_title",
           "height": 6,
@@ -297,6 +300,7 @@
           "class": "title_row",
           "cols": [{
             "type": "title",
+            "prefix": "title_icon",
             "style": "chart_title",
             "height": 6,
             "name": "站点云图",

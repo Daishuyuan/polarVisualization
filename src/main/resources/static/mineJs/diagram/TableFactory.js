@@ -72,7 +72,6 @@ export class TableFactory {
                     case CHART_SIGN:
                         if (node.url) {
                             // let entity = {
-                            //     type: TYPE_ECHARTS,
                             //     url: node.url,
                             //     target: node.chart
                             // };

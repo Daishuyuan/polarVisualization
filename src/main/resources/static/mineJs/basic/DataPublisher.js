@@ -23,22 +23,25 @@ const SUBSCRIBERS = [];
  */
 export class DataPublisher {
     constructor(params) {
+        tools.watch("shareResourceMap", SHARE_RES_MAP);
+
         // update entity
         this._updateData = (entity, data) => {
             entity.target(data);
             entity.isInited = true;
         };
 
-        // pull resouce from remote or local
+        // pull resource from remote or local
         this._reqRes = (entity) => {
             if (SHARE_RES_MAP.has(entity.url)) {
+                // when entity is initialized
                 if (!entity.isInited) {
                     this._updateData(entity, SHARE_RES_MAP.get(entity.url));
                 }
             } else {
                 $.ajax({
                     url: entity.url,
-                    type: "POST",
+                    type: "GET",
                     dataType: "json"
                 }).done((data) => {
                     SHARE_RES_MAP.set(entity.url, data);

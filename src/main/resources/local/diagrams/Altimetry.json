@@ -1,6 +1,13 @@
 {
+  "grid": {
+    "top": "10%",
+    "left": "3%",
+    "right": "4%",
+    "bottom": "3%",
+    "containLabel": true
+  },
   "title": {
-    "text": "测高",
+    "text": "",
     "x": "center",
     "textStyle":{
       "fontSize":10
@@ -17,12 +24,7 @@
       "type": "shadow"
     }
   },
-  "grid": {
-    "left": "15%",
-    "right": "20%",
-    "bottom": "3%",
-    "containLabel": true
-  },
+
   "xAxis": [
     {
       "type": "category",

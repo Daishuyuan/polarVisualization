@@ -93,7 +93,7 @@
                     "name": "高程雷达",
                     "title_class": "title_col",
                     "height": 13,
-                    "url": "windRose",
+                    "url": "line_radar",
                     "column": "col-md-12",
                     "description": "第一列"
                   }]

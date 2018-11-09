@@ -1,0 +1,87 @@
+{
+  "color": [
+    "#FFB300",
+    "#33adff"
+  ],
+  "grid": {
+    "left": "15%",
+    "right": "20%",
+    "top": "18%",
+    "bottom": "25%"
+  },
+  "tooltip": {
+    "trigger": "axis",
+    "textStyle": {
+      "fontFamily": "Arial"
+    }
+  },
+  "xAxis": [
+    {
+      "type": "value",
+      "name": "",
+      "nameRotate": -90,
+      "position": "top",
+      "splitNumber": 5,
+      "axisLabel": {
+        "show": true,
+        "rotate": 90
+      }
+    },
+    {
+      "type": "value",
+      "name": "",
+      "nameRotate": -90,
+      "position": "bottom",
+      "splitNumber": 5,
+      "axisLabel": {
+        "show": true,
+        "rotate": -90
+      }
+    }
+  ],
+  "yAxis": [
+    {
+      "type": "category",
+      "boundaryGap": false,
+      "axisLabel": {
+        "show": true,
+        "rotate": -90
+      },
+      "inverse": true,
+      "data": [
+        "一",
+        "二",
+        "三",
+        "四",
+        "五"
+      ]
+    }
+  ],
+  "series": [
+    {
+      "name": "",
+      "type": "line",
+      "smooth": true,
+      "data": [
+        0,
+        2,
+        5,
+        3,
+        2
+      ]
+    },
+    {
+      "name": "",
+      "type": "line",
+      "smooth": true,
+      "xAxisIndex": 1,
+      "data": [
+        100,
+        500,
+        400,
+        100,
+        50
+      ]
+    }
+  ]
+}

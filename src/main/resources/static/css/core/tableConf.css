@@ -5,7 +5,7 @@
 
 .chart_title {
     color: #cce4f9;
-    margin-top: 0px;
+    margin-top: 0;
     margin-left: 0.52vw;
     font-size: 1.15vw;
 }
@@ -17,21 +17,21 @@
 .system_title{
     color: #cce4f9;
     font-size: 2.26vw;
-    font-family: 'chartTitleFont';
+    font-family: 'chartTitleFont', serif;
     margin-left: 0.78vw;
 }
 
 .title_row {
     background-color: #7f9cb563;
-    font-family: 'sciFont';
+    font-family: 'sciFont', serif;
 }
 
 .blank_row {
-    font-family: 'sciFont';
+    font-family: 'sciFont', serif;
 }
 
 .title_col{
-    font-family: 'sciFont';
+    font-family: 'sciFont', serif;
     color: #cce4f9;
 }
 
@@ -41,4 +41,11 @@
     /* box-shadow: 0px 0px 20px #0085f7d6; */
     margin: 0.26vw;
     /* background: linear-gradient(#02026f14,#02026f54,#02026fbf); */
+}
+
+.title_icon{
+    background: url("../../img/ui/icon.png");
+    width: 1.5vw;
+    height: 1.5vw;
+    background-repeat: round;
 }

@@ -118,3 +118,4 @@ Dsy SynchronizedThread 2250649759@qq.com
 6. WPS 负责后端
 7. CJH 负责echarts和后端开发
 8. LDX 负责地图服务配置和开发
+9. LSM 负责前端

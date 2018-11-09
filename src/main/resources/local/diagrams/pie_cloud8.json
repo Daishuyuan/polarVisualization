@@ -18,8 +18,7 @@
           "position": "center"
         },
         "emphasis": {
-          "show":false,
-
+          "show": false,
           "textStyle": {
             "fontSize": "30",
             "fontWeight": "bold"
@@ -33,8 +32,8 @@
       },
       "data": [
         {
-          "value": 35,
-          "name": "云量\n35%",
+          "value": 100,
+          "name": "云量\n75%",
           "label": {
             "normal": {
               "textStyle": {
@@ -46,7 +45,7 @@
           }
         },
         {
-          "value": 100,
+          "value": 25,
           "name": "北京时间 8:00",
           "label": {
             "normal": {

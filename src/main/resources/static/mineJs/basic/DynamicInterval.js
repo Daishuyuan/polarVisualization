@@ -32,12 +32,11 @@ export let DynamicInterval = (func, tick, sign, closeDynamicSchedule) => {
             value: () => timer_func()
         },
         tick: {
-            writable: false,
             configurable: false,
-            get () {
+            get: () => {
                 return tick;
             },
-            set (newTick) {
+            set: (newTick) => {
                 tick = Math.min(Math.max(1, newTick | 0), MAX_TICK);
             }
         }

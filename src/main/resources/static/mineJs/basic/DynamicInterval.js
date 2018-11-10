@@ -1,4 +1,4 @@
-import { Tools as tools } from "BasicTools.js";
+import { Tools as tools } from "./BasicTools.js";
 
 export let DynamicInterval = (func, tick, sign, closeDynamicSchedule) => {
     const MAX_TICK = 100000;

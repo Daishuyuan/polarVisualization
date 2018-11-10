@@ -40,7 +40,7 @@ public class LidarDataProcessor extends DataProcessor {
             Gson gson = new Gson();
 
             File[] files = ResourceUtils.getFile(SOURCE_RES_PATH + OrtecSeededPath).listFiles();
-            if (files !=null && files.length!=0) {
+            if (files != null && files.length != 0) {
                 for (File f : files) {
                     String[] data_rowsplit = FileUtils.readFileToString(f, StandardCharsets.UTF_8).split(valueOf('\n'));
                     JsonArray Xdata1 = new JsonArray();

@@ -1,6 +1,6 @@
 import { Tools as tools } from "./BasicTools.js";
 
-export let DynamicInterval = (func, tick, sign, closeDynamicSchedule) => {
+export let DynamicInterval = (func, tick, autoPlay, closeDynamicSchedule) => {
     const MAX_TICK = 100000;
     let _tick = tick,
         _timerId = 0,
@@ -16,29 +16,32 @@ export let DynamicInterval = (func, tick, sign, closeDynamicSchedule) => {
         }
         _tick = _closeDynamicSchedule? tick: Math.max(1, tick - (Date.now() - start));
         _timerId = setTimeout(timer_func, _tick);
+        return true;
     };
-    timer_func();
-    return Object.defineProperties({}, {
-        halt: {
-            writable: false,
-            enumerable: false,
-            configurable: false,
-            value: () => clearTimeout(_timerId)
-        },
-        start: {
-            writable: false,
-            enumerable: false,
-            configurable: false,
-            value: () => timer_func()
-        },
-        tick: {
-            configurable: false,
-            get: () => {
-                return tick;
+    if(timer_func()) {
+        if (!autoPlay) this.halt();
+        return Object.defineProperties({}, {
+            halt: {
+                writable: false,
+                enumerable: false,
+                configurable: false,
+                value: () => clearTimeout(_timerId)
             },
-            set: (newTick) => {
-                tick = Math.min(Math.max(1, newTick | 0), MAX_TICK);
+            start: {
+                writable: false,
+                enumerable: false,
+                configurable: false,
+                value: () => timer_func()
+            },
+            tick: {
+                configurable: false,
+                get: () => {
+                    return tick;
+                },
+                set: (newTick) => {
+                    tick = Math.min(Math.max(1, newTick | 0), MAX_TICK);
+                }
             }
-        }
-    });
+        });
+    }
 };

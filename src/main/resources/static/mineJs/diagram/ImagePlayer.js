@@ -34,8 +34,7 @@ export class ImagePlayer {
                         child.hide();
                         $(child[(this.index++) % len]).show();
                     }
-                }, this.option.tick, false, true);
-                this.option.autoStart && this.start();
+                }, this.option.tick, this.option.autoStart, true);
                 if(this.option.hasOwnProperty("pauseOnHover")) {
                     this.option.pauseOnHover && this.imgList.hover(
                         () => this.timer.halt(),

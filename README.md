@@ -2,7 +2,8 @@
 ---
 
 ## Author
-Dsy SynchronizedThread 2250649759@qq.com
+Dsy SynchronizedThread 2250649759@qq.com <br/>
+project path: https://github.com/SynchronizedThread/polarVisualization
 
 ## Notice
 1. 在Settings -> Version Control -> Ignored Files 中添加规则忽略Log日志文件夹；

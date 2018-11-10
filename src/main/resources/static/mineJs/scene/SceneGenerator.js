@@ -10,7 +10,6 @@ export let SceneGenerator = {
      * @author dsy
      * @param props essential properties
      */
-
     init_ships: function (props) {
         console.time("初始化考察船");
         require([

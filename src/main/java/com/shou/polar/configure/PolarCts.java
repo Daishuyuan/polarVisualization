@@ -12,6 +12,5 @@ public final class PolarCts {
     public static final String SCENES_RES_PATH = LOCAL_RES_PATH + "/scenes";
     public static final String DIAGRAMS_RES_PATH = LOCAL_RES_PATH + "/diagrams";
     public static final String DISPLAY_RES_PATH = LOCAL_RES_PATH + "/data/target";
-
-
+    public static final String SOURCE_RES_PATH = LOCAL_RES_PATH + "/data/source";
 }

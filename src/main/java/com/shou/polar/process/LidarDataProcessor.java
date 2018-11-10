@@ -40,10 +40,7 @@ public class LidarDataProcessor extends DataProcessor {
             Gson gson = new Gson();
 
             File[] files = ResourceUtils.getFile(SOURCE_RES_PATH + OrtecSeededPath).listFiles();
-            assert files != null;
-            if (requireNonNull(files).length == 0) {
-                out.println("无文件可读");
-            } else {
+            if (files !=null && files.length!=0) {
                 for (File f : files) {
                     String[] data_rowsplit = FileUtils.readFileToString(f, StandardCharsets.UTF_8).split(valueOf('\n'));
                     JsonArray Xdata1 = new JsonArray();
@@ -96,31 +93,27 @@ public class LidarDataProcessor extends DataProcessor {
 
                 //创建temp.json
                 File file1 = new File(file.getAbsolutePath() + lidarPath + tempName);
-                if (!tempName.equals(file1.toString())) {
-                    boolean newFile = file1.createNewFile();
+                if (file1.exists() || file1.createNewFile()) {
+                    FileUtils.writeStringToFile(file1, String.valueOf(gson.toJson(temps)), "UTF-8", false);
                 }
-                FileUtils.writeStringToFile(file1, String.valueOf(gson.toJson(temps)), "UTF-8", false);
 
                 //创建wind.json
                 File file2 = new File(file.getAbsolutePath() + lidarPath + windName);
-                if (!windName.equals(file2.toString())) {
-                    boolean newFile = file2.createNewFile();
+                if (file2.exists() || file2.createNewFile()) {
+                    FileUtils.writeStringToFile(file2, String.valueOf(gson.toJson(winds)), "UTF-8", false);
                 }
-                FileUtils.writeStringToFile(file2, String.valueOf(gson.toJson(winds)), "UTF-8", false);
 
                 //创建na.json
                 File file3 = new File(file.getAbsolutePath() + lidarPath + naName);
-                if (!naName.equals(file3.toString())) {
-                    boolean newFile = file3.createNewFile();
+                if (file3.exists() || file3.createNewFile()) {
+                    FileUtils.writeStringToFile(file3, String.valueOf(gson.toJson(nas)), "UTF-8", false);
                 }
-                FileUtils.writeStringToFile(file3, String.valueOf(gson.toJson(nas)), "UTF-8", false);
 
                 //创建xaxis.json
                 File file4 = new File(file.getAbsolutePath() + lidarPath + xaxisName);
-                if (!xaxisName.equals(file4.toString())) {
-                    boolean newFile = file4.createNewFile();
+                if (file4.exists() || file4.createNewFile()) {
+                    FileUtils.writeStringToFile(file4, String.valueOf(gson.toJson(Xdata)), "UTF-8", false);
                 }
-                FileUtils.writeStringToFile(file4, String.valueOf(gson.toJson(Xdata)), "UTF-8", false);
             }
         } catch (IOException e) {
             e.printStackTrace();

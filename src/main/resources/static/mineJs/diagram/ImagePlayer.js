@@ -1,4 +1,5 @@
-import {Tools as tools} from "../basic/BasicTools.js"
+import {Tools as tools} from "../basic/BasicTools.js";
+import { DynamicInterval } from "../basic/DynamicInterval.js";
 
 /**
  * @name ImagePlayer 图片播放器
@@ -26,14 +27,14 @@ export class ImagePlayer {
             if (!this.option.tick) {
                 tools.mutter("Please set the interval of player.", "error", ImagePlayer);
             } else {
-                this.timer = tools.dynamicInterval(() => {
+                this.timer = DynamicInterval(() => {
                     let child = this.imgList.children();
                     let len = child.length;
                     if (len > 0) {
                         child.hide();
                         $(child[(this.index++) % len]).show();
                     }
-                }, this.option.tick, false);
+                }, this.option.tick, false, true);
                 this.option.autoStart && this.start();
                 if(this.option.hasOwnProperty("pauseOnHover")) {
                     this.option.pauseOnHover && this.imgList.hover(

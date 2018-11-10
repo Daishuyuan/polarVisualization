@@ -1,7 +1,8 @@
-import {Tools as tools} from "../basic/BasicTools.js";
-import {PARAMS_TABLE as ptable} from "../basic/ParamsTable.js";
-import {CHART_UNIQUE, CHARTLIST} from "../diagram/TableFactory.js";
-import {Scene} from "./Scene.js";
+import { Tools as tools } from "../basic/BasicTools.js";
+import { PARAMS_TABLE as ptable } from "../basic/ParamsTable.js";
+import { CHART_UNIQUE, CHARTLIST } from "../diagram/TableFactory.js";
+import { Scene } from "./Scene.js";
+import { DynamicInterval } from "../basic/DynamicInterval.js";
 
 export let SceneGenerator = {
     /**
@@ -209,7 +210,8 @@ export let SceneGenerator = {
                     }
                 });
             };
-            tools.dynamicInterval(firePopup, updateTick);
+            let popupTimer = DynamicInterval(firePopup, updateTick);
+            tools.watch("popupTimer", popupTimer);
             console.timeEnd("初始化气泡");
         });
     },
@@ -227,7 +229,7 @@ export let SceneGenerator = {
             let basic = 0, ring = 0, minIndex = 8;
             let rings = [0];
             console.time("初始化演示效果");
-            tools.dynamicInterval(() => {
+            let demonstrationTimer = DynamicInterval(() => {
                 CHARTLIST.forEach(chart => {
                     let option = chart[1],
                         myChart = chart[0],
@@ -346,6 +348,7 @@ export let SceneGenerator = {
                     counts[id] = count;
                 });
             }, speed);
+            tools.watch("demonstrationTimer", demonstrationTimer);
             console.timeEnd("初始化演示效果");
         }
     }

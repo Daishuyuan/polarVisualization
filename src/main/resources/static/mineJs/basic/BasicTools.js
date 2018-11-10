@@ -230,29 +230,6 @@ export let Tools = (() => {
         mutter: (msg, level, class_type) => {
             _mutter(msg, level, class_type);
         },
-        dynamicInterval: (func, tick, sign) => {
-            let _tick = tick,
-                timerId = 0,
-                beginToRun = !sign;
-            let timer_func = () => {
-                if(beginToRun) {
-                    let start = Date.now();
-                    if (typeof(func) === "function") {
-                        func();
-                    } else {
-                        _mutter("func isn't the type of function.", "error");
-                        return false;
-                    }
-                    _tick = Math.max(1, tick - (Date.now() - start));
-                    timerId = setTimeout(timer_func, _tick);
-                }
-            };
-            timer_func();
-            return {
-                halt: () => beginToRun = false,
-                start: () => !beginToRun? timer_func(beginToRun = true): null
-            };
-        },
         hitTest: (a, a_model, b, b_model) => {
             let [leftOne, topOne] = _transformXY(a, a_model),
                 [leftTwo, topTwo] = _transformXY(b, b_model),

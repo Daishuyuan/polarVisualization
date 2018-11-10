@@ -37,6 +37,7 @@
         "class": "title_row",
         "cols": [{
           "type": "title",
+          "prefix": "title_icon",
           "name": "电离层数据",
           "style": "chart_title",
           "height": 6,
@@ -93,7 +94,7 @@
                     "name": "高程雷达",
                     "title_class": "title_col",
                     "height": 13,
-                    "url": "windRose",
+                    "url": "line_radar",
                     "column": "col-md-12",
                     "description": "第一列"
                   }]
@@ -145,6 +146,7 @@
           "class": "title_row",
           "cols": [{
             "type": "title",
+            "prefix": "title_icon",
             "name": "地磁数据",
             "style": "chart_title",
             "height": 6,
@@ -250,6 +252,7 @@
         "class": "title_row",
         "cols": [{
           "type": "title",
+          "prefix": "title_icon",
           "name": "极光数据",
           "style": "chart_title",
           "height": 6,
@@ -297,6 +300,7 @@
           "class": "title_row",
           "cols": [{
             "type": "title",
+            "prefix": "title_icon",
             "style": "chart_title",
             "height": 6,
             "name": "站点云图",
@@ -316,7 +320,7 @@
             "height": 30,
             "url": "imagePlayer",
             "column": "col-md-4",
-            "style": "padding:0.5vw;",
+            "style": "padding:0.3vw 1vw;",
             "description": "第一列"
           },
             {

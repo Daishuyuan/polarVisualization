@@ -37,6 +37,7 @@
         "class": "title_row",
         "cols": [{
           "type": "title",
+          "prefix": "title_icon",
           "event_id":"ship_change",
           "name": "中山站实时气象信息",
           "style": "chart_title",
@@ -93,6 +94,7 @@
           "class": "title_row",
           "cols": [{
             "type": "title",
+            "prefix": "title_icon",
             "name": "雪龙船实时气象信息",
             "event_id":"ships",
             "style": "chart_title",
@@ -164,6 +166,7 @@
         "class": "title_row",
         "cols": [{
           "type": "title",
+          "prefix": "title_icon",
           "name": "激光雷达数据展示",
           "style": "chart_title",
           "height": 6,
@@ -201,6 +204,7 @@
           "class": "title_row",
           "cols": [{
             "type": "title",
+            "prefix": "title_icon",
             "name": "高空物理数据展示",
             "style": "chart_title",
             "height": 6,

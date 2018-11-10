@@ -20,7 +20,7 @@ export let SceneManager = () => {
                 "esri/Map",
                 "esri/views/SceneView",
                 "esri/layers/GraphicsLayer"
-            ], (Map, SceneView, GraphicsLayer,) => {
+            ], (Map, SceneView, GraphicsLayer) => {
                 // 1. init map and view (global map)
                 props.map = new Map({
                     logo: false,
@@ -53,21 +53,21 @@ export let SceneManager = () => {
                 props.map.add(props.staticGLayer = new GraphicsLayer());　// add GraphicLayer to map
                 props.view.when(() => {
                     $.when($.ajax({
-                        url: `${props.scenesUrl}/common`,
+                        url: `${props.scenesUrl}/Preloaded`,
                         dataType: "json"
-                    }).done((common) => {
-                        if (common.hasOwnProperty("ships")) {
-                            props.ships = common.ships;
+                    }).done((preloaded) => {
+                        if (preloaded.hasOwnProperty("ships")) {
+                            props.ships = preloaded.ships;
                         } else {
                             tools.mutter("the data of ships isn't exist.", "error");
                         }
-                        if (common.hasOwnProperty("stations")) {
-                            props.stations = common.stations;
+                        if (preloaded.hasOwnProperty("stations")) {
+                            props.stations = preloaded.stations;
                         } else {
                             tools.mutter("the data of stations isn't exist.", "error");
                         }
-                        if (common.hasOwnProperty("lidarObjects")) {
-                            props.lidarObjects = common.lidarObjects;
+                        if (preloaded.hasOwnProperty("lidarObjects")) {
+                            props.lidarObjects = preloaded.lidarObjects;
                         } else {
                             tools.mutter("the data of lidarObjects isn't exist.", "error");
                         }

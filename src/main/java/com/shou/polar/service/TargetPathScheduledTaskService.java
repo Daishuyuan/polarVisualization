@@ -17,7 +17,6 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
@@ -25,6 +24,12 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * TargetPathScheduledTaskService
+ * 按照一定的周期调用指定的数据处理器
+ *
+ * @author dsy 2018/11/08
+ */
 @Service
 public class TargetPathScheduledTaskService {
     private static SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -44,6 +49,10 @@ public class TargetPathScheduledTaskService {
         FileUtils.writeStringToFile(configFile, configs.toString(), StandardCharsets.UTF_8); // 写回配置
     }
 
+    /**
+     * 按照配置文件配置运行数据处理器
+     * @author dsy 2018/11/08
+     */
     public void configAndRun() {
         try {
             File configFile = ResourceUtils.getFile(PolarCts.UPDATE_DATA_CONFIG_FILE_PATH);
@@ -53,10 +62,13 @@ public class TargetPathScheduledTaskService {
                 ConfigEntity configEntity = GSON.fromJson(configs.get(i), ConfigEntity.class);
                 Class<DataProcessor> processorClass = (Class<DataProcessor>) Class.forName(configEntity.getEntityClass());
                 DataProcessor processor = processorClass.getConstructor().newInstance();
-                processor.setConfigEntity(configEntity);
+                processor.setConfigEntity(configEntity); // 设置配置实体
                 PROCESSORS.put(configEntity.getName(), processor);
                 if (StringUtils.isEmpty(configEntity.getCycleTimeRecord())) {
-                    configEntity.setCycleTimeRecord(String.valueOf(new Date().getTime()));
+                    configEntity.setCycleTimeRecord(String.valueOf(new Date().getTime())); // 设置初始化调用时间
+                }
+                if(configEntity.isStartInInit()) {
+                    executeProcess(processor);  // 初始化时，异步触发处理器
                 }
                 configs.set(i, GSON.toJsonTree(configEntity, ConfigEntity.class));
             }
@@ -73,11 +85,19 @@ public class TargetPathScheduledTaskService {
         }
     }
 
+    /**
+     * 异步执行数据处理器（在配置线程池中运行）
+     *
+     * @param processor 数据处理器
+     */
     @Async
     public void executeProcess(DataProcessor processor) {
         processor.execute();
     }
 
+    /**
+     * 按照 SCHEDULE_CYCLE 的周期调用调度器
+     */
     @Scheduled(fixedRate = PolarCts.SCHEDULE_CYCLE)
     public void processDataByCycle() {
         try {

@@ -24,7 +24,6 @@
  **/
 import { Tools as tools } from "../basic/BasicTools.js"
 import { PARAMS_TABLE as ptable } from "../basic/ParamsTable.js"
-import { TYPE_ECHARTS } from "../basic/DataPublisher.js"
 import { ImagePlayer } from "./ImagePlayer.js"
 
 export let CHARTLIST = [];
@@ -72,12 +71,11 @@ export class TableFactory {
                         break;
                     case CHART_SIGN:
                         if (node.url) {
-                            let entity = {
-                                type: TYPE_ECHARTS,
-                                url: node.url,
-                                target: node.chart
-                            };
-                            tools.setEventInApp(node.event_id, () => entity);
+                            // let entity = {
+                            //     url: node.url,
+                            //     target: node.chart
+                            // };
+                            // tools.setEventInApp(node.event_id, () => entity);
                         }
                         break;
                 }

@@ -10,7 +10,6 @@ export let SceneGenerator = {
      * @author dsy
      * @param props essential properties
      */
-
     init_ships: function (props) {
         console.time("初始化考察船");
         require([
@@ -222,7 +221,7 @@ export let SceneGenerator = {
      */
     init_demonstration: function (props) {
         if (props.demonstrate) {
-            const speed = 2500;
+            const speed = 5000;
             const shift_count = 2;
             let counts = {};
             let basic = 0, ring = 0, minIndex = 8;
@@ -242,7 +241,7 @@ export let SceneGenerator = {
                                 option.series[0].data.shift();
                                 option.series[0].data.push(date_buffer);
                             }
-                            myChart.setOption(option);
+                            myChart.setOption(option, true);
                             break;
                         case "frequency":
                         case "line_datazoom":
@@ -257,7 +256,7 @@ export let SceneGenerator = {
                                 option.series[0].data.shift();
                                 option.series[0].data.push(dataBuffer);
                             }
-                            myChart.setOption(option);
+                            myChart.setOption(option, true);
                             break;
                         case "wave":
                             let data_buffer;
@@ -266,7 +265,7 @@ export let SceneGenerator = {
                                 option.series[0].data.shift();
                                 option.series[0].data.push(data_buffer);
                             }
-                            myChart.setOption(option);
+                            myChart.setOption(option, true);
                             break;
                         case "heatmap":
                             break;
@@ -275,7 +274,7 @@ export let SceneGenerator = {
                             ring = (ring + seed) % 100;
                             option.series[1].data[0].value = ring;
                             option.series[1].data[1].value = 100 - ring;
-                            myChart.setOption(option);
+                            myChart.setOption(option, true);
                             break;
                         case "ringComplete":
                             let len = option.series.length;
@@ -286,7 +285,7 @@ export let SceneGenerator = {
                                 option.series[i].data[0].value = rings[i];
                                 option.series[i].data[1].value = 100 - rings[i];
                             }
-                            myChart.setOption(option);
+                            myChart.setOption(option, true);
                             break;
                         case "temperature":
                             let temp = tools.perlinRandom(count += Math.random(), -15, 15);
@@ -306,18 +305,15 @@ export let SceneGenerator = {
                         case "counter":
                             let num = tools.perlinRandom(count += Math.random(), 0, 1);
                             basic += Math.floor(num * 10);
-                            myChart.setOption({
-                                title: {
-                                    text: (basic).toFixed(0)
-                                }
-                            });
+                            option.title.text=(basic).toFixed(0);
+                            myChart.setOption(option, true);
                             break;
                         case "windRose":
                             let order = parseInt(tools.perlinRandom(count += Math.random(), 0, 15));
                             let level = tools.perlinRandom(count += Math.random(), 8, 13);
                             option.series[0].data.fill(0);
                             option.series[0].data[order] = level;
-                            myChart.setOption(option);
+                            myChart.setOption(option, true);
                             break;
                         case "roomAlarm":
                             let seeds = [];
@@ -332,7 +328,7 @@ export let SceneGenerator = {
                             for(let i =0; i < 4; i++){
                                 option.series[0].data[1].value[i] = seeds[i];
                             }
-                            myChart.setOption(option);
+                            myChart.setOption(option, true);
                             break;
                         case "fileType":
                             let lenOut = option.series.length;
@@ -344,7 +340,7 @@ export let SceneGenerator = {
                             }
                             option.angleAxis.data.shift();
                             option.angleAxis.data.push(minIndex++);
-                            myChart.setOption(option);
+                            myChart.setOption(option, true);
                             break;
                     }
                     counts[id] = count;

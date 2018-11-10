@@ -1,18 +1,6 @@
 import {Tools as tools} from "./BasicTools.js"
 
 /**
- * mark of echarts subscriber, full-field constants
- *
- * @type {string}
- */
-export var TYPE_ECHARTS = "echarts";
-/**
- * mark of custom subscriber, full-field constants
- *
- * @type {string}
- */
-export var TYPE_CUSTOM = "custom";
-/**
  * share resource (this resource is what has been downloaded from server by url)
  * in this map for that we don't want same url and same resource to download twice.
  * And we want to notice subscribers to take the real-time resource by removing its url in it.
@@ -35,32 +23,25 @@ const SUBSCRIBERS = [];
  */
 export class DataPublisher {
     constructor(params) {
-        // update entity by type
+        tools.watch("shareResourceMap", SHARE_RES_MAP);
+
+        // update entity
         this._updateData = (entity, data) => {
-            switch (entity.type) {
-                case TYPE_ECHARTS:
-                    entity.target.setOption(data, true);
-                    break;
-                case TYPE_CUSTOM:
-                    entity.target(data);
-                    break;
-                default:
-                    tools.mutter(`type=${entity.type} is invalid.`, "error");
-                    break;
-            }
+            entity.target(data);
             entity.isInited = true;
         };
 
-        // pull resouce from remote or local
+        // pull resource from remote or local
         this._reqRes = (entity) => {
             if (SHARE_RES_MAP.has(entity.url)) {
+                // when entity is initialized
                 if (!entity.isInited) {
                     this._updateData(entity, SHARE_RES_MAP.get(entity.url));
                 }
             } else {
                 $.ajax({
                     url: entity.url,
-                    type: "POST",
+                    type: "GET",
                     dataType: "json"
                 }).done((data) => {
                     SHARE_RES_MAP.set(entity.url, data);
@@ -72,7 +53,6 @@ export class DataPublisher {
         // materialize entity
         this._materialize = (entity) => {
             let _url = entity.url,
-                _type = entity.type,
                 _target = entity.target;
             Object.defineProperty(entity, "url", {
                 configurable: true,
@@ -82,18 +62,6 @@ export class DataPublisher {
                 set(url) {
                     if (url && url !== _url) {
                         _url = url;
-                        this._reqRes(entity);
-                    }
-                }
-            });
-            Object.defineProperty(entity, "type", {
-                configurable: true,
-                get() {
-                    return _type;
-                },
-                set(type) {
-                    if (type && type !== _type) {
-                        _type = type;
                         this._reqRes(entity);
                     }
                 }
@@ -143,12 +111,12 @@ export class DataPublisher {
 
     // subscrib entity to map(entity should be configured by url, target and type)
     subscrib(entity) {
-        if (entity.url && entity.target && entity.type) {
+        if (entity.url && typeof(entity.target) === "function") {
             this._materialize(entity);
             this._reqRes(entity);
             SUBSCRIBERS.push(entity);
         } else {
-            tools.mutter(`entity.url=${entity.url}, entity.target=${entity.target}, entity.type=${entity.type} invalid.`, "error");
+            tools.mutter(`entity.url=${entity.url}, entity.target=${entity.target} invalid.`, "error");
         }
     }
 }

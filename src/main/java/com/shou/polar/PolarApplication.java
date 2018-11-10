@@ -49,6 +49,9 @@ public class PolarApplication {
         return "error";
     }
 
+    @RequestMapping("/test")
+    public String testPage() {return "test";}
+
     public static void main(String[] args) {
         // 运行代码
         SpringApplication.run(PolarApplication.class, args);

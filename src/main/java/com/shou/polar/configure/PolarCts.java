@@ -2,7 +2,7 @@ package com.shou.polar.configure;
 
 public final class PolarCts {
     // basic common properties
-    public static final long SCHEDULE_CYCLE = 1000;
+    public static final long SCHEDULE_CYCLE = 500000;
 //    public static final long DEFAULT_ERROR_CYCLE_TIME = (long)(SCHEDULE_CYCLE * 1.618);
     public static final String PATH_SPLIT = "/";
     public static final String PERIOD_SPLIT = ".";

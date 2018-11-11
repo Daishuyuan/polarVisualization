@@ -6,7 +6,7 @@ export let DynamicInterval = (func, tick, autoPlay, clDySchedule) => {
     const DEFAULT_CLOSE_DYNAMIC = false;
     let _tick = tick,
         _timerId = 0,
-        _closeDynamicSchedule = typeof(clDySchedule) !== "boolean"? DEFAULT_AUTO_PLAY: clDySche,
+        _closeDynamicSchedule = typeof(clDySchedule) !== "boolean"? DEFAULT_AUTO_PLAY: clDySchedule,
         _autoPlay = typeof(autoPlay) !== "boolean"? DEFAULT_CLOSE_DYNAMIC: autoPlay;
     let timer_func = () => {
         clearTimeout(_timerId);

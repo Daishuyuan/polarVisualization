@@ -28,7 +28,7 @@ public class LidarDataProcessor extends DataProcessor {
     private static final String tempName = "temp.json";
     private static final String windName = "wind.json";
     private static final String naName = "na.json";
-    private static final String xaxisName = "xaxis.json";
+    private static final String xAxisName = "xaxis.json";
 
     @Override
     public void execute() {
@@ -42,11 +42,11 @@ public class LidarDataProcessor extends DataProcessor {
             File[] files = ResourceUtils.getFile(SOURCE_RES_PATH + OrtecSeededPath).listFiles();
             if (files != null && files.length != 0) {
                 for (File f : files) {
-                    String[] data_rowsplit = FileUtils.readFileToString(f, StandardCharsets.UTF_8).split(valueOf('\n'));
+                    String[] data_rowSplit = FileUtils.readFileToString(f, StandardCharsets.UTF_8).split(valueOf('\n'));
                     JsonArray Xdata1 = new JsonArray();
                     String regex = "\\s+";
                     Pattern p = Pattern.compile(regex);
-                    String[] datestr = p.split(data_rowsplit[ 0 ]);
+                    String[] datestr = p.split(data_rowSplit[ 0 ]);
 
                     String[] filetilte = new String[ 4 ];
                     System.arraycopy(datestr, 1, filetilte, 0, 4);
@@ -54,7 +54,7 @@ public class LidarDataProcessor extends DataProcessor {
                     Xdata1.add(date);
                     Xdata.add(Xdata1);
 
-                    for (int i = 2; i < data_rowsplit.length; ++i) {
+                    for (int i = 2; i < data_rowSplit.length; ++i) {
                         String winds1;
                         String nas1;
                         String temps1;
@@ -63,7 +63,7 @@ public class LidarDataProcessor extends DataProcessor {
                         JsonArray naCell = new JsonArray();
                         JsonArray tempCell = new JsonArray();
 
-                        String[] common = p.split(data_rowsplit[ i ]);
+                        String[] common = p.split(data_rowSplit[ i ]);
                         String flag1 = common[ 6 ];
                         winds1 = common[ 2 ];
                         nas1 = common[ 3 ];
@@ -109,8 +109,8 @@ public class LidarDataProcessor extends DataProcessor {
                     FileUtils.writeStringToFile(file3, String.valueOf(gson.toJson(nas)), "UTF-8", false);
                 }
 
-                //创建xaxis.json
-                File file4 = new File(file.getAbsolutePath() + lidarPath + xaxisName);
+                //创建xAxis.json
+                File file4 = new File(file.getAbsolutePath() + lidarPath + xAxisName);
                 if (file4.exists() || file4.createNewFile()) {
                     FileUtils.writeStringToFile(file4, String.valueOf(gson.toJson(Xdata)), "UTF-8", false);
                 }

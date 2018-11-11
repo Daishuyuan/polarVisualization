@@ -1,10 +1,13 @@
 import { Tools as tools } from "./BasicTools.js";
 
-export let DynamicInterval = (func, tick, autoPlay, closeDynamicSchedule) => {
+export let DynamicInterval = (func, tick, autoPlay, clDySche) => {
     const MAX_TICK = 100000;
+    const DEFAULT_AUTOPLAY = true;
+    const DEFAULT_CLOSEDYNAMIC = false;
     let _tick = tick,
         _timerId = 0,
-        _closeDynamicSchedule = !!closeDynamicSchedule;
+        _closeDynamicSchedule = typeof(clDySche) !== "boolean"? DEFAULT_CLOSEDYNAMIC: clDySche,
+        _autoPlay = typeof(autoPlay) !== "boolean"? DEFAULT_AUTOPLAY: autoPlay;
     let timer_func = () => {
         clearTimeout(_timerId);
         let start = Date.now();
@@ -19,7 +22,7 @@ export let DynamicInterval = (func, tick, autoPlay, closeDynamicSchedule) => {
         return true;
     };
     if(timer_func()) {
-        if (!autoPlay) clearTimeout(_timerId);
+        if (!_autoPlay) clearTimeout(_timerId);
         return Object.defineProperties({}, {
             halt: {
                 writable: false,

@@ -19,7 +19,7 @@ export let DynamicInterval = (func, tick, autoPlay, closeDynamicSchedule) => {
         return true;
     };
     if(timer_func()) {
-        if (!autoPlay) this.halt();
+        if (!autoPlay) clearTimeout(_timerId);
         return Object.defineProperties({}, {
             halt: {
                 writable: false,

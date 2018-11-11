@@ -1,11 +1,11 @@
 @font-face {
 	font-family: 'chartTitleFont';
-	src: url('‪../../../../fonts/kunlunxiyuan.ttf') format('truetype');
+	src: url('../../fonts/kunlunxiyuan.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'sciFont';
-    src: url('../../../../fonts/sciFont.ttf') format('truetype');
+    src: url('../../fonts/sciFont.ttf') format('truetype');
 }
 
 html, body {
@@ -93,7 +93,6 @@ html, body {
     border: none;
     background-color: #cfd1d612;
     -webkit-border-radius: 8;
-    -moz-border-radius: 8;
     border-radius: 0.42vw;
     width: 14.7vw;
     height: 1.84vw;

@@ -1,6 +1,16 @@
 import {Tools as tools} from "../basic/BasicTools.js";
 import { DynamicInterval } from "../basic/DynamicInterval.js";
-
+const LOADING_WRAPPER = `<div class="wrapper">
+					<div class="inner">
+						<span>L</span>
+						<span>o</span>
+						<span>a</span>
+						<span>d</span>
+						<span>i</span>
+						<span>n</span>
+						<span>g</span>
+					</div>
+				</div>`;
 /**
  * @name ImagePlayer 图片播放器
  * @author zxj 2018/11/07
@@ -46,6 +56,11 @@ export class ImagePlayer {
     }
 
     addImage(url) {
+        let imgLi = $(`<li class="${this.animate}">${LOADING_WRAPPER}</li>`);
+        if(this.imgList.children().length>0){
+            imgLi.hide();
+        }
+        this.imgList.append(imgLi);
         if (!url) {
             tools.mutter("Can not find the image.", "error", ImagePlayer);
         } else {
@@ -54,10 +69,9 @@ export class ImagePlayer {
             img.height = this.height;
             img.width = this.width;
             img.onload = () => {
-                let imgLi = $(`<li class="${this.animate}"></li>`);
+                imgLi.empty();
                 $(img).css('border-radius', this.radius);
-                imgLi.append(img).hide();
-                this.imgList.append(imgLi);
+                imgLi.append(img);
             }
         }
     }

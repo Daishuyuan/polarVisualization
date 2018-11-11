@@ -41,9 +41,4 @@ public class PolarApplicationTests {
         System.out.println(StringUtils.isEmpty(null));
         System.out.println(StringUtils.isEmpty(""));
     }
-
-    @Test
-    public void kkTest() {
-
-    }
 }

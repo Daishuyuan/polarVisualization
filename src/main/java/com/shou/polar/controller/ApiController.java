@@ -4,16 +4,15 @@ import com.shou.polar.service.ControllersAdviceService;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -70,11 +69,12 @@ public class ApiController {
     @RequestMapping(value = {"/downloadImage/{type}/{name}.{tails}"}, method = RequestMethod.GET)
     @ResponseBody
     public String downloadImage(@PathVariable String type,
-                                                @PathVariable String name,
-                                                @PathVariable String tails,
-                                                HttpServletResponse response) throws IOException {
-        String path = type + PolarCts.PATH_SPLIT + name + PolarCts.PERIOD_SPLIT + tails;
-        File image = ResourceUtils.getFile(PolarCts.DISPLAY_RES_PATH + PolarCts.PATH_SPLIT + path);
+                                @PathVariable String name,
+                                @PathVariable String tails,
+                                HttpServletResponse response) throws IOException {
+        String path = StringUtils.join(type, PolarCts.PATH_SPLIT, name, PolarCts.PERIOD_SPLIT, tails);
+        String realPath = StringUtils.join(PolarCts.DISPLAY_RES_PATH + PolarCts.PATH_SPLIT + path);
+        File image = ResourceUtils.getFile(realPath);
         if (image.exists() && image.isFile()) {
             response.setContentType("application/force-download");
             response.setHeader("Cache-Control", "max-age=604800");

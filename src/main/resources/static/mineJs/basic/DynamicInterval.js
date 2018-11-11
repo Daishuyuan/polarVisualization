@@ -6,8 +6,8 @@ export let DynamicInterval = (func, tick, autoPlay, clDySchedule) => {
     const DEFAULT_CLOSE_DYNAMIC = false;
     let _tick = tick,
         _timerId = 0,
-        _closeDynamicSchedule = typeof(clDySchedule) !== "boolean"? DEFAULT_AUTO_PLAY: clDySche,
-        _autoPlay = typeof(autoPlay) !== "boolean"? DEFAULT_CLOSE_DYNAMIC: autoPlay;
+        _closeDynamicSchedule = typeof(clDySchedule) !== "boolean"? DEFAULT_CLOSE_DYNAMIC: clDySchedule,
+        _autoPlay = typeof(autoPlay) !== "boolean"? DEFAULT_AUTO_PLAY: autoPlay;
     let timer_func = () => {
         clearTimeout(_timerId);
         let start = Date.now();

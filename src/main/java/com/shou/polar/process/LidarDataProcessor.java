@@ -21,7 +21,7 @@ import static java.lang.String.valueOf;
 
 /**
  * 雷达数据三个分量的处理（风、钠离子密度和温度）
- * <notice>该类别仅会以java反射的方式被调用</notice>
+ * <notice>该类仅会以java反射的方式被调用</notice>
  *
  * @author wps 2018/11/10
  * @author dsy 2018/11/11

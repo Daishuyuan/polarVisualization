@@ -72,7 +72,7 @@ public class ApiController {
                                 @PathVariable String name,
                                 @PathVariable String tails,
                                 HttpServletResponse response) throws IOException {
-        String path = StringUtils.join(Arrays.asList(type, name, tails), PolarCts.PATH_SPLIT);
+        String path = StringUtils.join(type, PolarCts.PATH_SPLIT, name, PolarCts.PERIOD_SPLIT, tails);
         String realPath = StringUtils.join(PolarCts.DISPLAY_RES_PATH + PolarCts.PATH_SPLIT + path);
         File image = ResourceUtils.getFile(realPath);
         if (image.exists() && image.isFile()) {

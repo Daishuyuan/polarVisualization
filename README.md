@@ -1,7 +1,7 @@
 # Polar Visualization Platform
 ---
 
-## Author
+## Primary
 Dsy SynchronizedThread 2250649759@qq.com <br/>
 project path: https://github.com/SynchronizedThread/polarVisualization
 
@@ -11,6 +11,7 @@ project path: https://github.com/SynchronizedThread/polarVisualization
 3. 写代码尽量加上注释和注解，解释代码的功能和影响；
 4. 上传的代码务必是没有警告和错误的代码，最坏情况下也应该是能够运行通过的代码；
 5. 更改超过100项内容的commit必须向项目的负责人通知，征求许可；
+6. 私有仓库拉取代码必须要使用id_rsa私钥拉取代码（私钥在群里有）；
 
 ## Architectures
 - 前端架构(resources/static/mineJs)
@@ -18,6 +19,7 @@ project path: https://github.com/SynchronizedThread/polarVisualization
     1. BasicTools 基本工具集合
     2. DataPublisher 数据更新和推送模块
     3. ParamsTable 参数表，包含本应用全部配置
+    4. DynamicInterval 动态可控触发器，用于对触发器进行控制
 2. core 核心库
     1. MainActivity 系统程序主入口，用于初始化检测和运行
     2. VueLayer 基于vue的前端控制层
@@ -43,6 +45,7 @@ project path: https://github.com/SynchronizedThread/polarVisualization
 2. 私有变量（即仅在你自己写的模块内部使用的变量）前面加上‘_’，如_name, _handle；
 3. 常量全部大写，且分割的单词用‘_’连接，如MY_NAME, HER_NAME；
 4. 判定是否为奇数或者偶数，请使用(num & 1) === 0进行判断；
+5. 使用typeof(params) === "..."的形式对外部参数进行验证；
 
 ## Java Coding Rule
 1. Java中的字符串请不要使用new String的方式创建，拼接大量字符串时，推荐使用StringBuilder或者StringBuffer

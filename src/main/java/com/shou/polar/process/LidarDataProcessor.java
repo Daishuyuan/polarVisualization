@@ -5,118 +5,113 @@ import com.google.gson.JsonArray;
 import com.shou.polar.pojo.DataProcessor;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.jboss.logging.Logger;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
-import java.util.concurrent.Semaphore;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import static com.shou.polar.configure.PolarCts.LOCAL_RES_PATH;
 import static com.shou.polar.configure.PolarCts.SOURCE_RES_PATH;
 import static java.lang.String.valueOf;
-import static java.lang.System.out;
-import static java.util.Objects.*;
 
+/**
+ * 雷达数据三个分量的处理（风、钠离子密度和温度）
+ * <notice>该类别仅会以java反射的方式被调用</notice>
+ *
+ * @author wps 2018/11/10
+ * @author dsy 2018/11/11
+ */
+@SuppressWarnings("unused")
 public class LidarDataProcessor extends DataProcessor {
+    private static final Logger logger = Logger.getLogger(LidarDataProcessor.class);
     private static final String joiner = "-";
     private static final String lidarPath = "/data/target/lidar/";
     private static final String OrtecSeededPath = "/lidar/OrtecSeeded/";
     private static final String tempName = "temp.json";
     private static final String windName = "wind.json";
     private static final String naName = "na.json";
-    private static final String xAxisName = "xaxis.json";
+    private static final String xAxisName = "xAxis.json";
 
     @Override
     public void execute() {
-        try {
-            JsonArray winds = new JsonArray();
-            JsonArray nas = new JsonArray();
-            JsonArray temps = new JsonArray();
-            JsonArray Xdata = new JsonArray();
-            Gson gson = new Gson();
+        Pattern MUTI_BLANKS = Pattern.compile("\\s+");
+        JsonArray winds = new JsonArray();
+        JsonArray nas = new JsonArray();
+        JsonArray temps = new JsonArray();
+        JsonArray xData = new JsonArray();
+        Gson gson = new Gson();
 
+        try {
             File[] files = ResourceUtils.getFile(SOURCE_RES_PATH + OrtecSeededPath).listFiles();
             if (files != null && files.length != 0) {
                 for (File f : files) {
                     String[] data_rowSplit = FileUtils.readFileToString(f, StandardCharsets.UTF_8).split(valueOf('\n'));
-                    JsonArray Xdata1 = new JsonArray();
-                    String regex = "\\s+";
-                    Pattern p = Pattern.compile(regex);
-                    String[] datestr = p.split(data_rowSplit[ 0 ]);
-
-                    String[] filetilte = new String[ 4 ];
-                    System.arraycopy(datestr, 1, filetilte, 0, 4);
-                    String date = StringUtils.join(filetilte, joiner);
-                    Xdata1.add(date);
-                    Xdata.add(Xdata1);
+                    String[] dateStr = MUTI_BLANKS.split(data_rowSplit[0]);
+                    String[] fileCutting = new String[4];
+                    System.arraycopy(dateStr, 1, fileCutting, 0, 4);
+                    String date = StringUtils.join(fileCutting, joiner);
+                    // generate a line of xAxis date data
+                    JsonArray xAxisDateData = new JsonArray();
+                    xAxisDateData.add(date);
+                    xData.add(xAxisDateData);
 
                     for (int i = 2; i < data_rowSplit.length; ++i) {
-                        String winds1;
-                        String nas1;
-                        String temps1;
-                        String altitude1;
+                        String[] tokens = MUTI_BLANKS.split(data_rowSplit[i]);
+                        String altitudeRow = tokens[0];
+                        String tempsRow = tokens[1];
+                        String windsRow = tokens[2];
+                        String nasRow = tokens[3];
+                        String flagRow = tokens[6];
+                        if (1 != Integer.parseInt(flagRow)) continue;
+
                         JsonArray windCell = new JsonArray();
                         JsonArray naCell = new JsonArray();
                         JsonArray tempCell = new JsonArray();
 
-                        String[] common = p.split(data_rowSplit[ i ]);
-                        String flag1 = common[ 6 ];
-                        winds1 = common[ 2 ];
-                        nas1 = common[ 3 ];
-                        temps1 = common[ 1 ];
-                        altitude1 = common[ 0 ];
-
-                        if (Integer.parseInt(flag1) != 1) {
-                            continue;
-                        }
-
+                        // wind processing
                         windCell.add(date);
-                        windCell.add(altitude1);
-                        windCell.add(winds1);
+                        windCell.add(altitudeRow);
+                        windCell.add(windsRow);
+                        // na processing
                         naCell.add(date);
-                        naCell.add(altitude1);
-                        naCell.add(nas1);
+                        naCell.add(altitudeRow);
+                        naCell.add(nasRow);
+                        // temperature processing
                         tempCell.add(date);
-                        tempCell.add(altitude1);
-                        tempCell.add(temps1);
-
+                        tempCell.add(altitudeRow);
+                        tempCell.add(tempsRow);
+                        // save winds, nas and temps
                         winds.add(windCell);
                         nas.add(naCell);
                         temps.add(tempCell);
                     }
                 }
                 File file = ResourceUtils.getFile(LOCAL_RES_PATH);
-
-                //创建temp.json
-                File file1 = new File(file.getAbsolutePath() + lidarPath + tempName);
-                if (file1.exists() || file1.createNewFile()) {
-                    FileUtils.writeStringToFile(file1, String.valueOf(gson.toJson(temps)), "UTF-8", false);
-                }
-
-                //创建wind.json
-                File file2 = new File(file.getAbsolutePath() + lidarPath + windName);
-                if (file2.exists() || file2.createNewFile()) {
-                    FileUtils.writeStringToFile(file2, String.valueOf(gson.toJson(winds)), "UTF-8", false);
-                }
-
-                //创建na.json
-                File file3 = new File(file.getAbsolutePath() + lidarPath + naName);
-                if (file3.exists() || file3.createNewFile()) {
-                    FileUtils.writeStringToFile(file3, String.valueOf(gson.toJson(nas)), "UTF-8", false);
-                }
-
-                //创建xAxis.json
-                File file4 = new File(file.getAbsolutePath() + lidarPath + xAxisName);
-                if (file4.exists() || file4.createNewFile()) {
-                    FileUtils.writeStringToFile(file4, String.valueOf(gson.toJson(Xdata)), "UTF-8", false);
+                Map<String, JsonArray> processorList = new HashMap<>();
+                processorList.put(file.getAbsolutePath() + lidarPath + tempName, temps);
+                processorList.put(file.getAbsolutePath() + lidarPath + windName, winds);
+                processorList.put(file.getAbsolutePath() + lidarPath + naName, nas);
+                processorList.put(file.getAbsolutePath() + lidarPath + xAxisName, xData);
+                for(Map.Entry<String, JsonArray> process: processorList.entrySet()) {
+                    File cacheFile = new File(process.getKey());
+                    if (cacheFile.exists() || cacheFile.createNewFile()) {
+                        FileUtils.writeStringToFile(
+                                cacheFile,
+                                String.valueOf(gson.toJson(process.getValue())),
+                                StandardCharsets.UTF_8,
+                                false
+                        );
+                    }
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
+            logger.error(e);
         }
     }
 }

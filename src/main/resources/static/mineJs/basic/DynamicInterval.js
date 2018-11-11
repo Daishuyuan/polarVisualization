@@ -1,13 +1,13 @@
 import { Tools as tools } from "./BasicTools.js";
 
-export let DynamicInterval = (func, tick, autoPlay, clDySche) => {
+export let DynamicInterval = (func, tick, autoPlay, clDySchedule) => {
     const MAX_TICK = 100000;
-    const DEFAULT_AUTOPLAY = true;
-    const DEFAULT_CLOSEDYNAMIC = false;
+    const DEFAULT_AUTO_PLAY = true;
+    const DEFAULT_CLOSE_DYNAMIC = false;
     let _tick = tick,
         _timerId = 0,
-        _closeDynamicSchedule = typeof(clDySche) !== "boolean"? DEFAULT_CLOSEDYNAMIC: clDySche,
-        _autoPlay = typeof(autoPlay) !== "boolean"? DEFAULT_AUTOPLAY: autoPlay;
+        _closeDynamicSchedule = typeof(clDySchedule) !== "boolean"? DEFAULT_AUTO_PLAY: clDySche,
+        _autoPlay = typeof(autoPlay) !== "boolean"? DEFAULT_CLOSE_DYNAMIC: autoPlay;
     let timer_func = () => {
         clearTimeout(_timerId);
         let start = Date.now();

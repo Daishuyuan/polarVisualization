@@ -109,7 +109,7 @@ export class TableFactory {
                         dataType: "json",
                         success: function (names) {
                             names.forEach(name => {
-                                player.addImage(`${ptable.constants.DOWNLOAD_IMAGE_URL}/${node.type}/${name}`);
+                                player.addImage(`${ptable.constants.DOWNLOAD_IMAGE_URL}/${node.type}/${name}`, name);
                             });
                         },
                         error: function () {

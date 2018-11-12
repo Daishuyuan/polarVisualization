@@ -26,7 +26,7 @@ export class ImagePlayer {
             this.animate = option.animate;
             this.radius = option.radius;
             this.index = 0;
-            this.imgList = $("<ul style='padding: 0;'></ul>");
+            this.imgList = $(`<ul style='padding: 0;margin:0;height: 100%;width: 100%;'></ul>`);
             dom.append(this.imgList);
             if (!this.option.tick) {
                 tools.mutter("Please set the interval of player.", "error", ImagePlayer);
@@ -49,7 +49,10 @@ export class ImagePlayer {
         }
     }
 
-    addImage(url) {
+    addImage(url, name) {
+        let date = name.substring(0,10),
+            time = name.replace(/-/g,":").substring(11,19);
+        let title = date + " " + time;
         let imgLi = $(`<li class="${this.animate}">${LOADING_WRAPPER}</li>`);
         if (this.imgList.children().length > 0)
             imgLi.hide();
@@ -64,7 +67,7 @@ export class ImagePlayer {
             img.onload = () => {
                 imgLi.empty();
                 $(img).css('border-radius', this.radius);
-                imgLi.append(img);
+                imgLi.append(img).append(`<p style='margin:0;color:white;'>${title}</p>`);
             }
         }
     }

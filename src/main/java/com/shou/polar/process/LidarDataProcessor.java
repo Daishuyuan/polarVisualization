@@ -37,6 +37,14 @@ public class LidarDataProcessor extends DataProcessor {
     private static final String naName = "na.json";
     private static final String xAxisName = "xAxis.json";
 
+    class FolderJudgment{
+        FolderJudgment(File folder) {
+            if (!folder.exists() || !folder.isDirectory()) {
+                boolean bool = folder.mkdir();
+            }
+        }
+    }
+
     @Override
     public void execute() {
         Pattern MUTI_BLANKS = Pattern.compile("\\s+");
@@ -47,6 +55,9 @@ public class LidarDataProcessor extends DataProcessor {
         Gson gson = new Gson();
 
         try {
+            File folder = ResourceUtils.getFile(LOCAL_RES_PATH);
+            new FolderJudgment(new File(folder.getAbsolutePath()+ lidarPath));
+
             File[] files = ResourceUtils.getFile(SOURCE_RES_PATH + OrtecSeededPath).listFiles();
             if (files != null && files.length != 0) {
                 for (File f : files) {

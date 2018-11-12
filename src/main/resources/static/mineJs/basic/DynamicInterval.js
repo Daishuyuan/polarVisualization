@@ -1,13 +1,14 @@
 import { Tools as tools } from "./BasicTools.js";
 
 export let DynamicInterval = (func, tick, autoPlay, clDySchedule) => {
-    const MAX_TICK = 100000;
-    const DEFAULT_AUTO_PLAY = true;
-    const DEFAULT_CLOSE_DYNAMIC = false;
-    let _tick = tick,
-        _timerId = 0,
+    const MAX_TICK = 100000;                // max tick
+    const DEFAULT_AUTO_PLAY = true;        // default auto play
+    const DEFAULT_CLOSE_DYNAMIC = false;   // default open dynamic interval
+    let _tick = tick,            // one tick
+        _timerId = -1,           // timer id
         _closeDynamicSchedule = typeof(clDySchedule) !== "boolean"? DEFAULT_CLOSE_DYNAMIC: clDySchedule,
         _autoPlay = typeof(autoPlay) !== "boolean"? DEFAULT_AUTO_PLAY: autoPlay;
+    // core schedule function
     let timer_func = () => {
         clearTimeout(_timerId);
         let start = Date.now();
@@ -18,17 +19,20 @@ export let DynamicInterval = (func, tick, autoPlay, clDySchedule) => {
             return false;
         }
         _tick = _closeDynamicSchedule? tick: Math.max(1, tick - (Date.now() - start));
-        _timerId = setTimeout(timer_func, _tick);
+        _timerId = _autoPlay? setTimeout(timer_func, _tick): -1;
         return true;
     };
     if(timer_func()) {
-        if (!_autoPlay) clearTimeout(_timerId);
+        _autoPlay = true; // autoPlay work only one time
         return Object.defineProperties({}, {
             halt: {
                 writable: false,
                 enumerable: false,
                 configurable: false,
-                value: () => clearTimeout(_timerId)
+                value: () => {
+                    clearTimeout(_timerId);
+                    _timerId = -1;
+                }
             },
             start: {
                 writable: false,
@@ -43,6 +47,12 @@ export let DynamicInterval = (func, tick, autoPlay, clDySchedule) => {
                 },
                 set: (newTick) => {
                     tick = Math.min(Math.max(1, newTick | 0), MAX_TICK);
+                }
+            },
+            isRun: {
+                configurable: false,
+                get: () => {
+                    return (_timerId > 0);
                 }
             }
         });

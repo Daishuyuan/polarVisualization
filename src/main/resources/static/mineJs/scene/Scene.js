@@ -9,6 +9,13 @@ import { DelayTime } from "../core/VueLayer.js";
 let LAST_SCENE;
 
 /**
+ * send and get message in this pool
+ *
+ * @type {Map<any, Set>} default empty
+ */
+let MSG_POOL = new Map();
+
+/**
  * super class of all scenes
  * used to control some common operations in other scenes
  * themeInit - this function used to init scene basic params
@@ -69,6 +76,27 @@ export class Scene {
     // get view
     get view() {
         return this._view;
+    }
+
+    static sendMsg(sceneType, msg) {
+        if (sceneType instanceof Scene) {
+            let wkhc = tools.hashCode(sceneType.name);
+            if (!MSG_POOL.has(wkhc)) {
+                MSG_POOL.set(wkhc, new Set());
+            }
+            MSG_POOL.get(wkhc).add(msg);
+        } else {
+            tools.mutter(`sceneType: ${sceneType} is invalid type.`, "warn");
+        }
+    }
+
+    receiveMsg() {
+        let wkhc = tools.hashCode(this._wkid), cache = [];
+        if (MSG_POOL.has(wkhc)) {
+            MSG_POOL.get(wkhc).forEach(x => cache.push(x));
+            MSG_POOL.delete(wkhc);
+        }
+        return cache;
     }
 
     // do the work of themes initialization

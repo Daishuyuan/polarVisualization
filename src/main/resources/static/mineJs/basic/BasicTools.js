@@ -31,7 +31,6 @@ export let Tools = (() => {
         let S4 = () => (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
         return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
     };
-    const intValue = (num, MAX_VALUE, MIN_VALUE) => Math.max(Math.min(num, MAX_VALUE), MIN_VALUE);
     const _unique = (array) => {
         let temp = {}, r = [], len = array.length, val, type;
         for (let i = 0; i < len; i++) {
@@ -186,13 +185,11 @@ export let Tools = (() => {
         identify: (id) => {
             return id.startsWith("#") ? id.slice(id.lastIndexOf("#")) : "#" + id;
         },
-        hashCode: (strKey, max = 0x7fffffff, min = -0x80000000) => {
-            let hash = 0;
-            if (!(strKey === undefined || strKey === null || strKey.value === "")) {
-                for (let i = 0; i < strKey.length; ++i) {
-                    hash = hash * 31 + strKey.charCodeAt(i);
-                    hash = intValue(hash, max, min);
-                }
+        hashCode: (strKey) => {
+            let hash = 5381;
+            for (let i = 0; i < strKey.length; i++) {
+                let char = strKey.charCodeAt(i);
+                hash = ((hash << 5) + hash) + char; /* hash * 33 + c */
             }
             return hash;
         },

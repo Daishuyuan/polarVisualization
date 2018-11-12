@@ -1,16 +1,10 @@
 import {Tools as tools} from "../basic/BasicTools.js";
-import { DynamicInterval } from "../basic/DynamicInterval.js";
-const LOADING_WRAPPER = `<div class="wrapper">
-					<div class="inner">
-						<span>L</span>
-						<span>o</span>
-						<span>a</span>
-						<span>d</span>
-						<span>i</span>
-						<span>n</span>
-						<span>g</span>
-					</div>
-				</div>`;
+import {DynamicInterval} from "../basic/DynamicInterval.js";
+
+const LOADING_WRAPPER = `<div class="wrapper"><div class="inner">
+<span>L</span><span>o</span><span>a</span><span>d</span>
+<span>i</span><span>n</span><span>g</span></div></div>`;
+
 /**
  * @name ImagePlayer 图片播放器
  * @author zxj 2018/11/07
@@ -45,7 +39,7 @@ export class ImagePlayer {
                         $(child[(this.index++) % len]).show();
                     }
                 }, this.option.tick, this.option.autoStart, true);
-                if(this.option.hasOwnProperty("pauseOnHover")) {
+                if (this.option.hasOwnProperty("pauseOnHover")) {
                     this.option.pauseOnHover && this.imgList.hover(
                         () => this.timer.halt(),
                         () => this.timer.start()
@@ -57,9 +51,8 @@ export class ImagePlayer {
 
     addImage(url) {
         let imgLi = $(`<li class="${this.animate}">${LOADING_WRAPPER}</li>`);
-        if(this.imgList.children().length>0){
+        if (this.imgList.children().length > 0)
             imgLi.hide();
-        }
         this.imgList.append(imgLi);
         if (!url) {
             tools.mutter("Can not find the image.", "error", ImagePlayer);

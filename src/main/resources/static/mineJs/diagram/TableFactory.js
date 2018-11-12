@@ -171,7 +171,7 @@ export class TableFactory {
                                     }
                                     title_content = `<p id='${id}' style='${NO_MARGIN}' class='${sstd(node.style)}'>${content}</p>`;
                                     tbcnt.push(`<div ${control}>${prefix_content}${title_content}</div>`);
-                                    if (ptable.exists(node.event_id)) {
+                                    if (node.event_id && (node.event_id.toUpperCase() in ptable.events)) {
                                         events.push({
                                             domId: tools.identify(id),
                                             event_id: node.event_id,

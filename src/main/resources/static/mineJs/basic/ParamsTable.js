@@ -4,15 +4,6 @@ import { ArcticScene } from "../scene/ArcticScene.js"
 import { LidarScene } from "../scene/LidarScene.js"
 import { HighAlttitudePhysicsScene } from "../scene/HighAlttitudePhysicsScene.js"
 
-
-
-/**
- * used to increase the speed of searching
- *
- * @type {Map<any, any>}
- */
-const SEARCH_MAP = new Map();
-
 export var PARAMS_TABLE = {
     constants: {
         "MAIN_APP_ID": "PolarApp", // vue application id
@@ -37,21 +28,14 @@ export var PARAMS_TABLE = {
             HighAlttitudePhysicsScene
         ] // current scenes list
     },
+    // 特别注意: 事件的key值必须为全大写，value值必须为key值的全小写格式
     events: {
         "SHIP_LOAD_EVENT": "ship_load_event", // ship zoom in invigorating event
         "STATION_LOAD_EVENT": "station_load_event", // station and title change event
-        "SHIP_TITLE_CHANGE": "ship_change", // ship and title change event
+        "SHIP_TITLE_CHANGE": "ship_title_change", // ship and title change event
         "VUE_CONTROL": "vue_control" // get full vue handle event
-
     },
-    exists: (event_id) => {
-        if (SEARCH_MAP.size <= 0) {
-            for (let name in PARAMS_TABLE.events) {
-                if (PARAMS_TABLE.events.hasOwnProperty(name)) {
-                    SEARCH_MAP.set(PARAMS_TABLE.events[name], name);
-                }
-            }
-        }
-        return SEARCH_MAP.has(event_id);
+    msgType: {
+        "": ""
     }
 };

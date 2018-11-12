@@ -39,7 +39,7 @@ export class AntarcticaScene extends Scene {
         });
     }
 
-    onLoad(  ) {
+    onLoad() {
         tools.setEventInApp(ptable.events.SHIP_LOAD_EVENT, (ship) => {
             ship.attributes.extend = true;
             let title_entity = tools.getEventByName(ptable.events.SHIP_TITLE_CHANGE)();

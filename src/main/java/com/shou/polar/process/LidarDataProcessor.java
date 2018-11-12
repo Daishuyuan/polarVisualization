@@ -32,16 +32,22 @@ public class LidarDataProcessor extends DataProcessor {
     private static final String joiner = "-";
     private static final String lidarPath = "/data/target/lidar/";
     private static final String OrtecSeededPath = "/lidar/OrtecSeeded/";
+    private static final String lidarName = "lidar";
     private static final String tempName = "temp.json";
     private static final String windName = "wind.json";
     private static final String naName = "na.json";
     private static final String xAxisName = "xAxis.json";
 
-    class FolderJudgment{
-        FolderJudgment(File folder) {
-            if (!folder.exists() || !folder.isDirectory()) {
-                boolean bool = folder.mkdir();
+    public LidarDataProcessor() {
+        try {
+            File folder = ResourceUtils.getFile(LOCAL_RES_PATH);
+            File lidarfolder = new File(folder.getAbsolutePath() + lidarPath);
+            if (!lidarfolder.exists() && !lidarfolder.mkdir()) {
+                throw new IOException("Cannot create this folder:" + lidarName);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e);
         }
     }
 
@@ -55,9 +61,6 @@ public class LidarDataProcessor extends DataProcessor {
         Gson gson = new Gson();
 
         try {
-            File folder = ResourceUtils.getFile(LOCAL_RES_PATH);
-            new FolderJudgment(new File(folder.getAbsolutePath()+ lidarPath));
-
             File[] files = ResourceUtils.getFile(SOURCE_RES_PATH + OrtecSeededPath).listFiles();
             if (files != null && files.length != 0) {
                 for (File f : files) {

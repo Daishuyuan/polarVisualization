@@ -54,8 +54,7 @@ export class ImagePlayer {
             time = name.replace(/-/g,":").substring(11,19);
         let title = date + " " + time;
         let imgLi = $(`<li class="${this.animate}">${LOADING_WRAPPER}</li>`);
-        if (this.imgList.children().length > 0)
-            imgLi.hide();
+        if (this.imgList.children().length > 0) imgLi.hide();
         this.imgList.append(imgLi);
         if (!url) {
             tools.mutter("Can not find the image.", "error", ImagePlayer);

@@ -41,8 +41,8 @@ public class LidarDataProcessor extends DataProcessor {
     public LidarDataProcessor() {
         try {
             File folder = ResourceUtils.getFile(LOCAL_RES_PATH);
-            File lidarfolder = new File(folder.getAbsolutePath() + lidarPath);
-            if (!lidarfolder.exists() && !lidarfolder.mkdir()) {
+            File lidarFolder = new File(folder.getAbsolutePath() + lidarPath);
+            if (!lidarFolder.exists() && !lidarFolder.mkdir()) {
                 throw new IOException("Cannot create this folder:" + lidarName);
             }
         } catch (Exception e) {
